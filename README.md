@@ -7,6 +7,8 @@
 composer create-project roadiz/skeleton my-website
 ```
 
+If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMORY_LIMIT=-1`.
+
 ### Install database and node-types
 
 ```shell
@@ -18,7 +20,7 @@ dcapp bin/console install
 ### Features
 
 - Configured to be used in headless mode with *API Platform*
-- Configured with lexik/jwt-authentication-bundle
+- Configured with *lexik/jwt-authentication-bundle*
 - All-Docker development and production environments
 - Supervisor daemon for execution symfony/messenger consumers
 - Solr and Varnish services right out-the-box
