@@ -18,6 +18,7 @@ dcapp bin/console install
 ### Features
 
 - Configured to be used in headless mode with *API Platform*
+- Configured with lexik/jwt-authentication-bundle
 - All-Docker development and production environments
 - Supervisor daemon for execution symfony/messenger consumers
 - Solr and Varnish services right out-the-box
