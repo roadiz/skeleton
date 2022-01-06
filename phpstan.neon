@@ -1,0 +1,37 @@
+parameters:
+    level: max
+    paths:
+        - src
+    excludePaths:
+        - src/GeneratedEntity
+        - */node_modules/*
+        - */bower_components/*
+        - */static/*
+    ignoreErrors:
+        - '#Class GeneratedNodeSources\\NS([a-zA-Z]+) not found#'
+        - '#Call to method ([a-zA-Z]+)\(\) on an unknown class GeneratedNodeSources\\NS([a-zA-Z]+)#'
+        - '#Call to an undefined method ([^:]+)\:\:get(?:External|Internal)Link(?:Sources)?\(\)#'
+        - '#NodesSources\|null but returns GeneratedNodeSources\\NS(?:[a-zA-Z]+)#'
+        - '#GeneratedNodeSources\\NS(?:[a-zA-Z]+)#'
+        - '#Call to an undefined method RZ\\Roadiz\\Core\\AbstractEntities\\LeafInterface#'
+        - '#Instantiated class (Memcached|Redis|Raven_Client|Raven_ErrorHandler) not found#'
+        - '#on an unknown class (Memcached|Redis)#'
+        - '#Doctrine\\Persistence\\ObjectRepository#'
+        - '#Call to an undefined method Doctrine\\Persistence\\ObjectRepository::#'
+        - '#Call to an undefined method Doctrine\\Persistence\\ObjectManager::#'
+        - '#Call to an undefined method Doctrine\\ORM\\EntityRepository::#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::#'
+        - '#Access to an undefined property Symfony\\Component\\Validator\\Constraint::#'
+        - '#Call to method publish\(\) on an unknown class Gelf\\IMessagePublisher#'
+        - '#RZ\\Roadiz\\Core\\Entities\\Tag does not have a field named \$translation#'
+        - '#does not have a field named \$node\.home#'
+        - '#Raven_Client#'
+        - '#Raven_ErrorHandler#'
+        # PHPStan Doctrine does not support ResolveTargetEntityListener
+        - '#Property ([a-zA-Z\\\:\$]+) type mapping mismatch: property can contain ([a-zA-Z\\\&\>\<]+)Interface\>?\|null but database expects ([a-zA-Z\\\&\>\<]+)\|null#'
+        - '#Property ([a-zA-Z\\\:\$]+) type mapping mismatch: property can contain ([a-zA-Z\\\&\>\<]+)Interface\>? but database expects ([a-zA-Z\\\&\>\<]+)#'
+        - '#type mapping mismatch: database can contain array\|bool\|float\|int\|JsonSerializable\|stdClass\|string\|null but property expects array\|null#'
+
+    reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false

@@ -1,0 +1,67 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        openid_user_provider:
+            id: RZ\Roadiz\OpenId\Authentication\Provider\OpenIdAccountProvider
+        roadiz_user_provider:
+            entity:
+                class: RZ\Roadiz\CoreBundle\Entity\User
+                property: username
+        all_users:
+            chain:
+                providers: [ 'openid_user_provider', 'roadiz_user_provider' ]
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # JWT for API
+        login:
+            pattern: ^/api/token
+            stateless: true
+            provider: all_users
+            form_login:
+                check_path: /api/token
+                username_parameter: username
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        main:
+            lazy: true
+            provider: all_users
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            switch_user: { role: ROLE_SUPERADMIN, parameter: _su }
+            entry_point: RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+            # ...
+            logout:
+                path: logoutPage
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+            custom_authenticator:
+                - RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/rz-admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/rz-admin, roles: ROLE_BACKEND_USER }
+        - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: ROLE_BACKEND_USER, methods: [ POST, PUT, PATCH, DELETE ] }
+        # - { path: ^/profile, roles: ROLE_USER }

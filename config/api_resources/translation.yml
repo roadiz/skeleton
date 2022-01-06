@@ -1,0 +1,11 @@
+
+RZ\Roadiz\CoreBundle\Entity\Translation:
+    attributes:
+        output: RZ\Roadiz\CoreBundle\Api\Dto\TranslationOutput
+    collectionOperations:
+        get:
+            method: "GET"
+    itemOperations:
+        get:
+            method: 'GET'
+

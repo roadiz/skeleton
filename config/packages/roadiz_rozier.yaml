@@ -1,0 +1,160 @@
+---
+roadiz_rozier:
+    entries:
+        dashboard:
+            name: dashboard
+            route: adminHomePage
+            icon: uk-icon-rz-dashboard
+
+        nodes:
+            name: nodes
+            route: ~
+            icon: uk-icon-rz-global-nodes
+            roles: [ 'ROLE_ACCESS_NODES' ]
+            subentries:
+                all_nodes:
+                    name: 'all.nodes'
+                    route: nodesHomePage
+                    icon: uk-icon-rz-all-nodes
+                    roles: ~
+                draft_nodes:
+                    name: 'draft.nodes'
+                    route: nodesHomeDraftPage
+                    icon: uk-icon-rz-draft-nodes
+                    roles: ~
+                pending_nodes:
+                    name: 'pending.nodes'
+                    route: nodesHomePendingPage
+                    icon: uk-icon-rz-pending-nodes
+                    roles: ~
+                archived_nodes:
+                    name: 'archived.nodes'
+                    route: nodesHomeArchivedPage
+                    icon: uk-icon-rz-archives-nodes
+                    roles: ~
+                deleted_nodes:
+                    name: 'deleted.nodes'
+                    route: nodesHomeDeletedPage
+                    icon: uk-icon-rz-deleted-nodes
+                    roles: ~
+                search_nodes:
+                    name: 'search.nodes'
+                    route: searchNodePage
+                    icon: uk-icon-search
+                    roles: ~
+
+        manage_documents:
+            name: 'manage.documents'
+            route: documentsHomePage
+            icon: uk-icon-rz-documents
+            roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+
+        manage_tags:
+            name: 'manage.tags'
+            route: tagsHomePage
+            icon: uk-icon-rz-tags
+            roles: [ 'ROLE_ACCESS_TAGS' ]
+
+        construction:
+            name: 'construction'
+            route: ~
+            icon: uk-icon-rz-construction
+            roles:
+                - 'ROLE_ACCESS_NODETYPES'
+                - 'ROLE_ACCESS_ATTRIBUTES'
+                - 'ROLE_ACCESS_TRANSLATIONS'
+                - 'ROLE_ACCESS_THEMES'
+                - 'ROLE_ACCESS_FONTS'
+                - 'ROLE_ACCESS_REDIRECTIONS'
+                - 'ROLE_ACCESS_WEBHOOKS'
+            subentries:
+                manage_nodeTypes:
+                    name: 'manage.nodeTypes'
+                    route: nodeTypesHomePage
+                    icon: uk-icon-rz-manage-nodes
+                    roles: ['ROLE_ACCESS_NODETYPES']
+                manage_attributes:
+                    name: 'manage.attributes'
+                    route: attributesHomePage
+                    icon: uk-icon-server
+                    roles: ['ROLE_ACCESS_ATTRIBUTES']
+                manage_translations:
+                    name: 'manage.translations'
+                    route: translationsHomePage
+                    icon: uk-icon-rz-translate
+                    roles: ['ROLE_ACCESS_TRANSLATIONS']
+                manage_fonts:
+                    name: 'manage.fonts'
+                    route: fontsHomePage
+                    icon: 'uk-icon-rz-fontes'
+                    roles: ['ROLE_ACCESS_FONTS']
+                manage_redirections:
+                    name: 'manage.redirections'
+                    route: redirectionsHomePage
+                    icon: 'uk-icon-compass'
+                    roles: ['ROLE_ACCESS_REDIRECTIONS']
+                manage_webhooks:
+                    name: 'manage.webhooks'
+                    route: webhooksHomePage
+                    icon: 'uk-icon-space-shuttle'
+                    roles: ['ROLE_ACCESS_WEBHOOKS']
+
+        user_system:
+            name: 'user.system'
+            route: ~
+            icon: uk-icon-rz-users
+            roles: ['ROLE_ACCESS_USERS', 'ROLE_ACCESS_ROLES', 'ROLE_ACCESS_GROUPS']
+            subentries:
+                manage_users:
+                    name: 'manage.users'
+                    route: usersHomePage
+                    icon: uk-icon-rz-user
+                    roles: ['ROLE_ACCESS_USERS']
+                manage_roles:
+                    name: 'manage.roles'
+                    route: rolesHomePage
+                    icon: uk-icon-rz-roles
+                    roles: ['ROLE_ACCESS_ROLES']
+                manage_groups:
+                    name: 'manage.groups'
+                    route: groupsHomePage
+                    icon: uk-icon-rz-groups
+                    roles: ['ROLE_ACCESS_GROUPS']
+
+        interactions:
+            name: 'interactions'
+            route: ~
+            icon: uk-icon-rz-interactions
+            roles:
+                - 'ROLE_ACCESS_CUSTOMFORMS'
+                - 'ROLE_ACCESS_MANAGE_SUBSCRIBERS'
+                - 'ROLE_ACCESS_COMMENTS'
+            subentries:
+                manage_customForms:
+                    name: 'manage.customForms'
+                    route: customFormsHomePage
+                    icon: uk-icon-rz-surveys
+                    roles: ['ROLE_ACCESS_CUSTOMFORMS']
+
+        settings:
+            name: 'settings'
+            route: ~
+            icon: uk-icon-rz-settings
+            roles: ['ROLE_ACCESS_SETTINGS']
+            subentries:
+                all_settings:
+                    name: 'all.settings'
+                    route: settingsHomePage
+                    icon: uk-icon-rz-settings-general
+                    roles: ['ROLE_ACCESS_SETTINGS']
+                setting_groups_dynamic:
+                    # This is a special menu entry replaced by all settings groups
+                    name: 'setting.groups.dynamic' # do not rename this
+                    icon: uk-icon-rz-settings-general
+                    roles: ['ROLE_ACCESS_SETTINGS']
+                setting_groups:
+                    name: 'setting.groups'
+                    route: settingGroupsHomePage
+                    icon: uk-icon-rz-settings-groups
+                    roles: ['ROLE_ACCESS_SETTINGS']
+

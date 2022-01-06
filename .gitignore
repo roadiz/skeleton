@@ -1,0 +1,48 @@
+
+###> symfony/framework-bundle ###
+/!.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/public/themes/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+/.data
+
+.phpcs-cache
+report.txt
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+openapi.json
+composer.lock
+/*.sql
+/*.zip
+/*.gz
+/.php_cs.cache
+/project_env.sh
+
+/public/assets/*
+/public/files/*
+!/public/assets/.gitkeep
+!/public/files/.gitkeep

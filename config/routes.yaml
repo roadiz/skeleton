@@ -1,0 +1,17 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+roadiz_core:
+    resource: "@RoadizCoreBundle/config/routing.yaml"
+
+roadiz_rozier:
+    resource: "@RoadizRozierBundle/config/routing.yaml"
+
+rz_intervention_request:
+    resource: "@RZInterventionRequestBundle/Resources/config/routing.yml"
+    prefix: /
+
+api_login_check:
+    methods: [POST]
+    path: /api/token

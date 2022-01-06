@@ -1,0 +1,12 @@
+
+RZ\Roadiz\CoreBundle\Entity\Tag:
+    iri: Tag
+    shortName: Tag
+    attributes:
+        output: RZ\Roadiz\CoreBundle\Api\Dto\TagOutput
+    collectionOperations:
+        get:
+            method: "GET"
+    itemOperations:
+        get:
+            method: 'GET'

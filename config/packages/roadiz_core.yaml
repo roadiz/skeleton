@@ -1,0 +1,37 @@
+roadiz_core:
+    appNamespace: '%env(string:APP_NAMESPACE)%'
+    staticDomainName: ~
+    defaultNodeSourceController: App\Controller\NullController
+    useNativeJsonColumnType: true
+    security:
+        private_key_name: default
+    medias:
+        unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
+    inheritance:
+        type: single_table
+    reverseProxyCache:
+        frontend:
+            default:
+                host: '%env(string:VARNISH_HOST)%'
+                domainName: '%env(string:VARNISH_DOMAIN)%'
+    solr:
+        timeout: 3
+        endpoints:
+            docker:
+                host: '%env(string:SOLR_HOST)%'
+                core: '%env(string:SOLR_CORE_NAME)%'
+                port: '%env(string:SOLR_PORT)%'
+                path: /
+    open_id:
+        # Verify User info in JWT at each login
+        verify_user_info: true
+        # Standard OpenID autodiscovery URL, required to enable OpenId login in Roadiz CMS.
+        discovery_url: '%env(string:OPEN_ID_DISCOVERY_URL)%'
+        # For public identity providers (such as Google), restrict users emails by their domain.
+        hosted_domain: '%env(string:OPEN_ID_HOSTED_DOMAIN)%'
+        # OpenID identity provider OAuth2 client ID
+        oauth_client_id: '%env(string:OPEN_ID_CLIENT_ID)%'
+        # OpenID identity provider OAuth2 client secret
+        oauth_client_secret: '%env(string:OPEN_ID_CLIENT_SECRET)%'
+
+

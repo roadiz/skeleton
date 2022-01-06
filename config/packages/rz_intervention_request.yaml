@@ -1,0 +1,9 @@
+rz_intervention_request:
+    driver: 'gd'
+    default_quality: 90
+    max_pixel_size: 1920
+    cache_path: "%kernel.project_dir%/public/assets"
+    files_path: "%kernel.project_dir%/public/files"
+    jpegoptim_path: /usr/bin/jpegoptim
+    pngquant_path: /usr/bin/pngquant
+    subscribers: []
