@@ -75,5 +75,15 @@
             "require": "5.4.*",
             "docker": false
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "github",
+            "url":  "git@github.com:rezozero/LiformBundle.git"
+        },
+        {
+            "type": "github",
+            "url":  "git@github.com:phpwutz/Liform.git"
+        }
+    ]
 }
