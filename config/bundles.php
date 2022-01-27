@@ -22,4 +22,5 @@ return [
     RZ\Roadiz\RozierBundle\RoadizRozierBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
 ];
