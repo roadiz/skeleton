@@ -19,7 +19,8 @@ framework:
     serializer:
         circular_reference_handler: 'App\Serializer\CircularReferenceHandler'
         max_depth_handler: 'App\Serializer\CircularReferenceHandler'
-
+    csrf_protection:
+        enabled: true
 when@test:
     framework:
         test: true
