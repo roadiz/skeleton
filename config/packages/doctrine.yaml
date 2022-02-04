@@ -36,13 +36,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/GeneratedEntity'
                 prefix: 'App\GeneratedEntity'
                 alias: App\GeneratedEntity
-            translatable:
-                is_bundle: false
-                type: annotation
-                alias: Gedmo
-                prefix: Gedmo\Translatable\Entity
-                # make sure vendor library location is correct
-                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Translatable/Entity"
 
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: RZ\Roadiz\CoreBundle\Entity\User
