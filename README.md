@@ -4,7 +4,7 @@
 ### Install
 
 ```shell
-COMPOSER_MEMORY_LIMIT=-1 composer create-project roadiz/skeleton my-website
+COMPOSER_MEMORY_LIMIT=-1 composer create-project roadiz/skeleton my-website dev-main
 ```
 
 If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMORY_LIMIT=-1`.
