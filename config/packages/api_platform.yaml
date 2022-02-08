@@ -11,6 +11,7 @@ api_platform:
             - '%kernel.project_dir%/src/Entity'
             - '%kernel.project_dir%/src/GeneratedEntity'
             - '%kernel.project_dir%/vendor/roadiz/core-bundle/src/Entity'
+            - '%kernel.project_dir%/vendor/rezozero/tree-walker/src'
             - '%kernel.project_dir%/config/api_resources'
 #    http_cache:
 #        # Automatically generate etags for API responses.
