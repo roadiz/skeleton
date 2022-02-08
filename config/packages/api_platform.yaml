@@ -24,6 +24,11 @@ api_platform:
 #        vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
 #        invalidation:
 #            enabled: false
+#    defaults:
+#        cache_headers:
+#            max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
+#            shared_max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
+#            vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
     collection:
         pagination:
             items_per_page: 15 # Default value
