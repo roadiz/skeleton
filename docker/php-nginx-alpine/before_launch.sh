@@ -10,7 +10,7 @@ printenv | sed 's/^\(.*\)$/export \1/g' | grep -E "^export (IR|SYMFONY|APP|ROADI
 # Wait for database to be ready.
 /bin/sleep 2s;
 
-/usr/bin/sudo -u www-data -- bash -c  "/var/www/html/project_env.sh; /usr/local/bin/composer dump-env prod"
+/usr/bin/sudo -u www-data -- bash -c  "/var/www/html/project_env.sh; /usr/local/bin/composer dump-env prod --empty"
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/project_env.sh; /var/www/html/bin/console cache:clear -n"
 
 # Uncomment following line to enable automatic migration for your theme at each docker start
