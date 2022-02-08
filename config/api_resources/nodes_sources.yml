@@ -41,7 +41,7 @@ RZ\Roadiz\CoreBundle\Entity\NodesSources:
                     - "web_response"
                     - "walker"
                     - "walker_level"
-                    - "walker_meta"
+                    - "walker_metadata"
                     - "meta"
                     - "children"
                     - "children_count"
