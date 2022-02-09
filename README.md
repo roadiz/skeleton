@@ -25,6 +25,16 @@ When you're ready you can check that *Symfony* console responds through your Doc
 docker-compose exec -u www-data app bin/console
 ```
 
+### Generate JWT private and public keys
+
+```shell script
+# Generate a strong secret
+openssl rand --base64 16; 
+# Fill JWT_PASSPHRASE env var.
+openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
+```
+
 ### Install database
 
 ```shell
