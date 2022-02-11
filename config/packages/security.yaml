@@ -56,6 +56,8 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
             custom_authenticator:
                 - RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
+                # Enables OpenId on backoffice entrypoint
+                - roadiz_rozier.authenticator.open_id
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

@@ -24,7 +24,7 @@ roadiz_core:
                 path: /
     open_id:
         # Verify User info in JWT at each login
-        verify_user_info: true
+        verify_user_info: false
         # Standard OpenID autodiscovery URL, required to enable OpenId login in Roadiz CMS.
         discovery_url: '%env(string:OPEN_ID_DISCOVERY_URL)%'
         # For public identity providers (such as Google), restrict users emails by their domain.
@@ -33,5 +33,8 @@ roadiz_core:
         oauth_client_id: '%env(string:OPEN_ID_CLIENT_ID)%'
         # OpenID identity provider OAuth2 client secret
         oauth_client_secret: '%env(string:OPEN_ID_CLIENT_SECRET)%'
+        granted_roles:
+            - ROLE_USER
+            - ROLE_BACKEND_USER
 
 
