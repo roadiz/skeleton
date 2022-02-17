@@ -15,3 +15,11 @@ rz_intervention_request:
 api_login_check:
     methods: [POST]
     path: /api/token
+
+#api_contact_form:
+#    methods: [POST]
+#    path: /api/contact_form/post
+#    defaults:
+#        _controller: App\Controller\ContactFormController::formAction
+#        _locale: fr
+#        _format: json

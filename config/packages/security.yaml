@@ -65,5 +65,7 @@ security:
         - { path: ^/rz-admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/rz-admin, roles: ROLE_BACKEND_USER }
         - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/api/contact_form/post, methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/custom_forms/(?:[0-9]+)/post, methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: ROLE_BACKEND_USER, methods: [ POST, PUT, PATCH, DELETE ] }
         # - { path: ^/profile, roles: ROLE_USER }
