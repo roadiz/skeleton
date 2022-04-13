@@ -1,0 +1,25 @@
+RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
+    collectionOperations: [ ]
+    itemOperations:
+        getByPath:
+            method: 'GET'
+            path: '/web_response_by_path'
+            read: false
+            controller: RZ\Roadiz\CoreBundle\Api\Controller\GetWebResponseByPathController
+            pagination_enabled: false
+            normalization_context:
+                pagination_enabled: false
+                groups:
+                    - get
+                    - web_response
+                    - position
+                    - walker
+                    - walker_level
+                    - meta
+                    - children
+                    - children_count
+                    - nodes_sources
+                    - urls
+                    - tag_base
+                    - translation_base
+                    - document_display
