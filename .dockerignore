@@ -56,5 +56,6 @@ project_env.sh
 !docker/php-nginx-alpine/crontab.txt
 !docker/php-nginx-alpine/supervisor.ini
 !docker/php-nginx-alpine/before_launch.sh
+!docker/php-nginx-alpine/entrypoint.sh
 !public/themes/*
 
