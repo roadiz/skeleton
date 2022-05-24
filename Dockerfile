@@ -1,4 +1,4 @@
-FROM roadiz/php80-nginx-alpine:latest
+FROM roadiz/php81-nginx-alpine:latest
 MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
 ARG USER_UID=1000
 ENV APP_ENV=prod
@@ -7,7 +7,9 @@ ENV APP_DEBUG=0
 RUN usermod -u ${USER_UID} www-data \
     && groupmod -g ${USER_UID} www-data
 
+COPY docker/php-nginx-alpine/php.prod.ini /usr/local/etc/php/php.ini
 COPY docker/php-nginx-alpine/crontab.txt /crontab.txt
+COPY docker/php-nginx-alpine/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 # Added Roadiz messenger for async tasks
 COPY docker/php-nginx-alpine/supervisor.ini /etc/supervisor.d/services.ini
 COPY docker/php-nginx-alpine/etc/nginx /etc/nginx

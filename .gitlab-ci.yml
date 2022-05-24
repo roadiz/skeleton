@@ -1,4 +1,4 @@
-image: roadiz/php80-runner
+image: roadiz/php81-runner
 
 stages:
     - test
