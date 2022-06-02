@@ -18,8 +18,8 @@ framework:
     php_errors:
         log: true
     serializer:
-        circular_reference_handler: 'App\Serializer\CircularReferenceHandler'
-        max_depth_handler: 'App\Serializer\CircularReferenceHandler'
+        circular_reference_handler: 'RZ\Roadiz\CoreBundle\Serializer\CircularReferenceHandler'
+        max_depth_handler: 'RZ\Roadiz\CoreBundle\Serializer\CircularReferenceHandler'
     csrf_protection:
         enabled: true
 

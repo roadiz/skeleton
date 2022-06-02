@@ -34,6 +34,15 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             jwt: ~
+        # disables session creation for assets and healthcheck controllers
+        assets:
+            pattern: ^/assets
+            stateless: true
+            security: false
+        healthCheck:
+            pattern: ^/health-check$
+            stateless: true
+            security: false
         main:
             lazy: true
             provider: all_users

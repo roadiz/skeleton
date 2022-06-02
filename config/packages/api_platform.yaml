@@ -5,7 +5,7 @@ api_platform:
         versions: [3]
     title:       "Roadiz Skeleton"
     description: "Roadiz Skeleton"
-    version:     '0.1.0'
+    version:     '%env(string:APP_VERSION)%'
     mapping:
         paths:
             - '%kernel.project_dir%/src/Entity'

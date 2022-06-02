@@ -1,5 +1,7 @@
 roadiz_core:
     appNamespace: '%env(string:APP_NAMESPACE)%'
+    appVersion: '%env(string:APP_VERSION)%'
+    healthCheckToken: '%env(string:APP_HEALTH_CHECK_TOKEN)%'
     staticDomainName: ~
     defaultNodeSourceController: App\Controller\NullController
     useNativeJsonColumnType: true

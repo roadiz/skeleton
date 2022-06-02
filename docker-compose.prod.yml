@@ -38,6 +38,11 @@ services:
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.port=80"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.passhostheader=true"
+            # Enable healthcheck to prevent routing traffic to not-ready service
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.path=/health-check"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.interval=10s"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.timeout=3s"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
             # Listen HTTP
             - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=http"
             - "traefik.http.routers.${APP_NAMESPACE}.rule=Host(${HOSTNAME})"

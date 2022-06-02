@@ -120,6 +120,11 @@ services:
             - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.scheme=http"
             - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.port=8983"
             - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.passhostheader=true"
+            # Enable healthcheck to prevent routing traffic to not-ready service
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.path=/health-check"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.interval=10s"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.timeout=3s"
+            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
             # Listen HTTP
             - "traefik.http.routers.${APP_NAMESPACE}_solr.entrypoints=http"
             - "traefik.http.routers.${APP_NAMESPACE}_solr.rule=Host(${HOSTNAME_SOLR})"
