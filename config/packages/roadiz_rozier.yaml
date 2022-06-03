@@ -45,9 +45,25 @@ roadiz_rozier:
 
         manage_documents:
             name: 'manage.documents'
-            route: documentsHomePage
+            route: ~
             icon: uk-icon-rz-documents
             roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+            subentries:
+                all_documents:
+                    name: 'all.documents'
+                    route: documentsHomePage
+                    icon: uk-icon-rz-documents
+                    roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+                unused_documents:
+                    name: 'unused_documents'
+                    route: documentsUnusedPage
+                    icon: uk-icon-unlink
+                    roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+                duplicated_documents:
+                    name: 'duplicated_documents'
+                    route: documentsDuplicatesPage
+                    icon: uk-icon-files-o
+                    roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
 
         manage_tags:
             name: 'manage.tags'
