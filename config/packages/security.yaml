@@ -27,6 +27,8 @@ security:
             pattern: ^/api
             stateless: true
             provider: all_users
+            login_throttling:
+                max_attempts: 3
             json_login:
                 check_path: /api/token
                 username_path: username
@@ -57,7 +59,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
-            # ...
+            login_throttling:
+                max_attempts: 3
             logout:
                 path: logoutPage
             guard:
@@ -75,6 +78,6 @@ security:
         - { path: ^/rz-admin, roles: ROLE_BACKEND_USER }
         - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/api/contact_form/post, methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/custom_forms/(?:[0-9]+)/post, methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/api/custom_forms/(?:[0-9]+)/post", methods: [ POST ], roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: ROLE_BACKEND_USER, methods: [ POST, PUT, PATCH, DELETE ] }
         # - { path: ^/profile, roles: ROLE_USER }
