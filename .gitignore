@@ -46,3 +46,5 @@ composer.lock
 /public/files/*
 !/public/assets/.gitkeep
 !/public/files/.gitkeep
+!/var/secret/.gitkeep
+!/var/export/.gitkeep
