@@ -9,4 +9,6 @@ RUN set -ex; \
     usermod -u ${USER_UID} "$SOLR_USER"; \
     groupmod -g ${USER_UID} "$SOLR_GROUP";
 
+COPY managed-schema.xml /opt/solr/server/solr/configsets/_default/conf/managed-schema
+
 USER $SOLR_USER
