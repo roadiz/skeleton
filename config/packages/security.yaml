@@ -69,7 +69,7 @@ security:
             custom_authenticator:
                 - RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
                 # Enables OpenId on backoffice entrypoint
-                - roadiz_rozier.authenticator.open_id
+                - roadiz_rozier.open_id.authenticator
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
