@@ -1,6 +1,12 @@
 api_platform:
     patch_formats:
         json: ['application/merge-patch+json']
+    enable_swagger_ui: false
+    enable_re_doc: true
+    graphql:
+        graphiql:
+            enabled: false
+    show_webby: false
     swagger:
         versions: [3]
     title:       "Roadiz Skeleton"

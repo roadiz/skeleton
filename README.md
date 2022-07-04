@@ -60,3 +60,8 @@ docker-compose exec -u www-data app bin/console users:create -m username@roadiz.
 - Solr and Varnish services right out-the-box
 - Gitlab CI ready
 - Use *phpcs* and *phpstan* to ensure code-smell and static analysis
+
+#### Common content endpoint
+
+`/api/common_content` endpoint is meant to expose common data about your website.
+You can fetch this endpoint once in your website frontend, instead of embedding the same data in each web response.
