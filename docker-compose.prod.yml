@@ -20,11 +20,13 @@ services:
     varnish:
         image: my-registry/roadiz_skeleton/varnish:latest
         restart: always
-        tmpfs: /usr/local/var/varnish:exec
+        tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - app
         links:
             - app:app
+        environment:
+            VARNISH_SIZE: ${VARNISH_SIZE}
         networks:
             - frontproxynet
             - default

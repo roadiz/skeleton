@@ -19,6 +19,7 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+/phpunit.xml.dist
 ###< phpunit/phpunit ###
 
 ###> lexik/jwt-authentication-bundle ###
@@ -38,6 +39,7 @@ openapi.json
 composer.lock
 /*.sql
 /*.zip
+/*.tar
 /*.gz
 /.php_cs.cache
 /project_env.sh
@@ -48,3 +50,5 @@ composer.lock
 !/public/files/.gitkeep
 !/var/secret/.gitkeep
 !/var/export/.gitkeep
+
+supervisord.pid
