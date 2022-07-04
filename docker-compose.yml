@@ -171,7 +171,7 @@ services:
     varnish:
         build:
             context: ./docker/varnish
-        tmpfs: /usr/local/var/varnish:exec
+        tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - app
         links:
@@ -183,6 +183,8 @@ services:
                 aliases:
                     - ${APP_NAMESPACE}_varnish
             default:
+        environment:
+            VARNISH_SIZE: ${VARNISH_SIZE}
         labels:
             - "traefik.enable=true"
             - "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.server.scheme=http"

@@ -4,12 +4,13 @@
 ### Install
 
 ```shell
-COMPOSER_MEMORY_LIMIT=-1 composer create-project roadiz/skeleton my-website dev-main
+COMPOSER_MEMORY_LIMIT=-1 composer create-project roadiz/skeleton my-website
+cp .env .env.local
 ```
 
 If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMORY_LIMIT=-1`.
 
-Edit your `.env` and `docker-compose.yml` files according to your local environment.
+Edit your `.env.local` and `docker-compose.yml` files according to your local environment.
 
 ```shell
 docker-compose build
