@@ -1,7 +1,13 @@
+parameters:
+    env(IR_DEFAULT_QUALITY): '90'
+    env(IR_MAX_PIXEL_SIZE): '1920'
+    ir_default_quality: '%env(int:IR_DEFAULT_QUALITY)%'
+    ir_max_pixel_size: '%env(int:IR_MAX_PIXEL_SIZE)%'
+
 rz_intervention_request:
     driver: 'gd'
-    default_quality: 90
-    max_pixel_size: 1920
+    default_quality: '%ir_default_quality%'
+    max_pixel_size: '%ir_max_pixel_size%'
     cache_path: "%kernel.project_dir%/public/assets"
     files_path: "%kernel.project_dir%/public/files"
     jpegoptim_path: /usr/bin/jpegoptim

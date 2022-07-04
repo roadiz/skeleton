@@ -20,3 +20,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+
+    App\Controller\ContactFormController:
+        tags: [ 'controller.service_arguments' ]

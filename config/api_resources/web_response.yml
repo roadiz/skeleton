@@ -23,3 +23,15 @@ RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
                     - tag_base
                     - translation_base
                     - document_display
+            openapi_context:
+                summary: Get a resource by its path wrapped in a WebResponse object
+                description: |
+                    Get a resource by its path wrapped in a WebResponse
+                parameters:
+                    -   type: string
+                        name: path
+                        in: query
+                        required: true
+                        description: Resource path, or `/` for home page
+                        schema:
+                            type: string

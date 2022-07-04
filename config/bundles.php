@@ -23,5 +23,6 @@ return [
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
+    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Rollerworks\Bundle\PasswordCommonListBundle\RollerworksPasswordCommonListBundle::class => ['all' => true],
 ];

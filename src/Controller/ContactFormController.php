@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Limenius\Liform\LiformInterface;
 use RZ\Roadiz\CoreBundle\Mailer\ContactFormManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -15,13 +17,42 @@ final class ContactFormController
 {
     private ContactFormManager $contactFormManager;
     private RateLimiterFactory $contactFormLimiter;
+    private LiformInterface $liform;
 
     public function __construct(
         ContactFormManager $contactFormManager,
-        RateLimiterFactory $contactFormLimiter
+        RateLimiterFactory $contactFormLimiter,
+        LiformInterface $liform
     ) {
         $this->contactFormManager = $contactFormManager;
         $this->contactFormLimiter = $contactFormLimiter;
+        $this->liform = $liform;
+    }
+
+    public function definitionAction(Request $request): JsonResponse
+    {
+        // Do not forget to disable CSRF and form-name
+        $this->contactFormManager
+            ->setUseRealResponseCode(true)
+            ->setFormName('')
+            ->disableCsrfProtection();
+        $builder = $this->contactFormManager->getFormBuilder();
+        /*
+         * Do not call form builder methods BEFORE defining options.
+         */
+        $this->contactFormManager
+            ->withDefaultFields()
+            ->withUserConsent()
+            ->withGoogleRecaptcha('g-recaptcha-response')
+        ;
+        $schema = json_encode($this->liform->transform($builder->getForm()));
+
+        return new JsonResponse(
+            $schema,
+            Response::HTTP_OK,
+            [],
+            true
+        );
     }
 
     public function formAction(Request $request): Response

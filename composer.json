@@ -11,6 +11,7 @@
         "ext-json": "*",
         "ext-soap": "*",
         "lexik/jwt-authentication-bundle": "^2.13",
+        "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.2",
         "roadiz/cms-pack": "~2.0.0 || dev-develop",
         "sensio/framework-extra-bundle": "^6.1",

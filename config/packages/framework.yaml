@@ -29,6 +29,16 @@ framework:
             limit: 10
             rate: { interval: '1 minutes', amount: 5 }
             cache_pool: 'cache.contact_form_limiter'
+        newsletter_form:
+            policy: 'token_bucket'
+            limit: 5
+            rate: { interval: '1 minutes', amount: 5 }
+            cache_pool: 'cache.newsletter_form_limiter'
+        password_protected:
+            policy: 'token_bucket'
+            limit: 3
+            rate: { interval: '1 minutes', amount: 3 }
+            cache_pool: 'cache.password_protected_limiter'
         custom_form:
             policy: 'token_bucket'
             limit: 10

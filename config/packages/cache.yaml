@@ -16,3 +16,5 @@ framework:
         pools:
             cache.contact_form_limiter: ~
             cache.custom_form_limiter: ~
+            cache.newsletter_form_limiter: ~
+            cache.password_protected_limiter: ~
