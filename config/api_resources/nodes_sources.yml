@@ -3,6 +3,7 @@ RZ\Roadiz\CoreBundle\Entity\NodesSources:
     iri: NodesSources
     shortName: NodesSources
     collectionOperations:
+        # Get operation is needed for sitemap generation
         get:
             method: "GET"
             normalization_context:

@@ -1,5 +1,5 @@
 App\Api\Model\CommonContent:
-    collectionOperations: []
+    collectionOperations: {}
     itemOperations:
         getCommonContent:
             method: 'GET'
