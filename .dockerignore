@@ -57,6 +57,7 @@ project_env.sh
 !docker/php-nginx-alpine/supervisor.ini
 !docker/php-nginx-alpine/before_launch.sh
 !docker/php-nginx-alpine/entrypoint.sh
+!docker/php-nginx-alpine/php.prod.ini
 !docker/solr/managed-schema.xml
 !public/themes/*
 
