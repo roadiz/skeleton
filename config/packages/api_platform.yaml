@@ -30,7 +30,8 @@ api_platform:
 #        # Default values of the "Vary" HTTP header.
 #        vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
 #        invalidation:
-#            enabled: false
+#            enabled: true
+#            varnish_urls: ['%env(VARNISH_URL)%']
 #    defaults:
 #        cache_headers:
 #            public: true
