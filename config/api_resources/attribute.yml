@@ -1,7 +1,7 @@
----
-RZ\Roadiz\CoreBundle\Entity\Attribute:
-    attributes:
-        output: RZ\Roadiz\CoreBundle\Api\Dto\AttributeOutput
-    collectionOperations: []
-    itemOperations: []
+#---
+#RZ\Roadiz\CoreBundle\Entity\Attribute:
+#    attributes:
+#        output: RZ\Roadiz\CoreBundle\Api\Dto\AttributeOutput
+#    collectionOperations: []
+#    itemOperations: []
 

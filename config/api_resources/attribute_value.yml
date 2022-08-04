@@ -1,17 +1,17 @@
----
-RZ\Roadiz\CoreBundle\Entity\AttributeValue:
-    attributes:
-        output: RZ\Roadiz\CoreBundle\Api\Dto\AttributeValueOutput
-    collectionOperations:
-        get:
-            method: "GET"
-            normalization_context:
-                groups: ["urls", "attribute", "document_display"]
-                enable_max_depth: true
-    itemOperations:
-        get:
-            method: 'GET'
-            normalization_context:
-                groups: ["urls", "attribute", "document_display"]
-                enable_max_depth: true
-
+#---
+#RZ\Roadiz\CoreBundle\Entity\AttributeValue:
+#    attributes:
+#        output: RZ\Roadiz\CoreBundle\Api\Dto\AttributeValueOutput
+#    collectionOperations:
+#        get:
+#            method: "GET"
+#            normalization_context:
+#                groups: ["urls", "attribute", "document_display"]
+#                enable_max_depth: true
+#    itemOperations:
+#        get:
+#            method: 'GET'
+#            normalization_context:
+#                groups: ["urls", "attribute", "document_display"]
+#                enable_max_depth: true
+#

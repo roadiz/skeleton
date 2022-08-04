@@ -109,3 +109,99 @@ RZ\Roadiz\CoreBundle\Entity\CustomForm:
                                             description: Required fields names
                                             example:
                                                 - 'email'
+
+        api_contact_form_post:
+            method: 'POST'
+            route_name: api_contact_form_post
+            normalization_context:
+                enable_max_depth: true
+            openapi_context:
+                summary: Post a user contact form
+                description: |
+                    Post a user contact form
+                requestBody:
+                    content:
+                        multipart/form-data:
+                            schema:
+                                type: object
+                                properties:
+                                    email:
+                                        type: string
+                                        example: test@test.test
+                                    first_name:
+                                        type: string
+                                        example: John
+                                    last_name:
+                                        type: string
+                                        example: Doe
+                responses:
+                    201: ~
+                    400:
+                        description: Posted contact form has errors
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        email:
+                                            type: object
+                                            example:
+                                                email: This value is not a valid email address.
+                    202:
+                        description: Posted contact form was accepted
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties: { }
+
+        api_contact_form_definition:
+            method: 'GET'
+            route_name: api_contact_form_definition
+            normalization_context:
+                enable_max_depth: true
+            openapi_context:
+                summary: Get a contact form definition for frontend
+                description: |
+                    Get a contact form definition for frontend
+                responses:
+                    200:
+                        description: Contact form definition object
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        title:
+                                            type: string
+                                            description: Form inputs prefix
+                                            example: reiciendis_natus_ducimus_nostrum
+                                        type:
+                                            type: string
+                                            description: Form definition type
+                                            example: object
+                                        properties:
+                                            type: object
+                                            description: Form definition fields
+                                            example:
+                                                email:
+                                                    type: string
+                                                    title: Email
+                                                    attr:
+                                                        data-group: null
+                                                        placeholder: null
+                                                    widget: email
+                                                    propertyOrder: 1
+                                                first_name:
+                                                    type: string
+                                                    title: Firstname
+                                                    attr:
+                                                        data-group: null
+                                                        placeholder: null
+                                                    widget: string
+                                                    propertyOrder: 2
+                                        required:
+                                            type: array
+                                            description: Required fields names
+                                            example:
+                                                - 'email'

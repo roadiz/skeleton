@@ -1,0 +1,25 @@
+App\Api\Model\CommonContent:
+    collectionOperations: {}
+    itemOperations:
+        getCommonContent:
+            method: 'GET'
+            path: '/common_content'
+            read: false
+            controller: App\Controller\GetCommonContentController
+            pagination_enabled: false
+            normalization_context:
+                pagination_enabled: false
+                groups:
+                    - get
+                    - common_content
+                    - web_response
+                    - walker
+                    - walker_level
+                    - children
+                    - children_count
+                    - nodes_sources_base
+                    - nodes_sources_default
+                    - urls
+                    - tag_base
+                    - translation_base
+                    - document_display

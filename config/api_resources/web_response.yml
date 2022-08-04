@@ -1,5 +1,5 @@
 RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
-    collectionOperations: [ ]
+    collectionOperations: {}
     itemOperations:
         getByPath:
             method: 'GET'

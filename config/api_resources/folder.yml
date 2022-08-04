@@ -4,12 +4,7 @@ RZ\Roadiz\CoreBundle\Entity\Folder:
     shortName: Folder
     attributes:
         output: RZ\Roadiz\CoreBundle\Api\Dto\FolderOutput
-    collectionOperations:
-        get:
-            method: "GET"
-            normalization_context:
-                groups: [ "folder" ]
-                enable_max_depth: true
+    collectionOperations: {}
     itemOperations:
         get:
             method: "GET"

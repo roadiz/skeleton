@@ -58,7 +58,7 @@ roadiz_skeleton_build:
             - web/themes/
     before_script:
         - eval "$(ssh-agent -s)"
-        - echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
         ##
         ## Create the SSH directory and give it the right permissions
         ##
