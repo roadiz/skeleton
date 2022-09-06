@@ -14,6 +14,7 @@ roadiz_core:
         private_key_name: default
     medias:
         unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
+        ffmpeg_path: '%env(string:APP_FFMPEG_PATH)%'
     inheritance:
         type: single_table
     reverseProxyCache:
