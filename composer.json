@@ -2,7 +2,6 @@
     "name": "roadiz/skeleton",
     "type": "project",
     "license": "mit",
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": ">=7.4",
@@ -12,7 +11,7 @@
         "lexik/jwt-authentication-bundle": "^2.13",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.2",
-        "roadiz/cms-pack": "~2.0.0 || dev-develop",
+        "roadiz/cms-pack": "~2.0.0",
         "sensio/framework-extra-bundle": "^6.1",
         "sentry/sentry-symfony": "^4.2",
         "symfony/flex": "^1.3.1"
