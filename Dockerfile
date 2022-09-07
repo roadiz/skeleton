@@ -3,6 +3,10 @@ MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
 ARG USER_UID=1000
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
+ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
+
+# Added ffmpeg to extract video files thumbnails
+RUN apk add --no-cache ffmpeg
 
 RUN usermod -u ${USER_UID} www-data \
     && groupmod -g ${USER_UID} www-data

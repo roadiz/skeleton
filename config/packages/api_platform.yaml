@@ -32,8 +32,12 @@ api_platform:
 #        invalidation:
 #            enabled: true
 #            varnish_urls: ['%env(VARNISH_URL)%']
-#    defaults:
+    defaults:
+        pagination_client_items_per_page: true
+        pagination_items_per_page: 15
+        pagination_maximum_items_per_page: 50
 #        cache_headers:
+#            etag: true
 #            public: true
 #            max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
 #            shared_max_age: '%env(int:HTTP_CACHE_SHARED_MAX_AGE)%'

@@ -1,11 +1,11 @@
 parameters:
     env(IR_DEFAULT_QUALITY): '90'
-    env(IR_MAX_PIXEL_SIZE): '1920'
+    env(IR_MAX_PIXEL_SIZE): '2500'
     ir_default_quality: '%env(int:IR_DEFAULT_QUALITY)%'
     ir_max_pixel_size: '%env(int:IR_MAX_PIXEL_SIZE)%'
 
 rz_intervention_request:
-    driver: 'gd'
+    driver: 'imagick'
     default_quality: '%ir_default_quality%'
     max_pixel_size: '%ir_max_pixel_size%'
     cache_path: "%kernel.project_dir%/public/assets"
