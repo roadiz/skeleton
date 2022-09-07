@@ -1,3 +1,10 @@
+## 2.0.3 (2022-09-07)
+
+### Features
+
+* Added `APP_FFMPEG_PATH` DotEnv and ffmpeg binary to Docker images ([4c0f063](https://github.com/roadiz/skeleton/commit/4c0f063df497553d9fcd411bd47167c05b1beedb))
+* Use Imagick as default image driver to support AVIF/HEIC files formats ([20ee3f6](https://github.com/roadiz/skeleton/commit/20ee3f643dc25deff3632385bbfe3e94f7faed28))
+
 ## 2.0.2 (2022-08-04)
 
 ### Features
