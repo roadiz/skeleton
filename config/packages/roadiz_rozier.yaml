@@ -129,6 +129,11 @@ roadiz_rozier:
                     route: webhooksHomePage
                     icon: 'uk-icon-space-shuttle'
                     roles: ['ROLE_ACCESS_WEBHOOKS']
+                manage_realms:
+                    name: 'manage.realms'
+                    route: realmsHomePage
+                    icon: 'uk-icon-user-secret'
+                    roles: ['ROLE_ACCESS_REALMS']
 
         user_system:
             name: 'user.system'
