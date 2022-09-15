@@ -18,3 +18,15 @@ framework:
             cache.custom_form_limiter: ~
             cache.newsletter_form_limiter: ~
             cache.password_protected_limiter: ~
+
+when@prod:
+    framework:
+        cache:
+            # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
+            app: cache.adapter.apcu
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+

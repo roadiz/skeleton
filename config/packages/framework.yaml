@@ -44,6 +44,7 @@ framework:
             limit: 10
             rate: { interval: '1 minutes', amount: 5 }
             cache_pool: 'cache.custom_form_limiter'
+
 when@test:
     framework:
         test: true
