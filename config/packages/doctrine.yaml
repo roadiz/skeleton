@@ -84,3 +84,20 @@ doctrine:
             RZ\Roadiz\Core\Entities\User: RZ\Roadiz\CoreBundle\Entity\User
             RZ\Roadiz\Core\Entities\UserLogEntry: RZ\Roadiz\CoreBundle\Entity\UserLogEntry
             RZ\Roadiz\Webhook\Entity\Webhook: RZ\Roadiz\CoreBundle\Entity\Webhook
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+    
+when@test:
+    doctrine:
+        dbal:
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
