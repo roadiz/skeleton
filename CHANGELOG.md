@@ -1,3 +1,9 @@
+## 2.0.5 (2022-09-15)
+
+### Bug Fixes
+
+* Missing `realms` Rozier admin section ([834cd85](https://github.com/roadiz/skeleton/commit/834cd85ec9a2c26e29235bc05bb5b5b0ac89e5f5))
+
 ## 2.0.4 (2022-09-15)
 
 ### Features
