@@ -1,3 +1,20 @@
+## 2.0.5 (2022-09-15)
+
+### Bug Fixes
+
+* Missing `realms` Rozier admin section ([834cd85](https://github.com/roadiz/skeleton/commit/834cd85ec9a2c26e29235bc05bb5b5b0ac89e5f5))
+
+## 2.0.4 (2022-09-15)
+
+### Features
+
+* Improved config/packages files and default .env ([910f32b](https://github.com/roadiz/skeleton/commit/910f32b70e75424598c000199d03315cf5e2c8a4))
+* Missing some default .env vars ([6052505](https://github.com/roadiz/skeleton/commit/605250508651574dde83192591cd9fcf2ff2258e))
+
+### Bug Fixes
+
+* Removed redundant dependencies ([911924a](https://github.com/roadiz/skeleton/commit/911924a3a3e1646a7f7795ea5c1270625cf4424f))
+
 ## 2.0.3 (2022-09-07)
 
 ### Features
