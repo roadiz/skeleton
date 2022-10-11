@@ -69,6 +69,11 @@ roadiz_rozier:
                     route: documentsHomePage
                     icon: uk-icon-rz-documents
                     roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+                private_documents:
+                    name: 'private_documents'
+                    route: documentsPrivateHomePage
+                    icon: uk-icon-lock
+                    roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
                 unused_documents:
                     name: 'unused_documents'
                     route: documentsUnusedPage
