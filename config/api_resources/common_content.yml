@@ -8,6 +8,7 @@ App\Api\Model\CommonContent:
             controller: App\Controller\GetCommonContentController
             pagination_enabled: false
             normalization_context:
+                enable_max_depth: true
                 pagination_enabled: false
                 groups:
                     - get

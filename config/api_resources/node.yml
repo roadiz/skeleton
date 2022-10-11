@@ -1,11 +1,15 @@
-
+---
 RZ\Roadiz\CoreBundle\Entity\Node:
     shortName: Node
-    attributes:
-        output: RZ\Roadiz\CoreBundle\Api\Dto\NodeOutput
-    collectionOperations: {}
+    collectionOperations: []
     itemOperations:
         get:
             method: 'GET'
             normalization_context:
-                groups: ["node", "tag_base", "translation_base", "document_display"]
+                groups:
+                    - node
+                    - tag_base
+                    - translation_base
+                    - document_display
+                    - document_display_sources
+                enable_max_depth: true

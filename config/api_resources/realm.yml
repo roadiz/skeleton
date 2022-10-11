@@ -7,5 +7,7 @@ RZ\Roadiz\CoreBundle\Entity\Realm:
         get:
             method: "GET"
             normalization_context:
-                groups: [ "get", "realm" ]
+                groups:
+                    - get
+                    - realm
                 enable_max_depth: true
