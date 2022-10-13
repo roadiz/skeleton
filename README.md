@@ -5,8 +5,17 @@
 
 ```shell
 COMPOSER_MEMORY_LIMIT=-1 composer create-project roadiz/skeleton my-website
+```
+
+Customize configuration by copying `.env` to `.env.local`:
+
+```shell
 cp .env .env.local
 ```
+
+Make sure to tell docker-compose to use `.env.local` if you are changing variables used for
+containers initialization (MySQL / Solr / SMTP credentials). Roadiz app will read `.env` then will override vars with your `.env.local`. 
+That's why `.env` file is committed in Git repository, and it MUST not contain any secret.
 
 If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMORY_LIMIT=-1`.
 
