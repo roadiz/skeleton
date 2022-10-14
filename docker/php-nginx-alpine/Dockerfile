@@ -7,6 +7,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV APP_ENV=dev
 ENV APP_CACHE=0
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
+ENV MYSQL_HOST=db
+ENV MYSQL_PORT=3306
 
 RUN apk add --no-cache git openssh make ffmpeg \
     && echo "USER_UID: ${USER_UID}\n" \
@@ -30,6 +32,7 @@ ADD supervisor.ini /etc/supervisor.d/services.ini
 ADD etc/nginx /etc/nginx
 ADD zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 ADD crontab.txt /crontab.txt
+ADD wait-for-it.sh /wait-for-it.sh
 ADD entrypoint.sh /entrypoint.sh
 ADD before_launch.sh /before_launch.sh
 
@@ -39,8 +42,9 @@ WORKDIR /var/www/html
 RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
     && /usr/bin/crontab -u www-data /crontab.txt \
     && rm /etc/supervisor.d/before_launch.ini \
+    && chmod +x /wait-for-it.sh \
     && chmod +x /entrypoint.sh \
     && chmod +x /before_launch.sh \
     && chown -R www-data:www-data /var/www/html/
 
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT /wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT} -- /entrypoint.sh

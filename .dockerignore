@@ -56,6 +56,7 @@ project_env.sh
 !docker/php-nginx-alpine/crontab.txt
 !docker/php-nginx-alpine/supervisor.ini
 !docker/php-nginx-alpine/before_launch.sh
+!docker/php-nginx-alpine/wait-for-it.sh
 !docker/php-nginx-alpine/entrypoint.sh
 !docker/php-nginx-alpine/php.prod.ini
 !docker/php-nginx-alpine/zz-docker.conf

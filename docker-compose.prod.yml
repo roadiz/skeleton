@@ -67,12 +67,16 @@ services:
             - app_assets_data:/var/www/html/public/assets
             - app_private_file_data:/var/www/html/var/files
             - ./robots.txt:/var/www/html/public/robots.txt:ro
+            # Use docker-compose env file as .env.local in container
             - ./.env:/var/www/html/.env.local:ro
             # Generate JWT certificates on your host and share them to docker container
             #- ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
             #- ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
         networks:
             - default
+        environment:
+            MYSQL_HOST: ${MYSQL_HOST}
+            MYSQL_PORT: ${MYSQL_PORT}
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
 
@@ -97,8 +101,9 @@ volumes:
 networks:
     frontproxynet:
         external: true
-    default:
-        ipam:
-            driver: default
-            config:
-                -   subnet: ${DEFAULT_GATEWAY}/16
+#    # Only set subnet gateway if default overlaps an existing network
+#    default:
+#        ipam:
+#            driver: default
+#            config:
+#                -   subnet: ${DEFAULT_GATEWAY}/16
