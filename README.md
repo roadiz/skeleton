@@ -80,3 +80,7 @@ You can fetch this endpoint once in your website frontend, instead of embedding 
 Make sure your `.env` file does not contain any sensitive data as it must be added to your repository: `git add --force .env`
 in order to be overridden by `.env.local` file.
 Sensitive and local data must be filled in `.env.local` which is git-ignored. 
+
+### Credits
+
+This skeleton uses https://github.com/vishnubob/wait-for-it script to wait for MySQL readiness before launching app entrypoint.
