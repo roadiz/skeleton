@@ -9,12 +9,10 @@
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console assets:install -n"
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:assets:install -n Rozier"
 
-#
-# Uncomment following line to enable automatic migration for your theme at each docker start
-#
-
+##
+## Uncomment following lines to enable automatic migration for your theme at each docker start
+##
 #if [ -e "./src/Resources/config.yml" ]; then
-   # Wait for database to be ready.
-#  /bin/sleep 1s;
+#  # Perform migrations directly as database should be ready thanks to wait-for-it.sh
 #  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:migrate -n src/Resources/config.yml"
 #fi
