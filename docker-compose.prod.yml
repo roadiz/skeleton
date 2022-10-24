@@ -21,6 +21,8 @@ services:
         image: my-registry/roadiz_skeleton/varnish:latest
         restart: always
         tmpfs: /var/lib/varnish/varnishd:exec
+        # https://github.com/varnish/docker-varnish/issues/53
+        user: root
         depends_on:
             - app
         links:
