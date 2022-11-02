@@ -17,6 +17,12 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
+    redis:
+        image: redis:7-alpine
+        restart: always
+        networks:
+            - default
+
     varnish:
         image: my-registry/roadiz_skeleton/varnish:latest
         restart: always
@@ -73,6 +79,8 @@ services:
         restart: always
         depends_on:
             - db
+            - redis
+            - solr
         volumes:
             - app_file_data:/var/www/html/public/files
             - app_assets_data:/var/www/html/public/assets

@@ -63,6 +63,7 @@ services:
         depends_on:
             - db
             - solr
+            - redis
         volumes:
             - ./:/var/www/html:cached
         networks:
@@ -173,6 +174,10 @@ services:
 #            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
 #            BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
 #            BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
+    redis:
+        image: redis:7-alpine
+        networks:
+            - default
 
     varnish:
         build:
