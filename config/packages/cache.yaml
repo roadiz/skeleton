@@ -23,4 +23,8 @@ when@prod:
     framework:
         cache:
             app: cache.adapter.redis
-
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.app
