@@ -19,24 +19,24 @@ api_platform:
             - '%kernel.project_dir%/vendor/roadiz/core-bundle/src/Entity'
             - '%kernel.project_dir%/vendor/rezozero/tree-walker/src'
             - '%kernel.project_dir%/config/api_resources'
-#    http_cache:
-#        invalidation:
-#            enabled: true
-#            varnish_urls: ['%env(VARNISH_URL)%']
+    http_cache:
+        invalidation:
+            enabled: true
+            varnish_urls: ['%env(VARNISH_URL)%']
     defaults:
         pagination_client_items_per_page: true
         pagination_items_per_page: 15
         pagination_maximum_items_per_page: 50
-#        cache_headers:
-#            # Automatically generate etags for API responses.
-#            etag: true
-#            public: true
-#            # Default value for the response max age.
-#            max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
-#            # Default value for the response shared (proxy) max age.
-#            shared_max_age: '%env(int:HTTP_CACHE_SHARED_MAX_AGE)%'
-#            # Default values of the "Vary" HTTP header.
-#            vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
+        cache_headers:
+            # Automatically generate etags for API responses.
+            etag: true
+            public: true
+            # Default value for the response max age.
+            max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
+            # Default value for the response shared (proxy) max age.
+            shared_max_age: '%env(int:HTTP_CACHE_SHARED_MAX_AGE)%'
+            # Default values of the "Vary" HTTP header.
+            vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
     collection:
         pagination:
             items_per_page_parameter_name: itemsPerPage

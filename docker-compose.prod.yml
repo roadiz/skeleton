@@ -86,10 +86,14 @@ services:
             - app_assets_data:/var/www/html/public/assets
             - app_private_file_data:/var/www/html/var/files
             - ./robots.txt:/var/www/html/public/robots.txt:ro
-            # Use docker-compose env file as .env.local in container
+            ## Use docker-compose env file as .env.local in container
             - ./.env:/var/www/html/.env.local:ro
-            # Generate JWT certificates on your host and share them to docker container
+            - ./default.key:/var/www/html/var/secret/default.key:ro
+            - ./default.pub.key:/var/www/html/var/secret/default.pub.key:ro
+            ## Generate JWT certificates on your host and share them to docker container
+            ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
             #- ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
+            ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout;
             #- ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
         networks:
             - default
@@ -99,16 +103,16 @@ services:
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
 
-    solr:
-        image: my-registry/roadiz_skeleton/solr:latest
-        volumes:
-            - "solr_data:/var/solr:delegated"
-        command:
-            - solr-precreate
-            - ${SOLR_CORE_NAME}
-        restart: always
-        networks:
-            - default
+#    solr:
+#        image: my-registry/roadiz_skeleton/solr:latest
+#        volumes:
+#            - "solr_data:/var/solr:delegated"
+#        command:
+#            - solr-precreate
+#            - ${SOLR_CORE_NAME}
+#        restart: always
+#        networks:
+#            - default
 
     backup:
         image: ambroisemaupate/s3-backup
@@ -146,9 +150,8 @@ volumes:
 networks:
     frontproxynet:
         external: true
-#    # Only set subnet gateway if default overlaps an existing network
-#    default:
-#        ipam:
-#            driver: default
-#            config:
-#                -   subnet: ${DEFAULT_GATEWAY}/16
+    default:
+        ipam:
+            driver: default
+            config:
+                -   subnet: ${DEFAULT_GATEWAY}/16
