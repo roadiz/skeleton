@@ -15,6 +15,10 @@ roadiz_core:
         private_key_name: default
     medias:
         unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
+        soundcloud_client_id: '%env(string:APP_SOUNDCLOUD_CLIENT_ID)%'
+        google_server_id: '%env(string:APP_GOOGLE_SERVER_ID)%'
+        recaptcha_private_key: '%env(string:APP_RECAPTCHA_PRIVATE_KEY)%'
+        recaptcha_public_key: '%env(string:APP_RECAPTCHA_PUBLIC_KEY)%'
         ffmpeg_path: '%env(string:APP_FFMPEG_PATH)%'
     inheritance:
         type: single_table
