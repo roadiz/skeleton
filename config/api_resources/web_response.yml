@@ -23,6 +23,7 @@ RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
                     - tag_base
                     - translation_base
                     - document_display
+                    - document_thumbnails
                     - document_display_sources
             openapi_context:
                 summary: Get a resource by its path wrapped in a WebResponse object
