@@ -45,6 +45,23 @@ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
 ```
 
+### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
+
+Make sure your defined a named volume for `/var/www/html/config/secrets` directory
+
+```shell script
+docker-compose exec -u www-data app bin/console secrets:generate-keys
+```
+
+Then generate secrets values for your configuration variables such as `APP_RECAPTCHA_PRIVATE_KEY` or `JWT_PASSPHRASE`:
+
+```shell script
+docker-compose exec -u www-data app bin/console secrets:set APP_RECAPTCHA_PRIVATE_KEY
+```
+
+**Make sure your remove any of these variables from your `.env` and `.env.local` files**, it would override your
+secrets (empty values for example), and lose all benefits from encrypting your secrets.
+
 ### Install database
 
 ```shell

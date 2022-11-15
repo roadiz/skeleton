@@ -32,6 +32,7 @@ RUN /usr/bin/crontab -u www-data /crontab.txt \
 
 # Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
 VOLUME /var/www/html/config/jwt \
+       /var/www/html/config/secrets \
        /var/www/html/public/files \
        /var/www/html/public/assets \
        /var/www/html/var/files \

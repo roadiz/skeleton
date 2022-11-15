@@ -85,6 +85,7 @@ services:
             - app_file_data:/var/www/html/public/files
             - app_assets_data:/var/www/html/public/assets
             - app_private_file_data:/var/www/html/var/files
+            - app_secret_data:/var/www/html/config/secrets
             - ./robots.txt:/var/www/html/public/robots.txt:ro
             ## Use docker-compose env file as .env.local in container
             - ./.env:/var/www/html/.env.local:ro
@@ -144,6 +145,7 @@ volumes:
     app_file_data:
     app_assets_data:
     app_private_file_data:
+    app_secret_data:
     db_data:
     solr_data:
 
