@@ -42,9 +42,8 @@ doctrine:
 
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: RZ\Roadiz\CoreBundle\Entity\User
-
-            # Roadiz Core
-            RZ\Roadiz\Core\Models\DocumentInterface: RZ\Roadiz\CoreBundle\Entity\Document
+            RZ\Roadiz\Documents\Models\DocumentInterface: RZ\Roadiz\CoreBundle\Entity\Document
+            RZ\Roadiz\Documents\Models\FolderInterface: RZ\Roadiz\CoreBundle\Entity\Folder
             RZ\Roadiz\Contracts\NodeType\NodeTypeInterface: RZ\Roadiz\CoreBundle\Entity\NodeType
             RZ\Roadiz\CoreBundle\Model\AttributeInterface: RZ\Roadiz\CoreBundle\Entity\Attribute
             RZ\Roadiz\CoreBundle\Model\AttributeTranslationInterface: RZ\Roadiz\CoreBundle\Entity\AttributeTranslation
