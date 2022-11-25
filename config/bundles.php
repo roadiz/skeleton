@@ -14,6 +14,7 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
     Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle::class => ['all' => true],
+    League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
     RZ\InterventionRequestBundle\RZInterventionRequestBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     RZ\Roadiz\CoreBundle\RoadizCoreBundle::class => ['all' => true],
