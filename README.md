@@ -162,8 +162,8 @@ Sensitive and local data must be filled in `.env.local` which is git-ignored.
 
 ### Make node-types editable on production environment
 
-You may want to set up and deploy your Roadiz v2 application and edit your node-type schema after.
-You can enable Docker volumes on these 3 directory in order to persist your configuration between
+You may want to set up and deploy your Roadiz v2 application and edit your node-type schema after (without any
+Git versioning). You can enable Docker volumes on these 3 directories in order to persist your configuration between
 Docker restarts.
 
 - config/api_resources
@@ -172,6 +172,9 @@ Docker restarts.
 
 Pay attention that you will have to download your node-types JSON files if you want to replicate your setup in 
 a local environment.
+
+**We do not recommend this workflow on complex applications** in which you will need to control and version your node-types
+schema. This is only recommended for small and basic websites.
 
 ### Credits
 
