@@ -26,7 +26,12 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "5.4.*",
         "symfony/stopwatch": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*"
+        "symfony/web-profiler-bundle": "5.4.*",
+        "ambroisemaupate/intervention-request": "dev-develop",
+        "roadiz/documents": "dev-develop",
+        "roadiz/entity-generator": "dev-develop",
+        "roadiz/models": "~2.1.0 || dev-develop",
+        "roadiz/rozier": "~2.1.0 || dev-develop"
     },
     "config": {
         "optimize-autoloader": true,
