@@ -153,6 +153,13 @@ volumes:
     app_assets_data:
     app_private_file_data:
     app_secret_data:
+    ##
+    ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
+    ## Uncomment these if you DO want to persist and edit node-types on production env
+    ##
+    #app_node_types_api:
+    #app_node_types_resource:
+    #app_node_types_entities:
     db_data:
     solr_data:
 
