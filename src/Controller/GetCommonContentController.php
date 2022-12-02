@@ -10,7 +10,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactory;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
-use RZ\Roadiz\CoreBundle\EntityApi\NodeSourceApi;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +22,6 @@ final class GetCommonContentController extends AbstractController
 {
     private RequestStack $requestStack;
     private ManagerRegistry $managerRegistry;
-    private NodeSourceApi $nodeSourceApi;
     private NodesSourcesHeadFactory $nodesSourcesHeadFactory;
     private PreviewResolverInterface $previewResolver;
     private TreeWalkerGenerator $treeWalkerGenerator;
@@ -31,13 +29,11 @@ final class GetCommonContentController extends AbstractController
     public function __construct(
         RequestStack $requestStack,
         ManagerRegistry $managerRegistry,
-        NodeSourceApi $nodeSourceApi,
         NodesSourcesHeadFactory $nodesSourcesHeadFactory,
         PreviewResolverInterface $previewResolver,
         TreeWalkerGenerator $treeWalkerGenerator
     ) {
         $this->requestStack = $requestStack;
-        $this->nodeSourceApi = $nodeSourceApi;
         $this->managerRegistry = $managerRegistry;
         $this->nodesSourcesHeadFactory = $nodesSourcesHeadFactory;
         $this->previewResolver = $previewResolver;
