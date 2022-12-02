@@ -86,11 +86,73 @@ docker-compose exec -u www-data app bin/console users:create -m username@roadiz.
 - Solr and Varnish services right out-the-box
 - Gitlab CI ready
 - Use *phpcs* and *phpstan* to ensure code-smell and static analysis
+- Packed with 2 *node-types*: `Menu` and `MenuLink` in order to create automatic menus in your `/api/common_content` response
 
 #### Common content endpoint
 
 `/api/common_content` endpoint is meant to expose common data about your website.
 You can fetch this endpoint once in your website frontend, instead of embedding the same data in each web response.
+`menus` entry will automatically hold any root-level `Menu` tree-walker.
+
+```json
+{
+    "@context": "/api/contexts/CommonContent",
+    "@id": "/api/common_content?id=unique",
+    "@type": "CommonContent",
+    "home": {
+        "@id": "/api/pages/1",
+        "@type": "Page",
+        "title": "home",
+        "publishedAt": "2021-09-09T02:23:00+02:00",
+        "node": {
+            "@id": "/api/nodes/1",
+            "@type": "Node",
+            "nodeName": "home",
+            "visible": true,
+            "tags": []
+        },
+        "translation": {
+            "@id": "/api/translations/1",
+            "@type": "Translation",
+            "name": "English",
+            "defaultTranslation": true,
+            "available": true,
+            "locale": "en"
+        },
+        "slug": "home",
+        "url": "/"
+    },
+    "head": {
+        "@type": "NodesSourcesHead",
+        "googleAnalytics": null,
+        "googleTagManager": null,
+        "matomoUrl": null,
+        "matomoSiteId": null,
+        "siteName": "Roadiz dev website",
+        "metaTitle": "Roadiz dev website",
+        "metaDescription": "Roadiz dev website",
+        "policyUrl": null,
+        "mainColor": null,
+        "facebookUrl": null,
+        "instagramUrl": null,
+        "twitterUrl": null,
+        "youtubeUrl": null,
+        "linkedinUrl": null,
+        "homePageUrl": "/",
+        "shareImage": null
+    },
+    "menus": {
+        "mainMenuWalker": {
+            "@type": "MenuNodeSourceWalker",
+            "children": [],
+            "item": { ... },
+            "childrenCount": 0,
+            "level": 0,
+            "maxLevel": 3
+        }
+    }
+}
+```
 
 ### Versioning
 
