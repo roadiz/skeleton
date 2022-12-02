@@ -19,4 +19,7 @@ final class CommonContent
 
     #[Groups(["common_content"])]
     public ?NodesSourcesHeadInterface $head = null;
+
+    #[Groups(["common_content"])]
+    public ?array $menus = null;
 }

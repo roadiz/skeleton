@@ -9,7 +9,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "nelmio/cors-bundle": "^2.2",
-        "roadiz/cms-pack": "~2.0.0",
+        "roadiz/cms-pack": "~2.1.0 || dev-develop",
         "sentry/sentry-symfony": "^4.2",
         "symfony/flex": "*"
     },

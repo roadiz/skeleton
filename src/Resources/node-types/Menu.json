@@ -1,0 +1,28 @@
+{
+    "color": "#947ccf",
+    "name": "Menu",
+    "display_name": "Menu",
+    "visible": true,
+    "publishable": false,
+    "reachable": false,
+    "hiding_nodes": false,
+    "hiding_non_reachable_nodes": false,
+    "fields": [
+        {
+            "position": 1.0,
+            "name": "menu_items",
+            "label": "Menu items",
+            "default_values": "Page, MenuLink",
+            "type": 16,
+            "expanded": false,
+            "node_type_name": "Menu",
+            "universal": false,
+            "exclude_from_search": false,
+            "excluded_from_serialization": false,
+            "indexed": false,
+            "visible": true
+        }
+    ],
+    "default_ttl": 0,
+    "searchable": true
+}

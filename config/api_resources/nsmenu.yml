@@ -1,0 +1,16 @@
+App\GeneratedEntity\NSMenu:
+    iri: Menu
+    shortName: Menu
+    collectionOperations: {  }
+    itemOperations:
+        get:
+            method: GET
+            normalization_context:
+                groups:
+                    - nodes_sources
+                    - urls
+                    - tag_base
+                    - translation_base
+                    - document_display
+                    - document_thumbnails
+                    - document_display_sources
