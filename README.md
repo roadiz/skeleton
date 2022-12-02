@@ -160,6 +160,19 @@ Make sure your `.env` file does not contain any sensitive data as it must be add
 in order to be overridden by `.env.local` file.
 Sensitive and local data must be filled in `.env.local` which is git-ignored. 
 
+### Make node-types editable on production environment
+
+You may want to set up and deploy your Roadiz v2 application and edit your node-type schema after.
+You can enable Docker volumes on these 3 directory in order to persist your configuration between
+Docker restarts.
+
+- config/api_resources
+- src/Resources
+- src/GeneratedEntity
+
+Pay attention that you will have to download your node-types JSON files if you want to replicate your setup in 
+a local environment.
+
 ### Credits
 
 This skeleton uses https://github.com/vishnubob/wait-for-it script to wait for MySQL readiness before launching app entrypoint.

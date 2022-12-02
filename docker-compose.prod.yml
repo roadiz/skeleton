@@ -96,6 +96,13 @@ services:
             #- ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
             ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout;
             #- ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
+            ##
+            ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
+            ## Uncomment these if you DO want to persist and edit node-types on production env
+            ##
+            #- app_node_types_api:/var/www/html/config/api_resources
+            #- app_node_types_resource:/var/www/html/src/Resources
+            #- app_node_types_entities:/var/www/html/src/GeneratedEntity
         networks:
             - default
         environment:
