@@ -9,8 +9,8 @@ api_platform:
     show_webby: false
     swagger:
         versions: [3]
-    title:       "Roadiz Skeleton"
-    description: "Roadiz Skeleton"
+    title:       "%env(string:APP_TITLE)%"
+    description: "%env(string:APP_DESCRIPTION)%"
     version:     '%env(string:APP_VERSION)%'
     mapping:
         paths:
