@@ -15,6 +15,8 @@ acl local {
     "app";
     "varnish";
     "localhost";
+    "127.0.0.1";
+    "::1";
     # Add here your $DEFAULT_GATEWAY CIDR to allow all containers in docker network to purge
     #"172.144.0.0/24";
 }
