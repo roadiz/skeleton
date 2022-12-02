@@ -14,6 +14,23 @@ roadiz_rozier:
         granted_roles:
             - ROLE_USER
             - ROLE_BACKEND_USER
+            - ROLE_ACCESS_VERSIONS
+            - ROLE_ACCESS_DOCTRINE_CACHE_DELETE
+            - ROLE_ACCESS_DOCUMENTS
+            - ROLE_ACCESS_DOCUMENTS_LIMITATIONS
+            - ROLE_ACCESS_DOCUMENTS_DELETE
+            - ROLE_ACCESS_NODES
+            - ROLE_ACCESS_NODES_DELETE
+            - ROLE_ACCESS_NODES_SETTING
+            - ROLE_ACCESS_NODES_STATUS
+            - ROLE_ACCESS_REDIRECTIONS
+            - ROLE_ACCESS_TAGS
+            - ROLE_ACCESS_TAGS_DELETE
+            - ROLE_ACCESS_CUSTOMFORMS
+            - ROLE_ACCESS_CUSTOMFORMS_DELETE
+            - ROLE_ACCESS_ATTRIBUTES
+            - ROLE_ACCESS_ATTRIBUTES_DELETE
+            - ROLE_ACCESS_NODE_ATTRIBUTES
 
     entries:
         dashboard:
