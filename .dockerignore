@@ -28,6 +28,7 @@ var/sessions/*
 var/log/*
 var/cache/*
 var/secret/*
+/config/secrets/*/*.decrypt.private.php
 var/*.zip
 var/*.sql
 var/*.tar.gz
