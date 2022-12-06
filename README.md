@@ -35,16 +35,6 @@ When you're ready you can check that *Symfony* console responds through your Doc
 docker-compose exec -u www-data app bin/console
 ```
 
-### Generate JWT private and public keys
-
-```shell script
-# Generate a strong secret
-openssl rand --base64 32; 
-# Fill JWT_PASSPHRASE env var.
-openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
-openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
-```
-
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
 
 Make sure your defined a named volume for `/var/www/html/config/secrets` directory
@@ -67,6 +57,16 @@ docker-compose exec -u www-data app bin/console secrets:set APP_SECRET
 
 **Make sure your remove any of these variables from your `.env` and `.env.local` files**, it would override your
 secrets (empty values for example), and lose all benefits from encrypting your secrets.
+
+### Generate JWT private and public keys
+
+```shell script
+# Reveal your JWT_PASSPHRASE
+docker-compose exec -u www-data app bin/console secrets:list --reveal
+# Fill JWT_PASSPHRASE env var.
+openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
+```
 
 ### Install database
 
