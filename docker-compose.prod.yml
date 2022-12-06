@@ -80,7 +80,7 @@ services:
         depends_on:
             - db
             - redis
-            - solr
+#            - solr
         volumes:
             - app_file_data:/var/www/html/public/files
             - app_assets_data:/var/www/html/public/assets
@@ -161,7 +161,7 @@ volumes:
     #app_node_types_resource:
     #app_node_types_entities:
     db_data:
-    solr_data:
+#    solr_data:
 
 networks:
     frontproxynet:
