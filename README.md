@@ -39,7 +39,7 @@ docker-compose exec -u www-data app bin/console
 
 ```shell script
 # Generate a strong secret
-openssl rand --base64 16; 
+openssl rand --base64 32; 
 # Fill JWT_PASSPHRASE env var.
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
@@ -57,7 +57,11 @@ Then generate secrets values for your configuration variables such as `APP_RECAP
 
 ```shell script
 docker-compose exec -u www-data app bin/console secrets:set APP_RECAPTCHA_PRIVATE_KEY
+# Generate a strong secret
+openssl rand --base64 32; 
 docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE
+# Generate a strong secret
+openssl rand --base64 32; 
 docker-compose exec -u www-data app bin/console secrets:set APP_SECRET
 ```
 
