@@ -108,6 +108,11 @@ services:
         environment:
             MYSQL_HOST: ${MYSQL_HOST}
             MYSQL_PORT: ${MYSQL_PORT}
+            # Can only override env in docker environment
+            # because these are hardcoded in Docker image definition
+            APP_ENV: ${APP_ENV}
+            APP_RUNTIME_ENV: ${APP_RUNTIME_ENV}
+            APP_DEBUG: ${APP_DEBUG}
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
 
