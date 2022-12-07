@@ -13,6 +13,15 @@ RUN apk add --no-cache ffmpeg
 RUN usermod -u ${USER_UID} www-data \
     && groupmod -g ${USER_UID} www-data
 
+#
+# Use development PHP configuration if you need to
+# edit your node-types in production / preproduction
+#
+#COPY docker/php-nginx-alpine/php.ini /usr/local/etc/php/php.ini
+#
+# Use production PHP configuration for maximum performances
+# but you won't be able to edit node-type without restarting docker app
+#
 COPY docker/php-nginx-alpine/php.prod.ini /usr/local/etc/php/php.ini
 COPY docker/php-nginx-alpine/crontab.txt /crontab.txt
 COPY docker/php-nginx-alpine/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
