@@ -19,6 +19,7 @@ roadiz_rozier:
             - ROLE_ACCESS_DOCUMENTS
             - ROLE_ACCESS_DOCUMENTS_LIMITATIONS
             - ROLE_ACCESS_DOCUMENTS_DELETE
+            - ROLE_ACCESS_DOCUMENTS_CREATION_DATE
             - ROLE_ACCESS_NODES
             - ROLE_ACCESS_NODES_DELETE
             - ROLE_ACCESS_NODES_SETTING
@@ -28,9 +29,16 @@ roadiz_rozier:
             - ROLE_ACCESS_TAGS_DELETE
             - ROLE_ACCESS_CUSTOMFORMS
             - ROLE_ACCESS_CUSTOMFORMS_DELETE
+            - ROLE_ACCESS_CUSTOMFORMS_RETENTION
             - ROLE_ACCESS_ATTRIBUTES
             - ROLE_ACCESS_ATTRIBUTES_DELETE
             - ROLE_ACCESS_NODE_ATTRIBUTES
+            - ROLE_ACCESS_SETTINGS
+            - ROLE_ACCESS_LOGS
+            - ROLE_ACCESS_USERS
+            - ROLE_ACCESS_USERS_DELETE
+            - ROLE_ACCESS_GROUPS
+            - ROLE_ACCESS_TRANSLATIONS
 
     entries:
         dashboard:
