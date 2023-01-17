@@ -1,0 +1,19 @@
+{% extends '@!ApiPlatform/SwaggerUi/index.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        body {
+            margin: 0;
+        }
+
+        header {
+            display: none;
+        }
+
+        #swagger-ui.api-platform .information-container.wrapper {
+            padding-top: 2em;
+        }
+    </style>
+{% endblock %}
+
