@@ -1,6 +1,8 @@
 # roadiz/skeleton
 **Headless API project skeleton built on Roadiz v2+**
 
+![Run test status](https://github.com/roadiz/skeleton/actions/workflows/run-test.yml/badge.svg?branch=develop)
+
 ### Install
 
 ```shell
