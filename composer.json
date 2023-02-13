@@ -91,6 +91,9 @@
             "allow-contrib": false,
             "require": "5.4.*",
             "docker": false
+        },
+        "branch-alias": {
+            "dev-develop": "2.1.x-dev"
         }
     }
 }
