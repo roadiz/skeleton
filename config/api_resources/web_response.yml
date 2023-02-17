@@ -17,7 +17,6 @@ RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
                     - walker_level
                     - meta
                     - children
-                    - children_count
                     - nodes_sources
                     - urls
                     - tag_base

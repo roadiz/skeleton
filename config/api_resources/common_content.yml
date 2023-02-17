@@ -17,7 +17,6 @@ App\Api\Model\CommonContent:
                     - walker
                     - walker_level
                     - children
-                    - children_count
                     - nodes_sources_base
                     - nodes_sources_default
                     - urls
