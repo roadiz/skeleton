@@ -58,6 +58,7 @@ services:
             # Listen HTTPS
             - "traefik.http.routers.${APP_NAMESPACE}_secure.entrypoints=https"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls=true"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.certresolver=letsencrypt"
             # Combine Host and PathPrefix to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
