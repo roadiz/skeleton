@@ -1,3 +1,52 @@
+## v2.1.0 (2023-03-06)
+
+
+### Features
+
+* Added backup docker service example ([d1dc286](https://github.com/roadiz/skeleton/commit/d1dc2860dc2b0195fd467e6ad4f3a733bd64c5d2))
+* Added CIDR to Varnish ACLs ([498d708](https://github.com/roadiz/skeleton/commit/498d70841c0865cdc946c504fd7f25f7ca518e2f))
+* Added default Menu and MenuLink node-types ([891f378](https://github.com/roadiz/skeleton/commit/891f3783943b3489e35d48c4780584c194e2c287))
+* Added document_thumbnails serialization group ([7dcaff8](https://github.com/roadiz/skeleton/commit/7dcaff82e17c5c04597852934cf1977b14baa485))
+* Added Flysystem default storages ([687ef20](https://github.com/roadiz/skeleton/commit/687ef2053e941adc5f2fbb158daafeac19b4bd0f))
+* Added migration for Symfony Messenger message table ([7a5a410](https://github.com/roadiz/skeleton/commit/7a5a410e4d721b0277efc460d4bc80c57a704afc))
+* Added trusted_headers to accept HTTPS proto from Load balancers ([4cc8130](https://github.com/roadiz/skeleton/commit/4cc8130419c455aefcf322eaa60f45b650659ee3))
+* Added wait-for-it before launching app ([9c19335](https://github.com/roadiz/skeleton/commit/9c1933504897fbc1b2e507bea9c5c06a5c913e21))
+* Always pretty print with JMS Serializer ([d7154fd](https://github.com/roadiz/skeleton/commit/d7154fd916e1d60ba2aad8963d5e8aa4c58ac86f))
+* Change doctrine mapping to attribute ([f2521cc](https://github.com/roadiz/skeleton/commit/f2521cc3d43967994df1ab903b1a4f0651d1ea56))
+* Declare docker volumes to persist node-types configuration ([5d17b89](https://github.com/roadiz/skeleton/commit/5d17b89a100f0cadf2385ce80aa34cde9968f6a0))
+* Default enable Varnish for dev env and disable Solr by default ([bb180f6](https://github.com/roadiz/skeleton/commit/bb180f667f59776a76bb630db455f320919341f0))
+* Deprecated api_platform config ([38235f3](https://github.com/roadiz/skeleton/commit/38235f3b0804f7345dc7a8d18df66cb82ff08008))
+* Do not commit prod secret keys ([0103b9f](https://github.com/roadiz/skeleton/commit/0103b9f41955c8506d6dd1f9ca29e5a05f61009d))
+* Do not wait for 1 sec on before_launch script thanks to wait-for-it.sh ([0f9f317](https://github.com/roadiz/skeleton/commit/0f9f31747768ce3bc776de2f96e8be89b5f348d1))
+* **Documents:** Moved private documents to a dedicated listing ([eaf8ce6](https://github.com/roadiz/skeleton/commit/eaf8ce6d4a188bce173c0d2caf3bba2046f32243))
+* Dotenv for API name and description ([4a8ac47](https://github.com/roadiz/skeleton/commit/4a8ac4747c5409e76cbca836a08c28397156cd7c))
+* Fixed Roadiz to v2.1 ([106a79f](https://github.com/roadiz/skeleton/commit/106a79f1b0a38f05dffb5ca3155c995e91ed8e45))
+* Force dev-develop version ([e99cda4](https://github.com/roadiz/skeleton/commit/e99cda45d160d229f4bc9d5e79116e718d20cdab))
+* Ignore /config/secrets/*/*.decrypt.private.php ([a4e32c3](https://github.com/roadiz/skeleton/commit/a4e32c3a9b046dfce86b3cb93b9f9348b86af88d))
+* Invert secret gen and jwt in README ([d89ecd6](https://github.com/roadiz/skeleton/commit/d89ecd62fb0960692ebd6bed44d75eac27662b5a))
+* Moved constant settings to DotEnv variables ([cde8a48](https://github.com/roadiz/skeleton/commit/cde8a4809484371fdc00b92bcdcf7f5599291c69))
+* Restrict open_id users to editors roles ([2672f26](https://github.com/roadiz/skeleton/commit/2672f26ffa331a4e94679abf6deb8770590ad9c1))
+* Stop messenger workers when clearing cache or migrating ([13664c9](https://github.com/roadiz/skeleton/commit/13664c93d2259ba6e0ae036470f41f1c7a18327e))
+* Up to PHP 8.0, changed api resources config for roadiz v2.1 ([d2bb269](https://github.com/roadiz/skeleton/commit/d2bb26980d86a5830faedc4a8a38a2bee67e0b2c))
+* Use attributes on Models ([61a4763](https://github.com/roadiz/skeleton/commit/61a47634bfa0b13f8468b1aab38683f4fdd59fea))
+* Use dev-develop bundles ([7252f2c](https://github.com/roadiz/skeleton/commit/7252f2c5353dd5a48ed007a4a06b680b071bae04))
+* Use Redis as default cache backend for production ([e8144e3](https://github.com/roadiz/skeleton/commit/e8144e371ebf7080e103534c105bfd7aadda7291))
+* Use Symfony secrets to store sensitive configuration values ([446d5c5](https://github.com/roadiz/skeleton/commit/446d5c54afb40159cb4b7c97376f54da23cdc257))
+* Use traefik path_prefix to host API and NuxtJS on the same domain ([8b5f4c5](https://github.com/roadiz/skeleton/commit/8b5f4c5ab598ce4936081b22a1e60ad43295194c))
+
+
+### Bug Fixes
+
+* added isTransactional: false on Doctrine migrations ([7164208](https://github.com/roadiz/skeleton/commit/71642086cf28b342f5089a40850eb1f871f2cc9a))
+* Fixed doctrine resolved entities ([3d2e029](https://github.com/roadiz/skeleton/commit/3d2e029f7c25b80ccf24be4848657d0942f6e080))
+* Keep themes and bundles assets to include them in docker image ([c43a3ee](https://github.com/roadiz/skeleton/commit/c43a3ee1799f59e095150637167f343dd306ec78))
+* Missing ,`/css/login/image` path ([06e6a70](https://github.com/roadiz/skeleton/commit/06e6a70a787067fe2b1b543e667a7a09bcca36cd))
+* Missing path prefix for Symfony profiler ([7015e36](https://github.com/roadiz/skeleton/commit/7015e368e9cc2b3ca38efe6a6b5cf4c2685d15c1))
+* **Nginx:** Missing CORS on pdf extension ([3fddf0e](https://github.com/roadiz/skeleton/commit/3fddf0e68b4212fce1f93427d40151954426f99c))
+* skip messenger_messages migration if table already exists ([e594113](https://github.com/roadiz/skeleton/commit/e594113ae15dcd7cbe813eca1ac295bb3b16cde1))
+* SSO user roles ([a3a3b92](https://github.com/roadiz/skeleton/commit/a3a3b9290e26bdb9fe894fb49899b860b3f1cb62))
+* Workaround for https://github.com/varnish/docker-varnish/issues/53 ([1d9b847](https://github.com/roadiz/skeleton/commit/1d9b8477f342d12b82bb53e1e1d81faab62fa748))
+
 ## 2.0.5 (2022-09-15)
 
 ### Bug Fixes
