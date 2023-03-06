@@ -1,12 +1,20 @@
-
+---
 RZ\Roadiz\CoreBundle\Entity\Tag:
     iri: Tag
     shortName: Tag
-    attributes:
-        output: RZ\Roadiz\CoreBundle\Api\Dto\TagOutput
     collectionOperations:
         get:
             method: "GET"
+            normalization_context:
+                enable_max_depth: true
+                groups:
+                    - tag_base
     itemOperations:
         get:
             method: 'GET'
+            normalization_context:
+                enable_max_depth: true
+                groups:
+                    - tag
+                    - tag_base
+                    - tag_parent

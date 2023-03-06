@@ -4,4 +4,6 @@ importFiles:
     roles: []
     groups: []
     settings: []
-    nodetypes: []
+    nodetypes:
+        - src/Resources/node-types/Menu.json
+        - src/Resources/node-types/MenuLink.json

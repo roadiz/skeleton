@@ -55,7 +55,8 @@ roadiz_skeleton_build:
         paths:
             - vendor/
             # Keep themes assets to include them in docker image
-            - web/themes/
+            - public/themes/
+            - public/bundles/
     before_script:
         - eval "$(ssh-agent -s)"
         #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -69,7 +70,8 @@ roadiz_skeleton_build:
         - ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
     script:
         - composer install --optimize-autoloader --apcu-autoloader
-        - php bin/console themes:assets:install Rozier
+        - php bin/console assets:install -n
+        - php bin/console themes:assets:install -n Rozier
 
 roadiz_skeleton_dev_docker:
     stage: deploy

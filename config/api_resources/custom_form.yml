@@ -1,7 +1,5 @@
 ---
 RZ\Roadiz\CoreBundle\Entity\CustomForm:
-    attributes:
-        output: RZ\Roadiz\CoreBundle\Api\Dto\CustomFormOutput
     collectionOperations:
         get:
             method: "GET"

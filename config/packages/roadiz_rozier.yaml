@@ -14,6 +14,31 @@ roadiz_rozier:
         granted_roles:
             - ROLE_USER
             - ROLE_BACKEND_USER
+            - ROLE_ACCESS_VERSIONS
+            - ROLE_ACCESS_DOCTRINE_CACHE_DELETE
+            - ROLE_ACCESS_DOCUMENTS
+            - ROLE_ACCESS_DOCUMENTS_LIMITATIONS
+            - ROLE_ACCESS_DOCUMENTS_DELETE
+            - ROLE_ACCESS_DOCUMENTS_CREATION_DATE
+            - ROLE_ACCESS_NODES
+            - ROLE_ACCESS_NODES_DELETE
+            - ROLE_ACCESS_NODES_SETTING
+            - ROLE_ACCESS_NODES_STATUS
+            - ROLE_ACCESS_REDIRECTIONS
+            - ROLE_ACCESS_TAGS
+            - ROLE_ACCESS_TAGS_DELETE
+            - ROLE_ACCESS_CUSTOMFORMS
+            - ROLE_ACCESS_CUSTOMFORMS_DELETE
+            - ROLE_ACCESS_CUSTOMFORMS_RETENTION
+            - ROLE_ACCESS_ATTRIBUTES
+            - ROLE_ACCESS_ATTRIBUTES_DELETE
+            - ROLE_ACCESS_NODE_ATTRIBUTES
+            - ROLE_ACCESS_SETTINGS
+            - ROLE_ACCESS_LOGS
+            - ROLE_ACCESS_USERS
+            - ROLE_ACCESS_USERS_DELETE
+            - ROLE_ACCESS_GROUPS
+            - ROLE_ACCESS_TRANSLATIONS
 
     entries:
         dashboard:
@@ -68,6 +93,11 @@ roadiz_rozier:
                     name: 'all.documents'
                     route: documentsHomePage
                     icon: uk-icon-rz-documents
+                    roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
+                private_documents:
+                    name: 'private_documents'
+                    route: documentsPrivateHomePage
+                    icon: uk-icon-lock
                     roles: [ 'ROLE_ACCESS_DOCUMENTS' ]
                 unused_documents:
                     name: 'unused_documents'

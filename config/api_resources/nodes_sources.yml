@@ -14,7 +14,23 @@ RZ\Roadiz\CoreBundle\Entity\NodesSources:
                     - tag_base
                     - translation_base
                     - document_display
-                    - position
+#                    - position
+#        archives:
+#            method: 'GET'
+#            path: '/nodes_sources/archives'
+#            pagination_enabled: false
+#            pagination_client_enabled: false
+#            archive_enabled: true
+#            archive_publication_field_name: publishedAt
+#            normalization_context:
+#                groups:
+#                    - get
+#                    - archives
+#            openapi_context:
+#                summary: Get available NodesSources archives
+#                parameters: ~
+#                description: |
+#                    Get available NodesSources archives
 #        search:
 #            method: 'GET'
 #            path: '/nodes_sources/search'

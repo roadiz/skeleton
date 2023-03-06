@@ -5,6 +5,7 @@ roadiz_core:
     staticDomainName: ~
     defaultNodeSourceController: App\Controller\NullController
     useNativeJsonColumnType: true
+    hideRoadizVersion: false
     # When no information to find locale is found and "force_locale" setting is ON,
     # Roadiz can find root path translation based on Accept-Language header.
     # Be careful if you are using a reverse-proxy cache, YOU MUST vary on Accept-Language header and normalize it.
@@ -14,6 +15,10 @@ roadiz_core:
         private_key_name: default
     medias:
         unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
+        soundcloud_client_id: '%env(string:APP_SOUNDCLOUD_CLIENT_ID)%'
+        google_server_id: '%env(string:APP_GOOGLE_SERVER_ID)%'
+        recaptcha_private_key: '%env(string:APP_RECAPTCHA_PRIVATE_KEY)%'
+        recaptcha_public_key: '%env(string:APP_RECAPTCHA_PUBLIC_KEY)%'
         ffmpeg_path: '%env(string:APP_FFMPEG_PATH)%'
     inheritance:
         type: single_table
@@ -24,11 +29,11 @@ roadiz_core:
                 domainName: '%env(string:VARNISH_DOMAIN)%'
     solr:
         timeout: 3
-        endpoints:
-            docker:
-                host: '%env(string:SOLR_HOST)%'
-                core: '%env(string:SOLR_CORE_NAME)%'
-                port: '%env(string:SOLR_PORT)%'
-                path: /
+        endpoints: {}
+#            docker:
+#                host: '%env(string:SOLR_HOST)%'
+#                core: '%env(string:SOLR_CORE_NAME)%'
+#                port: '%env(string:SOLR_PORT)%'
+#                path: /
 
 

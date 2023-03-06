@@ -11,17 +11,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 final class CommonContent
 {
-    /**
-     * @ApiProperty(identifier=true)
-     * @var string
-     */
+    #[ApiProperty(identifier: true)]
     public string $id = 'unique';
-    /**
-     * @Groups({"common_content", "nodes_sources_base", "urls"})
-     */
+
+    #[Groups(["common_content"])]
     public ?NodesSources $home = null;
-    /**
-     * @Groups({"common_content"})
-     */
+
+    #[Groups(["common_content"])]
     public ?NodesSourcesHeadInterface $head = null;
+
+    #[Groups(["common_content"])]
+    public ?array $menus = null;
 }

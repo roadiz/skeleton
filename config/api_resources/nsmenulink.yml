@@ -1,15 +1,16 @@
----
-RZ\Roadiz\CoreBundle\Entity\Node:
-    shortName: Node
-    collectionOperations: []
+App\GeneratedEntity\NSMenuLink:
+    iri: MenuLink
+    shortName: MenuLink
+    collectionOperations: {  }
     itemOperations:
         get:
-            method: 'GET'
+            method: GET
             normalization_context:
                 groups:
-                    - node
+                    - nodes_sources
+                    - urls
                     - tag_base
                     - translation_base
                     - document_display
+                    - document_thumbnails
                     - document_display_sources
-                enable_max_depth: true

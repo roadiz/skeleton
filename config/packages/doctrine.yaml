@@ -17,34 +17,33 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
             RoadizCoreBundle:
                 is_bundle: true
-                type: annotation
+                type: attribute
                 dir: 'src/Entity'
                 prefix: 'RZ\Roadiz\CoreBundle\Entity'
                 alias: RoadizCoreBundle
             RZ\Roadiz\Core:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/vendor/roadiz/models/src/Roadiz/Core/AbstractEntities'
                 prefix: 'RZ\Roadiz\Core\AbstractEntities'
                 alias: AbstractEntities
             App\GeneratedEntity:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/GeneratedEntity'
                 prefix: 'App\GeneratedEntity'
                 alias: App\GeneratedEntity
 
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: RZ\Roadiz\CoreBundle\Entity\User
-
-            # Roadiz Core
-            RZ\Roadiz\Core\Models\DocumentInterface: RZ\Roadiz\CoreBundle\Entity\Document
+            RZ\Roadiz\Documents\Models\DocumentInterface: RZ\Roadiz\CoreBundle\Entity\Document
+            RZ\Roadiz\Documents\Models\FolderInterface: RZ\Roadiz\CoreBundle\Entity\Folder
             RZ\Roadiz\Contracts\NodeType\NodeTypeInterface: RZ\Roadiz\CoreBundle\Entity\NodeType
             RZ\Roadiz\CoreBundle\Model\AttributeInterface: RZ\Roadiz\CoreBundle\Entity\Attribute
             RZ\Roadiz\CoreBundle\Model\AttributeTranslationInterface: RZ\Roadiz\CoreBundle\Entity\AttributeTranslation
@@ -53,37 +52,6 @@ doctrine:
             RZ\Roadiz\CoreBundle\Model\AttributeValueInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValue
             RZ\Roadiz\CoreBundle\Model\AttributeValueTranslationInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValueTranslation
             RZ\Roadiz\Core\AbstractEntities\TranslationInterface: RZ\Roadiz\CoreBundle\Entity\Translation
-            RZ\Roadiz\Core\Entities\CustomForm: RZ\Roadiz\CoreBundle\Entity\CustomForm
-            RZ\Roadiz\Core\Entities\CustomFormAnswer: RZ\Roadiz\CoreBundle\Entity\CustomFormAnswer
-            RZ\Roadiz\Core\Entities\CustomFormField: RZ\Roadiz\CoreBundle\Entity\CustomFormField
-            RZ\Roadiz\Core\Entities\CustomFormFieldAttribute: RZ\Roadiz\CoreBundle\Entity\CustomFormFieldAttribute
-            RZ\Roadiz\Core\Entities\Document: RZ\Roadiz\CoreBundle\Entity\Document
-            RZ\Roadiz\Core\Entities\DocumentTranslation: RZ\Roadiz\CoreBundle\Entity\DocumentTranslation
-            RZ\Roadiz\Core\Entities\Folder: RZ\Roadiz\CoreBundle\Entity\Folder
-            RZ\Roadiz\Core\Entities\FolderTranslation: RZ\Roadiz\CoreBundle\Entity\FolderTranslation
-            RZ\Roadiz\Core\Entities\Font: RZ\Roadiz\CoreBundle\Entity\Font
-            RZ\Roadiz\Core\Entities\Group: RZ\Roadiz\CoreBundle\Entity\Group
-            RZ\Roadiz\Core\Entities\Log: RZ\Roadiz\CoreBundle\Entity\Log
-            RZ\Roadiz\Core\Entities\LoginAttempt: RZ\Roadiz\CoreBundle\Entity\LoginAttempt
-            RZ\Roadiz\Core\Entities\Node: RZ\Roadiz\CoreBundle\Entity\Node
-            RZ\Roadiz\Core\Entities\NodesCustomForms: RZ\Roadiz\CoreBundle\Entity\NodesCustomForms
-            RZ\Roadiz\Core\Entities\NodesSources: RZ\Roadiz\CoreBundle\Entity\NodesSources
-            RZ\Roadiz\Core\Entities\NodesSourcesDocuments: RZ\Roadiz\CoreBundle\Entity\NodesSourcesDocuments
-            RZ\Roadiz\Core\Entities\NodesToNodes: RZ\Roadiz\CoreBundle\Entity\NodesToNodes
-            RZ\Roadiz\Core\Entities\NodeType: RZ\Roadiz\CoreBundle\Entity\NodeType
-            RZ\Roadiz\Core\Entities\NodeTypeField: RZ\Roadiz\CoreBundle\Entity\NodeTypeField
-            RZ\Roadiz\Core\Entities\Redirection: RZ\Roadiz\CoreBundle\Entity\Redirection
-            RZ\Roadiz\Core\Entities\Role: RZ\Roadiz\CoreBundle\Entity\Role
-            RZ\Roadiz\Core\Entities\Setting: RZ\Roadiz\CoreBundle\Entity\Setting
-            RZ\Roadiz\Core\Entities\SettingGroup: RZ\Roadiz\CoreBundle\Entity\SettingGroup
-            RZ\Roadiz\Core\Entities\Tag: RZ\Roadiz\CoreBundle\Entity\Tag
-            RZ\Roadiz\Core\Entities\TagTranslation: RZ\Roadiz\CoreBundle\Entity\TagTranslation
-            RZ\Roadiz\Core\Entities\TagTranslationDocuments: RZ\Roadiz\CoreBundle\Entity\TagTranslationDocuments
-            RZ\Roadiz\Core\Entities\Translation: RZ\Roadiz\CoreBundle\Entity\Translation
-            RZ\Roadiz\Core\Entities\UrlAlias: RZ\Roadiz\CoreBundle\Entity\UrlAlias
-            RZ\Roadiz\Core\Entities\User: RZ\Roadiz\CoreBundle\Entity\User
-            RZ\Roadiz\Core\Entities\UserLogEntry: RZ\Roadiz\CoreBundle\Entity\UserLogEntry
-            RZ\Roadiz\Webhook\Entity\Webhook: RZ\Roadiz\CoreBundle\Entity\Webhook
 
 when@prod:
     doctrine:
@@ -95,7 +63,7 @@ when@prod:
             result_cache_driver:
                 type: pool
                 pool: doctrine.result_cache_pool
-    
+
 when@test:
     doctrine:
         dbal:

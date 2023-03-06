@@ -8,6 +8,7 @@ App\Api\Model\CommonContent:
             controller: App\Controller\GetCommonContentController
             pagination_enabled: false
             normalization_context:
+                enable_max_depth: true
                 pagination_enabled: false
                 groups:
                     - get
@@ -16,7 +17,6 @@ App\Api\Model\CommonContent:
                     - walker
                     - walker_level
                     - children
-                    - children_count
                     - nodes_sources_base
                     - nodes_sources_default
                     - urls

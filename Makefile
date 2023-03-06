@@ -1,5 +1,7 @@
 cache :
 	docker-compose exec -u www-data app php bin/console cache:clear
+	# Stop workers to force restart them (Supervisord)
+	docker-compose exec -u www-data app php bin/console messenger:stop-workers
 
 test:
 	docker-compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/phpcbf --report=full --report-file=./report.txt -p ./src
@@ -8,6 +10,8 @@ test:
 migrate:
 	docker-compose exec -u www-data app php bin/console doctrine:migrations:migrate
 	docker-compose exec -u www-data app php bin/console themes:migrate ./src/Resources/config.yml
+	# Stop workers to force restart them (Supervisord)
+	docker-compose exec -u www-data app php bin/console messenger:stop-workers
 
 install:
 	make migrate;

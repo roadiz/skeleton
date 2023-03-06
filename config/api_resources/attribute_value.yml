@@ -1,7 +1,5 @@
 #---
 #RZ\Roadiz\CoreBundle\Entity\AttributeValue:
-#    attributes:
-#        output: RZ\Roadiz\CoreBundle\Api\Dto\AttributeValueOutput
 #    collectionOperations:
 #        get:
 #            method: "GET"
