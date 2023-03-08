@@ -62,6 +62,14 @@ secrets (empty values for example), and lose all benefits from encrypting your s
 
 ### Generate JWT private and public keys
 
+Use built-in command to generate your key pair:
+
+```shell
+docker-compose exec -u www-data app bin/console lexik:jwt:generate-keypair
+```
+
+Or manually using `openssl`
+
 ```shell script
 # Reveal your JWT_PASSPHRASE
 docker-compose exec -u www-data app bin/console secrets:list --reveal
