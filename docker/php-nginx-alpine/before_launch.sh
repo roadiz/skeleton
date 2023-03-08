@@ -9,6 +9,10 @@
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console assets:install -n"
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:assets:install -n Rozier"
 
+# To improve performance (i.e. avoid decrypting secrets at runtime),
+# you can decrypt your secrets during deployment to the "local" vault:
+#/usr/bin/sudo -u www-data -- bash -c "APP_RUNTIME_ENV=prod /var/www/html/bin/console secrets:decrypt-to-local --force"
+
 ##
 ## Uncomment following lines to generate node-types found in database
 ## This disallow automatic node-type update from Docker image, and local database
