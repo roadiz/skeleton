@@ -1,3 +1,10 @@
+## [v2.1.1](https://github.com/roadiz/skeleton/compare/v2.1.0...v2.1.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* Missing return types on provided node-types ([c5208fa](https://github.com/roadiz/skeleton/commit/c5208fa95f47fc5d9105b7c32139af9cf3082dd5))
+
 ## v2.1.0 (2023-03-06)
 
 
