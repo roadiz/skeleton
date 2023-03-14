@@ -1,3 +1,10 @@
+## [v2.1.2](https://github.com/roadiz/skeleton/compare/v2.1.1...v2.1.2) (2023-03-14)
+
+
+### Bug Fixes
+
+* Strip out irrelevant data ([929756f](https://github.com/roadiz/skeleton/commit/929756fa1a5148dd5abb9d4240a11c368c858cc0))
+
 ## [v2.1.1](https://github.com/roadiz/skeleton/compare/v2.1.0...v2.1.1) (2023-03-08)
 
 
