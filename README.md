@@ -49,12 +49,8 @@ Then generate secrets values for your configuration variables such as `APP_RECAP
 
 ```shell script
 docker-compose exec -u www-data app bin/console secrets:set APP_RECAPTCHA_PRIVATE_KEY
-# Generate a strong secret
-openssl rand --base64 32; 
-docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE
-# Generate a strong secret
-openssl rand --base64 32; 
-docker-compose exec -u www-data app bin/console secrets:set APP_SECRET
+docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
+docker-compose exec -u www-data app bin/console secrets:set APP_SECRET --random
 ```
 
 **Make sure your remove any of these variables from your `.env` and `.env.local` files**, it would override your
