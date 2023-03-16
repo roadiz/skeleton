@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e
+
 # Fix volume permissions
 /bin/chown -R www-data:www-data /var/www/html/var;
 /bin/chown -R www-data:www-data /var/www/html/public;
@@ -28,3 +31,12 @@
 #  # Perform migrations directly as database should be ready thanks to wait-for-it.sh
 #  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:migrate -n src/Resources/config.yml"
 #fi
+
+/wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"

@@ -52,24 +52,21 @@ services:
 
     app:
         # Need to pass all vars to docker env for Crontab and supervisor scripts
-        # env_file: "./.env.local"
+        #env_file: "./.env.local"
         build:
-            # Use Nginx
-            context: ./docker/php-nginx-alpine
+            context: ./docker/php-fpm-alpine
             args:
                 USER_UID: ${USER_UID}
-#        ports:
-#            - ${PUBLIC_APP_PORT}:80/tcp
         depends_on:
             - db
-#            - solr
+            #- solr
             - redis
+        links:
+            - solr:solr
+            - redis:redis
         volumes:
             - ./:/var/www/html:cached
         networks:
-#            frontproxynet:
-#                aliases:
-#                    - ${APP_NAMESPACE}_app
             default:
         environment:
             TRUSTED_PROXIES: ${TRUSTED_PROXIES}
@@ -77,12 +74,26 @@ services:
             DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
             MYSQL_HOST: ${MYSQL_HOST}
             MYSQL_PORT: ${MYSQL_PORT}
-#            BLACKFIRE_LOG_LEVEL: ${BLACKFIRE_LOG_LEVEL}
-#            BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
-#            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
-#            BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
-#            BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
-#            BLACKFIRE_ENDPOINT: "https://blackfire.io"
+            #BLACKFIRE_LOG_LEVEL: ${BLACKFIRE_LOG_LEVEL}
+            #BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
+            #BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
+            #BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
+            #BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
+            #BLACKFIRE_ENDPOINT: "https://blackfire.io"
+
+    nginx:
+        image: roadiz/nginx-alpine:latest
+#        ports:
+#            - ${PUBLIC_APP_PORT}:80/tcp
+        depends_on:
+            - app
+        volumes:
+            - ./:/var/www/html:cached
+        networks:
+            default:
+#            frontproxynet:
+#                aliases:
+#                    - ${APP_NAMESPACE}_app
 #        labels:
 #            - "traefik.enable=true"
 #            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
@@ -104,6 +115,20 @@ services:
 #            # Combine Host and PathPrefix to allow API and Frontend to share same domain name
 #            - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
 #            - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
+
+    worker:
+        extends: app
+        deploy:
+            replicas: 1
+        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=60" ]
+        restart: unless-stopped
+
+    cron:
+        extends: app
+        # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
+        init: true
+        entrypoint: [ "crond", "-f", "-L", "15" ]
+        restart: unless-stopped
 
 #    solr:
 #        build:
@@ -174,6 +199,8 @@ services:
 #            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
 #            BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
 #            BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
+
+    # Use Redis for Cache, Messaging and Sessions
     redis:
         image: redis:7-alpine
         networks:
@@ -184,9 +211,9 @@ services:
             context: ./docker/varnish
         tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
-            - app
+            - nginx
         links:
-            - app:app
+            - nginx:nginx
 #        ports:
 #            - ${PUBLIC_VARNISH_PORT}:80/tcp
         networks:

@@ -17,6 +17,7 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
+    # Use Redis for Cache, Messaging and Sessions
     redis:
         image: redis:7-alpine
         restart: always
@@ -30,9 +31,9 @@ services:
         # https://github.com/varnish/docker-varnish/issues/53
         user: root
         depends_on:
-            - app
+            - nginx
         links:
-            - app:app
+            - nginx:nginx
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         networks:
@@ -75,6 +76,16 @@ services:
             - "traefik.http.middlewares.${APP_NAMESPACE}Redirectscheme.redirectscheme.scheme=https"
             - "traefik.http.middlewares.${APP_NAMESPACE}Redirectscheme.redirectscheme.permanent=true"
 
+    nginx:
+        image: my-registry/roadiz_skeleton/nginx:latest
+        restart: always
+        depends_on:
+            - app
+        links:
+            - app:app
+        networks:
+            - default
+
     app:
         image: my-registry/roadiz_skeleton:latest
         restart: always
@@ -116,6 +127,20 @@ services:
             APP_DEBUG: ${APP_DEBUG}
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+
+    worker:
+        extends: app
+        deploy:
+            replicas: 1
+        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
+        restart: always
+
+    cron:
+        extends: app
+        # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
+        init: true
+        entrypoint: [ "crond", "-f", "-L", "15" ]
+        restart: always
 
 #    solr:
 #        image: my-registry/roadiz_skeleton/solr:latest
