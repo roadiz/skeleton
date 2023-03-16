@@ -217,6 +217,9 @@ services:
             - nginx
         links:
             - nginx:nginx
+            - app:app
+            - cron:cron
+            - worker:worker
 #        ports:
 #            - ${PUBLIC_VARNISH_PORT}:80/tcp
         networks:

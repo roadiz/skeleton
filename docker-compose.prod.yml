@@ -35,6 +35,8 @@ services:
         links:
             - nginx:nginx
             - app:app
+            - cron:cron
+            - worker:worker
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         networks:

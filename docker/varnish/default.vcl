@@ -14,6 +14,8 @@ backend default {
 acl local {
     "app";
     "nginx";
+    "worker";
+    "cron";
     "varnish";
     "localhost";
     "127.0.0.1";
