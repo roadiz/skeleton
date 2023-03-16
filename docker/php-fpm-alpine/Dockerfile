@@ -22,7 +22,7 @@ RUN apk add --no-cache shadow make git ffmpeg \
 ADD php.ini /usr/local/etc/php/php.ini
 ADD crontab.txt /crontab.txt
 ADD wait-for-it.sh /wait-for-it.sh
-ADD docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+ADD docker-php-entrypoint-dev /usr/local/bin/docker-php-entrypoint
 
 VOLUME /var/www/html
 WORKDIR /var/www/html

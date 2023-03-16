@@ -1,10 +1,15 @@
 #!/bin/sh
 set -e
 
+#
+# Override default entrypoint to add some maintenance and migration commands (PROD)
+# DO NOT CALL THIS SCRIPT FOR WORKERS AND CRON containers (see docker-compose.yml)
+#
+
 # Fix volume permissions
-/bin/chown -R www-data:www-data /var/www/html/var;
-/bin/chown -R www-data:www-data /var/www/html/public;
-/bin/chown -R www-data:www-data /var/www/html/config;
+/bin/chown -R www-data:www-data /var/www/html/var || true;
+/bin/chown -R www-data:www-data /var/www/html/public || true;
+/bin/chown -R www-data:www-data /var/www/html/config || true;
 
 # Print local env vars to .env.xxx.php file for performances and crontab jobs
 /usr/bin/sudo -u www-data -- bash -c  "/usr/local/bin/composer dump-env prod"
@@ -15,6 +20,11 @@ set -e
 # To improve performance (i.e. avoid decrypting secrets at runtime),
 # you can decrypt your secrets during deployment to the "local" vault:
 #/usr/bin/sudo -u www-data -- bash -c "APP_RUNTIME_ENV=prod /var/www/html/bin/console secrets:decrypt-to-local --force"
+
+#
+# Wait for database to be ready for next commands and migrations
+#
+/wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
 
 ##
 ## Uncomment following lines to generate node-types found in database
@@ -31,8 +41,6 @@ set -e
 #  # Perform migrations directly as database should be ready thanks to wait-for-it.sh
 #  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:migrate -n src/Resources/config.yml"
 #fi
-
-/wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then

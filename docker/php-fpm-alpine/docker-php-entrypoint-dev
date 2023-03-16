@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+#
+# Override default entrypoint to add some maintenance DEV only.
+# DO NOT CALL THIS SCRIPT FOR WORKERS AND CRON containers (see docker-compose.yml)
+#
+
+# Fix volume permissions
+/bin/chown -R www-data:www-data /var/www/html/var || true;
+/bin/chown -R www-data:www-data /var/www/html/public || true;
+/bin/chown -R www-data:www-data /var/www/html/config || true;
+
+# Print local env vars to .env.xxx.php file for performances and crontab jobs
+/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console cache:clear -n"
+/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console assets:install -n"
+/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:assets:install -n Rozier --relative --symlink"
+
+#
+# Wait for database to be ready for next commands and migrations
+#
+/wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"

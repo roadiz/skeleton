@@ -34,6 +34,7 @@ services:
             - nginx
         links:
             - nginx:nginx
+            - app:app
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         networks:
@@ -81,10 +82,15 @@ services:
         restart: always
         depends_on:
             - app
+        # Nginx does not resolve `app` hostname correctly
         links:
             - app:app
         networks:
             - default
+        volumes:
+            - ./robots.txt:/var/www/html/public/robots.txt:ro
+            - app_file_data:/var/www/html/public/files:ro
+            - app_assets_data:/var/www/html/public/assets:ro
 
     app:
         image: my-registry/roadiz_skeleton:latest
@@ -92,22 +98,19 @@ services:
         depends_on:
             - db
             - redis
-#            - solr
+            #- solr
         volumes:
             - app_file_data:/var/www/html/public/files
             - app_assets_data:/var/www/html/public/assets
             - app_private_file_data:/var/www/html/var/files
             - app_secret_data:/var/www/html/config/secrets
-            - ./robots.txt:/var/www/html/public/robots.txt:ro
             ## Use docker-compose env file as .env.local in container
             - ./.env:/var/www/html/.env.local:ro
-            - ./default.key:/var/www/html/var/secret/default.key:ro
-            - ./default.pub.key:/var/www/html/var/secret/default.pub.key:ro
             ## Generate JWT certificates on your host and share them to docker container
             ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
-            #- ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
+            - ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
             ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout;
-            #- ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
+            - ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
             ##
             ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
             ## Uncomment these if you DO want to persist and edit node-types on production env
@@ -122,9 +125,9 @@ services:
             MYSQL_PORT: ${MYSQL_PORT}
             # Can only override env in docker environment
             # because these are hardcoded in Docker image definition
-            APP_ENV: ${APP_ENV}
-            APP_RUNTIME_ENV: ${APP_RUNTIME_ENV}
-            APP_DEBUG: ${APP_DEBUG}
+            APP_ENV: prod
+            APP_RUNTIME_ENV: prod
+            APP_DEBUG: 0
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
 
@@ -134,6 +137,8 @@ services:
             replicas: 1
         entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
         restart: always
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
 
     cron:
         extends: app
@@ -141,17 +146,19 @@ services:
         init: true
         entrypoint: [ "crond", "-f", "-L", "15" ]
         restart: always
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
 
-#    solr:
-#        image: my-registry/roadiz_skeleton/solr:latest
-#        volumes:
-#            - "solr_data:/var/solr:delegated"
-#        command:
-#            - solr-precreate
-#            - ${SOLR_CORE_NAME}
-#        restart: always
-#        networks:
-#            - default
+    #solr:
+    #    image: my-registry/roadiz_skeleton/solr:latest
+    #    volumes:
+    #        - "solr_data:/var/solr:delegated"
+    #    command:
+    #        - solr-precreate
+    #        - ${SOLR_CORE_NAME}
+    #    restart: always
+    #    networks:
+    #        - default
 
     backup:
         image: ambroisemaupate/s3-backup
@@ -173,6 +180,7 @@ services:
             S3_HOST_BUCKET: ${S3_HOST_BUCKET}
             S3_BUCKET_NAME: ${S3_BUCKET_NAME}
             S3_FOLDER_NAME: ${S3_FOLDER_NAME}
+            S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
             COMPRESS: 0
         volumes:
             - app_file_data:/var/www/html/var/files:ro
@@ -192,7 +200,7 @@ volumes:
     #app_node_types_resource:
     #app_node_types_entities:
     db_data:
-#    solr_data:
+    #solr_data:
 
 networks:
     frontproxynet:

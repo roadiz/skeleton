@@ -61,9 +61,6 @@ services:
             - db
             #- solr
             - redis
-        links:
-            - solr:solr
-            - redis:redis
         volumes:
             - ./:/var/www/html:cached
         networks:
@@ -74,6 +71,9 @@ services:
             DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
             MYSQL_HOST: ${MYSQL_HOST}
             MYSQL_PORT: ${MYSQL_PORT}
+            APP_ENV: dev
+            APP_RUNTIME_ENV: dev
+            APP_DEBUG: 1
             #BLACKFIRE_LOG_LEVEL: ${BLACKFIRE_LOG_LEVEL}
             #BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
             #BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
@@ -87,6 +87,9 @@ services:
 #            - ${PUBLIC_APP_PORT}:80/tcp
         depends_on:
             - app
+        # Nginx does not resolve `app` hostname correctly
+        links:
+            - app:app
         volumes:
             - ./:/var/www/html:cached
         networks:
@@ -120,7 +123,7 @@ services:
         extends: app
         deploy:
             replicas: 1
-        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=60" ]
+        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=600" ]
         restart: unless-stopped
 
     cron:
