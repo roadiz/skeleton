@@ -24,6 +24,7 @@ RUN usermod -u ${USER_UID} www-data \
 #
 COPY docker/php-fpm-alpine/php.prod.ini /usr/local/etc/php/php.ini
 COPY docker/php-fpm-alpine/crontab.txt /crontab.txt
+COPY docker/php-fpm-alpine/wait-for-it.sh /wait-for-it.sh
 COPY docker/php-fpm-alpine/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY --chown=www-data:www-data . /var/www/html/
 
