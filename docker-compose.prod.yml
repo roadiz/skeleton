@@ -136,6 +136,8 @@ services:
     worker:
         extends: app
         deploy:
+            # Do not scale worker to more than 1 if you use varnish due to cache invalidation
+            # and docker DNS resolution
             replicas: 1
         entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
         restart: always

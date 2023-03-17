@@ -47,7 +47,7 @@ final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
         }
         $childrenNodeTypes = $context->getNodeTypeResolver()->getChildrenNodeTypeList($nodeType);
         if (count($childrenNodeTypes) > 0) {
-            return new MultiTypeChildrenDefinition($this->getContext(), $childrenNodeTypes);
+            return new MultiTypeChildrenDefinition($this->getContext(), $childrenNodeTypes, false);
         }
 
         return new ZeroChildrenDefinition($this->getContext());
