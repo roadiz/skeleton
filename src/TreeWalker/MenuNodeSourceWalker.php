@@ -16,9 +16,6 @@ use RZ\TreeWalker\Definition\ZeroChildrenDefinition;
  */
 final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
 {
-    /**
-     * @throws InvalidArgumentException
-     */
     protected function initializeDefinitions(): void
     {
         if ($this->isRoot()) {
@@ -38,7 +35,6 @@ final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
     /**
      * @param NodeTypeInterface $nodeType
      * @return callable
-     * @throws InvalidArgumentException
      */
     protected function createDefinitionForNodeType(NodeTypeInterface $nodeType): callable
     {
@@ -51,7 +47,7 @@ final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
         }
         $childrenNodeTypes = $context->getNodeTypeResolver()->getChildrenNodeTypeList($nodeType);
         if (count($childrenNodeTypes) > 0) {
-            return new MultiTypeChildrenDefinition($this->getContext(), $childrenNodeTypes);
+            return new MultiTypeChildrenDefinition($this->getContext(), $childrenNodeTypes, false);
         }
 
         return new ZeroChildrenDefinition($this->getContext());

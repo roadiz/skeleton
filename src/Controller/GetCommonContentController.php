@@ -8,47 +8,42 @@ use App\Api\Model\CommonContent;
 use App\TreeWalker\MenuNodeSourceWalker;
 use Doctrine\Persistence\ManagerRegistry;
 use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
-use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactory;
+use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactoryInterface;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 final class GetCommonContentController extends AbstractController
 {
-    private RequestStack $requestStack;
     private ManagerRegistry $managerRegistry;
-    private NodesSourcesHeadFactory $nodesSourcesHeadFactory;
+    private NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory;
     private PreviewResolverInterface $previewResolver;
     private TreeWalkerGenerator $treeWalkerGenerator;
 
     public function __construct(
-        RequestStack $requestStack,
         ManagerRegistry $managerRegistry,
-        NodesSourcesHeadFactory $nodesSourcesHeadFactory,
+        NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory,
         PreviewResolverInterface $previewResolver,
         TreeWalkerGenerator $treeWalkerGenerator
     ) {
-        $this->requestStack = $requestStack;
         $this->managerRegistry = $managerRegistry;
         $this->nodesSourcesHeadFactory = $nodesSourcesHeadFactory;
         $this->previewResolver = $previewResolver;
         $this->treeWalkerGenerator = $treeWalkerGenerator;
     }
 
-    public function __invoke(): ?CommonContent
+    public function __invoke(Request $request): ?CommonContent
     {
         try {
-            $request = $this->requestStack->getMainRequest();
             $translation = $this->getTranslationFromRequest($request);
 
             $resource = new CommonContent();
 
-            $request?->attributes->set('data', $resource);
+            $request->attributes->set('data', $resource);
             $resource->head = $this->nodesSourcesHeadFactory->createForTranslation($translation);
             $resource->home = $resource->head->getHomePage();
             $resource->menus = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
@@ -59,7 +54,7 @@ final class GetCommonContentController extends AbstractController
             );
             return $resource;
         } catch (ResourceNotFoundException $exception) {
-            throw new NotFoundHttpException($exception->getMessage(), $exception);
+            throw $this->createNotFoundException($exception->getMessage(), $exception);
         }
     }
 

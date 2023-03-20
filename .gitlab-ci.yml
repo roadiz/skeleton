@@ -99,6 +99,10 @@ roadiz_skeleton_dev_docker:
         #- "docker build -t ${CI_REGISTRY_IMAGE}/solr ./docker/solr"
         #- "docker tag ${CI_REGISTRY_IMAGE}/solr ${CI_REGISTRY_IMAGE}/solr:develop"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:develop"
+        # Nginx image build
+        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx -f docker/nginx/Dockerfile ."
+        - "docker tag ${CI_REGISTRY_IMAGE}/nginx ${CI_REGISTRY_IMAGE}/nginx:develop"
+        - "docker push ${CI_REGISTRY_IMAGE}/nginx:develop"
         # Varnish image build
         - "docker build -t ${CI_REGISTRY_IMAGE}/varnish ./docker/varnish"
         - "docker tag ${CI_REGISTRY_IMAGE}/varnish ${CI_REGISTRY_IMAGE}/varnish:develop"
@@ -140,6 +144,11 @@ roadiz_skeleton_docker:
         #- "docker tag ${CI_REGISTRY_IMAGE}/solr ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG}"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:latest"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG}"
+        # Nginx image build
+        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx -f docker/nginx/Dockerfile ."
+        - "docker tag ${CI_REGISTRY_IMAGE}/nginx ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG}"
+        - "docker push ${CI_REGISTRY_IMAGE}/nginx:latest"
+        - "docker push ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG}"
         # Varnish image build
         - "docker build -t ${CI_REGISTRY_IMAGE}/varnish ./docker/varnish"
         - "docker tag ${CI_REGISTRY_IMAGE}/varnish ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG}"

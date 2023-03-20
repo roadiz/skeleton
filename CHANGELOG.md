@@ -1,3 +1,18 @@
+## [v2.1.3](https://github.com/roadiz/skeleton/compare/v2.1.2...v2.1.3) (2023-03-20)
+
+
+### Features
+
+* Allow MultiTypeChildren treeWalker definition to fetch invisible nodes ([3785331](https://github.com/roadiz/skeleton/commit/3785331d6220dfb8497ff5b4620193127fa01db6))
+* Migrate from monolithic docker image to app, nginx, worker and cron containers. ([2a88497](https://github.com/roadiz/skeleton/commit/2a8849779778dd2e1ccf2217944cd8bcd8d6d97a))
+
+
+### Bug Fixes
+
+* Fixed GetCommonContentController using NodesSourcesHeadFactoryInterface and type-hinting Request ([33b637a](https://github.com/roadiz/skeleton/commit/33b637aea034111199b4edc00ceec788ff5b659c))
+* Missing docker/php-fpm-alpine/wait-for-it.sh in Dockerfile COPY ([54785fe](https://github.com/roadiz/skeleton/commit/54785fef5fd0847a85c1746e51669563999b5363))
+* Varnish ACL should allow cron and worker hostname to purge ([b1a69e4](https://github.com/roadiz/skeleton/commit/b1a69e4d367330bd4b86a606de3da835f00ba69e))
+
 ## [v2.1.2](https://github.com/roadiz/skeleton/compare/v2.1.1...v2.1.2) (2023-03-14)
 
 
