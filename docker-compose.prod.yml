@@ -136,8 +136,8 @@ services:
     worker:
         extends: app
         deploy:
-            # Do not scale worker to more than 1 if you use varnish due to cache invalidation
-            # and docker DNS resolution
+            # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
+            # from your workers. Varnish ACL hostnames won't be resolved correctly.
             replicas: 1
         entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
         restart: always
