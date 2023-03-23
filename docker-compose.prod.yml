@@ -93,6 +93,10 @@ services:
             - ./robots.txt:/var/www/html/public/robots.txt:ro
             - app_file_data:/var/www/html/public/files:ro
             - app_assets_data:/var/www/html/public/assets:ro
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            # Force Watchtower to restart varnish after app update
+            - "com.centurylinklabs.watchtower.depends-on=varnish"
 
     app:
         image: my-registry/roadiz_skeleton:latest
@@ -132,6 +136,8 @@ services:
             APP_DEBUG: 0
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            # Force Watchtower to restart nginx after app update
+            - "com.centurylinklabs.watchtower.depends-on=nginx"
 
     worker:
         extends: app
