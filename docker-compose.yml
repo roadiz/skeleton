@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
     db:
         build:
@@ -120,7 +120,8 @@ services:
 #            - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
 
     worker:
-        extends: app
+        extends:
+            service: app
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
@@ -129,7 +130,8 @@ services:
         restart: unless-stopped
 
     cron:
-        extends: app
+        extends:
+            service: app
         # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
         init: true
         entrypoint: [ "crond", "-f", "-L", "15" ]
