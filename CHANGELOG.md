@@ -1,3 +1,10 @@
+## [v2.1.4](https://github.com/roadiz/skeleton/compare/v2.1.3...v2.1.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* Mixed up public and private file volumes for backup ([8d954ac](https://github.com/roadiz/skeleton/commit/8d954acb885bda28fd071c7db3b747bf57ac9af3))
+
 ## [v2.1.3](https://github.com/roadiz/skeleton/compare/v2.1.2...v2.1.3) (2023-03-20)
 
 
