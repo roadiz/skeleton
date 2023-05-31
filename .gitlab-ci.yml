@@ -50,6 +50,11 @@ roadiz_skeleton_build:
         key: ${CI_COMMIT_REF_SLUG}
         paths:
             - vendor/
+    variables:
+        # temporary vars for composer scripts only
+        APP_ENV: prod
+        JWT_PASSPHRASE: changeme
+        APP_SECRET: changeme
     artifacts:
         expire_in: 1 hour
         paths:
@@ -69,9 +74,7 @@ roadiz_skeleton_build:
         #- ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
         #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
     script:
-        - composer install --optimize-autoloader --apcu-autoloader
-        - php bin/console assets:install -n
-        - php bin/console themes:assets:install -n Rozier
+        - composer install --no-dev --optimize-autoloader
 
 roadiz_skeleton_dev_docker:
     stage: deploy
