@@ -4,12 +4,14 @@ RZ\Roadiz\CoreBundle\Entity\CustomForm:
         get:
             method: "GET"
             normalization_context:
+                groups: ['custom_form']
                 enable_max_depth: true
 
     itemOperations:
         get:
             method: 'GET'
             normalization_context:
+                groups: ['custom_form']
                 enable_max_depth: true
 
         api_custom_forms_item_post:
