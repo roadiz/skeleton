@@ -11,7 +11,8 @@
         "nelmio/cors-bundle": "^2.2",
         "roadiz/cms-pack": "*",
         "sentry/sentry-symfony": "^4.2",
-        "symfony/flex": "*"
+        "symfony/flex": "*",
+        "symfony/requirements-checker": "^2.0"
     },
     "require-dev": {
         "blackfire/php-sdk": "^1.28",
@@ -61,7 +62,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd"
+            "themes:assets:install Rozier": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
