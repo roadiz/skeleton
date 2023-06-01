@@ -1,3 +1,10 @@
+## [v2.1.7](https://github.com/roadiz/skeleton/compare/v2.1.6...v2.1.7) (2023-06-01)
+
+
+### Bug Fixes
+
+* Clear all cache pools on Symfony 5.4 on docker-entrypoint ([03b93a8](https://github.com/roadiz/skeleton/commit/03b93a895e8dca451e8d261c43dca498fe8264a6))
+
 ## [v2.1.6](https://github.com/roadiz/skeleton/compare/v2.1.5...v2.1.6) (2023-05-31)
 
 
