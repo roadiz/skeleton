@@ -1,3 +1,10 @@
+## [v2.1.8](https://github.com/roadiz/skeleton/compare/v2.1.7...v2.1.8) (2023-06-12)
+
+
+### Bug Fixes
+
+* Renamed Gitlab CI dropped vars ([809af31](https://github.com/roadiz/skeleton/commit/809af3128ae18bce471a7140c3603facf1111ab5))
+
 ## [v2.1.7](https://github.com/roadiz/skeleton/compare/v2.1.6...v2.1.7) (2023-06-01)
 
 
