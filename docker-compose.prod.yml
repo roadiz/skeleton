@@ -1,6 +1,5 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
-version: '3'
 services:
     db:
         image: mysql:8.0
@@ -93,6 +92,10 @@ services:
             - ./robots.txt:/var/www/html/public/robots.txt:ro
             - app_file_data:/var/www/html/public/files:ro
             - app_assets_data:/var/www/html/public/assets:ro
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            # Force Watchtower to restart varnish after app update
+            - "com.centurylinklabs.watchtower.depends-on=skeleton-varnish-1"
 
     app:
         image: my-registry/roadiz_skeleton:latest
@@ -109,9 +112,9 @@ services:
             ## Use docker-compose env file as .env.local in container
             - ./.env:/var/www/html/.env.local:ro
             ## Generate JWT certificates on your host and share them to docker container
-            ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
+            ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096; chmod 0644 jwt_private.pem;
             - ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
-            ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout;
+            ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout; chmod 0644 jwt_public.pem;
             - ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
             ##
             ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
@@ -132,6 +135,8 @@ services:
             APP_DEBUG: 0
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            # Force Watchtower to restart nginx and varnish after app update
+            - "com.centurylinklabs.watchtower.depends-on=skeleton-nginx-1,skeleton-varnish-1"
 
     worker:
         extends: app
