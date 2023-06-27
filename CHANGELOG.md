@@ -1,3 +1,10 @@
+## [v2.1.9](https://github.com/roadiz/skeleton/compare/v2.1.8...v2.1.9) (2023-06-27)
+
+
+### Bug Fixes
+
+* Fixed `com.centurylinklabs.watchtower.depends-on` syntax ([fc484c4](https://github.com/roadiz/skeleton/commit/fc484c43e08a1301922d614469e0046730cd9862))
+
 ## [v2.1.8](https://github.com/roadiz/skeleton/compare/v2.1.7...v2.1.8) (2023-06-12)
 
 
