@@ -39,6 +39,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/GeneratedEntity'
                 prefix: 'App\GeneratedEntity'
                 alias: App\GeneratedEntity
+            gedmo_loggable:
+                type: attribute
+                prefix: Gedmo\Loggable\Entity\MappedSuperclass
+                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity/MappedSuperclass"
+                alias: GedmoLoggableMappedSuperclass
+                is_bundle: false
 
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: RZ\Roadiz\CoreBundle\Entity\User

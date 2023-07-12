@@ -1,3 +1,10 @@
+## [v2.1.10](https://github.com/roadiz/skeleton/compare/v2.1.9...v2.1.10) (2023-07-12)
+
+
+### Bug Fixes
+
+* Missing `gedmo_loggable` doctrine mapping for Superclasses ([ce63709](https://github.com/roadiz/skeleton/commit/ce63709c317b795ab3ee1e31ade0b8b4f3383ffd))
+
 ## [v2.1.9](https://github.com/roadiz/skeleton/compare/v2.1.8...v2.1.9) (2023-06-27)
 
 
