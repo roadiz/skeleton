@@ -1,18 +1,16 @@
 ---
 RZ\Roadiz\CoreBundle\Entity\Tag:
-    iri: Tag
-    shortName: Tag
-    collectionOperations:
-        get:
+    operations:
+        ApiPlatform\Metadata\GetCollection:
             method: "GET"
-            normalization_context:
+            normalizationContext:
                 enable_max_depth: true
                 groups:
                     - tag_base
-    itemOperations:
-        get:
+
+        ApiPlatform\Metadata\Get:
             method: 'GET'
-            normalization_context:
+            normalizationContext:
                 enable_max_depth: true
                 groups:
                     - tag

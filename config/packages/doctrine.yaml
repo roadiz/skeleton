@@ -1,53 +1,73 @@
 doctrine:
     dbal:
-        driver: 'pdo_mysql'
-        server_version: '8.0.22'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
         url: '%env(resolve:DATABASE_URL)%'
     orm:
-        dql:
-            string_functions:
-                JSON_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
-            RoadizCoreBundle:
-                is_bundle: true
-                type: attribute
-                dir: 'src/Entity'
-                prefix: 'RZ\Roadiz\CoreBundle\Entity'
-                alias: RoadizCoreBundle
-            RZ\Roadiz\Core:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/vendor/roadiz/models/src/Roadiz/Core/AbstractEntities'
-                prefix: 'RZ\Roadiz\Core\AbstractEntities'
-                alias: AbstractEntities
-            App\GeneratedEntity:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/GeneratedEntity'
-                prefix: 'App\GeneratedEntity'
-                alias: App\GeneratedEntity
-            gedmo_loggable:
-                type: attribute
-                prefix: Gedmo\Loggable\Entity\MappedSuperclass
-                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity/MappedSuperclass"
-                alias: GedmoLoggableMappedSuperclass
-                is_bundle: false
+        default_entity_manager: default
+        entity_managers:
+            # Put `logger` entity manager first to select it as default for Log entity
+            logger:
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                mappings:
+                    ## Just sharding EM to avoid having Logs in default EM
+                    ## and flushing bad entities when storing log entries.
+                    RoadizCoreLogger:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/vendor/roadiz/core-bundle/src/Logger/Entity'
+                        prefix: 'RZ\Roadiz\CoreBundle\Logger\Entity'
+                        alias: RoadizCoreLogger
+            default:
+                dql:
+                    string_functions:
+                        JSON_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                auto_mapping: true
+                mappings:
+                    ## Keep RoadizCoreLogger to avoid creating different migrations since we are using
+                    ## the same database for both entity managers. Just sharding EM to avoid
+                    ## having Logs in default EM and flushing bad entities when storing log entries.
+                    RoadizCoreLogger:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/vendor/roadiz/core-bundle/src/Logger/Entity'
+                        prefix: 'RZ\Roadiz\CoreBundle\Logger\Entity'
+                        alias: RoadizCoreLogger
+                    App:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App
+                    RoadizCoreBundle:
+                        is_bundle: true
+                        type: attribute
+                        dir: 'src/Entity'
+                        prefix: 'RZ\Roadiz\CoreBundle\Entity'
+                        alias: RoadizCoreBundle
+                    RZ\Roadiz\Core:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/vendor/roadiz/models/src/Core/AbstractEntities'
+                        prefix: 'RZ\Roadiz\Core\AbstractEntities'
+                        alias: AbstractEntities
+                    App\GeneratedEntity:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/GeneratedEntity'
+                        prefix: 'App\GeneratedEntity'
+                        alias: App\GeneratedEntity
+                    gedmo_loggable:
+                        type: attribute
+                        prefix: Gedmo\Loggable\Entity\MappedSuperclass
+                        dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity/MappedSuperclass"
+                        alias: GedmoLoggableMappedSuperclass
+                        is_bundle: false
 
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: RZ\Roadiz\CoreBundle\Entity\User
+
+            # Roadiz Core
             RZ\Roadiz\Documents\Models\DocumentInterface: RZ\Roadiz\CoreBundle\Entity\Document
             RZ\Roadiz\Documents\Models\FolderInterface: RZ\Roadiz\CoreBundle\Entity\Folder
             RZ\Roadiz\Contracts\NodeType\NodeTypeInterface: RZ\Roadiz\CoreBundle\Entity\NodeType
@@ -58,20 +78,3 @@ doctrine:
             RZ\Roadiz\CoreBundle\Model\AttributeValueInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValue
             RZ\Roadiz\CoreBundle\Model\AttributeValueTranslationInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValueTranslation
             RZ\Roadiz\Core\AbstractEntities\TranslationInterface: RZ\Roadiz\CoreBundle\Entity\Translation
-
-when@prod:
-    doctrine:
-        orm:
-            auto_generate_proxy_classes: false
-            query_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
-            result_cache_driver:
-                type: pool
-                pool: doctrine.result_cache_pool
-
-when@test:
-    doctrine:
-        dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
