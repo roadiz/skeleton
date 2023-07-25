@@ -1,3 +1,11 @@
+## [v2.1.11](https://github.com/roadiz/skeleton/compare/v2.1.10...v2.1.11) (2023-07-25)
+
+
+### Bug Fixes
+
+* Added missing Makefile entries, README and API platform `metadata_backward_compatibility_layer` ([3346d79](https://github.com/roadiz/skeleton/commit/3346d794a60e3e94978a13d3f56d5bf28927f07b))
+* Run secrets command after composer install ([4ef7f4c](https://github.com/roadiz/skeleton/commit/4ef7f4c6a855fac2e604c208fe212f91c8912470))
+
 ## [v2.1.10](https://github.com/roadiz/skeleton/compare/v2.1.9...v2.1.10) (2023-07-12)
 
 

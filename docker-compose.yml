@@ -1,4 +1,3 @@
-version: '3'
 services:
     db:
         build:
@@ -74,12 +73,6 @@ services:
             APP_ENV: dev
             APP_RUNTIME_ENV: dev
             APP_DEBUG: 1
-            #BLACKFIRE_LOG_LEVEL: ${BLACKFIRE_LOG_LEVEL}
-            #BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
-            #BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
-            #BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
-            #BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
-            #BLACKFIRE_ENDPOINT: "https://blackfire.io"
 
     nginx:
         image: roadiz/nginx-alpine:latest
@@ -194,16 +187,6 @@ services:
             - "traefik.http.routers.${APP_NAMESPACE}_mailer_secure.tls=true"
             - "traefik.http.routers.${APP_NAMESPACE}_mailer_secure.rule=Host(${HOSTNAME_MAILER})"
             - "traefik.http.routers.${APP_NAMESPACE}_mailer_secure.service=${APP_NAMESPACE}_mailer"
-
-#    blackfire:
-#        image: blackfire/blackfire
-#        environment:
-#            # Exposes BLACKFIRE_* environment variables from the host
-#            BLACKFIRE_LOG_LEVEL: ${BLACKFIRE_LOG_LEVEL}
-#            BLACKFIRE_SERVER_ID: ${BLACKFIRE_SERVER_ID}
-#            BLACKFIRE_SERVER_TOKEN: ${BLACKFIRE_SERVER_TOKEN}
-#            BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
-#            BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
 
     # Use Redis for Cache, Messaging and Sessions
     redis:
