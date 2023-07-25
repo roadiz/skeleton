@@ -1,3 +1,10 @@
+## [v2.1.13](https://github.com/roadiz/skeleton/compare/v2.1.12...v2.1.13) (2023-07-25)
+
+
+### Bug Fixes
+
+* Wrong args order for docker compose with custom config file ([f00addf](https://github.com/roadiz/skeleton/commit/f00addff020f3b9b583db854b29d556429dec43e))
+
 ## [v2.1.12](https://github.com/roadiz/skeleton/compare/v2.1.11...v2.1.12) (2023-07-25)
 
 
