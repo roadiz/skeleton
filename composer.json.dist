@@ -65,17 +65,16 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd",
-            "requirements-checker": "script"
+            "themes:assets:install Rozier": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-create-project-cmd": [
             "bin/console secrets:generate-keys",
-            "secrets:set JWT_PASSPHRASE --random",
-            "secrets:set APP_SECRET --random",
-            "lexik:jwt:generate-keypair"
+            "bin/console secrets:set JWT_PASSPHRASE --random",
+            "bin/console secrets:set APP_SECRET --random",
+            "bin/console lexik:jwt:generate-keypair"
         ],
         "post-update-cmd": [
             "@auto-scripts"

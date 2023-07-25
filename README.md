@@ -39,18 +39,15 @@ docker-compose exec -u www-data app bin/console
 
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
 
-Make sure your defined a named volume for `/var/www/html/config/secrets` directory
+When you run `composer create-project` first time, following command should have been executed automatically:
 
 ```shell script
 docker-compose exec -u www-data app bin/console secrets:generate-keys
 ```
 
-Then generate secrets values for your configuration variables such as `APP_RECAPTCHA_PRIVATE_KEY` or `JWT_PASSPHRASE`:
+Then generate secrets values for your configuration variables such as `APP_SECRET` or `JWT_PASSPHRASE`:
 
 ```shell script
-# Make sure you are using a DIFFERENT APP_RECAPTCHA_PRIVATE_KEY between your environments
-# If you want to use the same, add it to your .env.local file instead
-docker-compose exec -u www-data app bin/console secrets:set APP_RECAPTCHA_PRIVATE_KEY
 docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
 docker-compose exec -u www-data app bin/console secrets:set APP_SECRET --random
 ```
@@ -60,7 +57,7 @@ secrets (empty values for example), and lose all benefits from encrypting your s
 
 ### Generate JWT private and public keys
 
-Use built-in command to generate your key pair:
+Use built-in command to generate your key pair (following command should have been executed automatically at `composer create-project`):
 
 ```shell
 docker-compose exec -u www-data app bin/console lexik:jwt:generate-keypair
