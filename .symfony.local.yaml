@@ -1,0 +1,9 @@
+workers:
+    messenger_consume_async:
+         cmd: ['symfony', 'console', 'messenger:consume', 'async']
+         watch: ['config', 'src', 'templates', 'vendor']
+http:
+    port: 8000 # Force the port that will be used to run the server
+    allow_http: true # Prevent auto-redirection from HTTP to HTTPS
+    no_tls: true # Use HTTP instead of HTTPS
+    use_gzip: true # Toggle GZIP compression

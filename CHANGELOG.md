@@ -1,3 +1,10 @@
+## [v2.1.12](https://github.com/roadiz/skeleton/compare/v2.1.11...v2.1.12) (2023-07-25)
+
+
+### Features
+
+* Added some doc about using symfony server:start instead of full docker stack ([b7ed89e](https://github.com/roadiz/skeleton/commit/b7ed89e1fd3bef5ce7bdb49b97e978037595d65d))
+
 ## [v2.1.11](https://github.com/roadiz/skeleton/compare/v2.1.10...v2.1.11) (2023-07-25)
 
 

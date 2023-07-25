@@ -24,8 +24,8 @@ If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMOR
 Edit your `.env.local` and `docker-compose.yml` files according to your local environment.
 
 ```shell
-docker-compose build
-docker-compose up -d --force-recreate
+docker compose build
+docker compose up -d --force-recreate
 ```
 
 Then wait for your services to initialize, especially your *database* could take several seconds
@@ -34,7 +34,7 @@ to initialize (filesystem, database and user creation).
 When you're ready you can check that *Symfony* console responds through your Docker service:
 
 ```shell
-docker-compose exec -u www-data app bin/console
+docker compose exec -u www-data app bin/console
 ```
 
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
@@ -42,14 +42,14 @@ docker-compose exec -u www-data app bin/console
 When you run `composer create-project` first time, following command should have been executed automatically:
 
 ```shell script
-docker-compose exec -u www-data app bin/console secrets:generate-keys
+docker compose exec -u www-data app bin/console secrets:generate-keys
 ```
 
 Then generate secrets values for your configuration variables such as `APP_SECRET` or `JWT_PASSPHRASE`:
 
 ```shell script
-docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
-docker-compose exec -u www-data app bin/console secrets:set APP_SECRET --random
+docker compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
+docker compose exec -u www-data app bin/console secrets:set APP_SECRET --random
 ```
 
 **Make sure your remove any of these variables from your `.env` and `.env.local` files**, it would override your
@@ -60,14 +60,14 @@ secrets (empty values for example), and lose all benefits from encrypting your s
 Use built-in command to generate your key pair (following command should have been executed automatically at `composer create-project`):
 
 ```shell
-docker-compose exec -u www-data app bin/console lexik:jwt:generate-keypair
+docker compose exec -u www-data app bin/console lexik:jwt:generate-keypair
 ```
 
 Or manually using `openssl`
 
 ```shell script
 # Reveal your JWT_PASSPHRASE
-docker-compose exec -u www-data app bin/console secrets:list --reveal
+docker compose exec -u www-data app bin/console secrets:list --reveal
 # Fill JWT_PASSPHRASE env var.
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
@@ -81,15 +81,15 @@ Or manually:
 
 ```shell
 # Create Roadiz database schema
-docker-compose exec -u www-data app bin/console doctrine:migrations:migrate
+docker compose exec -u www-data app bin/console doctrine:migrations:migrate
 # Migrate any existing data types
-docker-compose exec -u www-data app bin/console themes:migrate ./src/Resources/config.yml
+docker compose exec -u www-data app bin/console themes:migrate ./src/Resources/config.yml
 # Install base Roadiz fixtures, roles and settings
-docker-compose exec -u www-data app bin/console install
+docker compose exec -u www-data app bin/console install
 # Clear cache
-docker-compose exec -u www-data app bin/console cache:clear
+docker compose exec -u www-data app bin/console cache:clear
 # Create your admin account
-docker-compose exec -u www-data app bin/console users:create -m username@roadiz.io -b -s username
+docker compose exec -u www-data app bin/console users:create -m username@roadiz.io -b -s username
 ```
 
 ### Features
@@ -174,6 +174,36 @@ You can fetch this endpoint once in your website frontend, instead of embedding 
 Make sure your `.env` file does not contain any sensitive data as it must be added to your repository: `git add --force .env`
 in order to be overridden by `.env.local` file.
 Sensitive and local data must be filled in `.env.local` which is git-ignored. 
+
+### Using `symfony server:start` instead of Docker
+
+If you are working on a *macOS* environment, you may prefer using `symfony` binary to start a local webserver instead of using
+a full _Docker_ stack. You will need to install `symfony` binary first:
+
+```shell
+curl -sS https://get.symfony.com/cli/installer | bash
+```
+
+And make sure your local PHP environment is configured with php-intl, php-redis, php-gd extensions.
+You will need to use at least *MySQL* and *Redis* (and *Solr* if needed) services from Docker stack in order to run your application.
+
+```shell
+docker compose up -d -f docker-compose.symfony.yml
+```
+
+And configure your `.env` variables to use your local MySQL and Redis services. 
+Replacing `db`, `redis`, `mailer` and `solr` hostnames with `127.0.0.1`. Make sure to use `127.0.0.1` and not `localhost` 
+on *macOS* as it will not work with Docker.
+
+Then you can start your local webserver:
+
+```shell
+symfony server:start
+```
+
+Perform all installation steps described above, without using `docker compose exec` command.
+
+Then your Roadiz backoffice will be available at `https://127.0.0.1:8000/rz-admin`
 
 ### Make node-types editable on production environment
 
