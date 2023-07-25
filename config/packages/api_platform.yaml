@@ -2,6 +2,7 @@ api_platform:
     patch_formats:
         json: ['application/merge-patch+json']
     enable_swagger_ui: false
+    metadata_backward_compatibility_layer: true
     enable_re_doc: true
     graphql:
         graphiql:
