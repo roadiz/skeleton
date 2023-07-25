@@ -1,5 +1,6 @@
 cache :
 	docker-compose exec -u www-data app php bin/console cache:clear
+	docker-compose exec -u www-data app php bin/console cache:pool:clear cache.global_clearer
 	# Stop workers to force restart them (Supervisord)
 	docker-compose exec -u www-data app php bin/console messenger:stop-workers
 

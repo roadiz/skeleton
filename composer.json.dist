@@ -59,6 +59,9 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
+        "post-root-package-install": [
+            "mkdir -p var/cache var/files var/log var/export var/secret"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
@@ -67,6 +70,12 @@
         },
         "post-install-cmd": [
             "@auto-scripts"
+        ],
+        "post-create-project-cmd": [
+            "bin/console secrets:generate-keys",
+            "secrets:set JWT_PASSPHRASE --random",
+            "secrets:set APP_SECRET --random",
+            "lexik:jwt:generate-keypair"
         ],
         "post-update-cmd": [
             "@auto-scripts"

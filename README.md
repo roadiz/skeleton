@@ -48,6 +48,8 @@ docker-compose exec -u www-data app bin/console secrets:generate-keys
 Then generate secrets values for your configuration variables such as `APP_RECAPTCHA_PRIVATE_KEY` or `JWT_PASSPHRASE`:
 
 ```shell script
+# Make sure you are using a DIFFERENT APP_RECAPTCHA_PRIVATE_KEY between your environments
+# If you want to use the same, add it to your .env.local file instead
 docker-compose exec -u www-data app bin/console secrets:set APP_RECAPTCHA_PRIVATE_KEY
 docker-compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
 docker-compose exec -u www-data app bin/console secrets:set APP_SECRET --random
@@ -75,6 +77,10 @@ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
 ```
 
 ### Install database
+
+Use `make install` command to install your database schema and fixtures.
+
+Or manually:
 
 ```shell
 # Create Roadiz database schema
