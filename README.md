@@ -188,7 +188,7 @@ And make sure your local PHP environment is configured with php-intl, php-redis,
 You will need to use at least *MySQL* and *Redis* (and *Solr* if needed) services from Docker stack in order to run your application.
 
 ```shell
-docker compose up -d -f docker-compose.symfony.yml
+docker compose -f docker-compose.symfony.yml up -d 
 ```
 
 And configure your `.env` variables to use your local MySQL and Redis services. 
