@@ -20,10 +20,10 @@ api_platform:
             - '%kernel.project_dir%/vendor/roadiz/core-bundle/src/Entity'
             - '%kernel.project_dir%/vendor/rezozero/tree-walker/src'
             - '%kernel.project_dir%/config/api_resources'
-    http_cache:
-        invalidation:
-            enabled: true
-            varnish_urls: ['%env(VARNISH_URL)%']
+#    http_cache:
+#        invalidation:
+#            enabled: true
+#            varnish_urls: ['%env(VARNISH_URL)%']
     defaults:
         pagination_client_items_per_page: true
         pagination_items_per_page: 15
