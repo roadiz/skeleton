@@ -83,7 +83,7 @@ Or manually:
 # Create Roadiz database schema
 docker compose exec -u www-data app bin/console doctrine:migrations:migrate
 # Migrate any existing data types
-docker compose exec -u www-data app bin/console themes:migrate ./src/Resources/config.yml
+docker compose exec -u www-data app bin/console app:install
 # Install base Roadiz fixtures, roles and settings
 docker compose exec -u www-data app bin/console install
 # Clear cache

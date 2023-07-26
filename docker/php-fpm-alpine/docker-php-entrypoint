@@ -41,7 +41,7 @@ set -e
 ##
 #if [ -e "./src/Resources/config.yml" ]; then
 #  # Perform migrations directly as database should be ready thanks to wait-for-it.sh
-#  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:migrate -n src/Resources/config.yml"
+#  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console app:install"
 #fi
 
 # first arg is `-f` or `--some-option`
