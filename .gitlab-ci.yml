@@ -8,6 +8,11 @@ stages:
     - deploy
     - release
 
+# AutoDevOps templates for security
+include:
+    - template: Jobs/Secret-Detection.gitlab-ci.yml
+    - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+
 variables:
     # Timezone will be used both for system and php date.timezone php.ini value
     COMPOSER_MEMORY_LIMIT: '-1'
