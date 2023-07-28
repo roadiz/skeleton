@@ -1,3 +1,10 @@
+## [v2.1.14](https://github.com/roadiz/skeleton/compare/v2.1.13...v2.1.14) (2023-07-28)
+
+
+### Bug Fixes
+
+* Added AutoDevops templates for Gitlab CI/CD ([769495d](https://github.com/roadiz/skeleton/commit/769495dd8460fd66c8844a04c56be5fd9e259d69))
+
 ## [v2.1.13](https://github.com/roadiz/skeleton/compare/v2.1.12...v2.1.13) (2023-07-25)
 
 
