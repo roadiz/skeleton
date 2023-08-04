@@ -35,8 +35,8 @@ roadiz_core:
 
 when@prod:
     roadiz_core:
-    reverseProxyCache:
-        frontend:
-            default:
-                host: '%env(VARNISH_URL)%'
-                domainName: '%env(VARNISH_DOMAIN)%'
+        reverseProxyCache:
+            frontend:
+                default:
+                    host: '%env(VARNISH_URL)%'
+                    domainName: '%env(VARNISH_DOMAIN)%'

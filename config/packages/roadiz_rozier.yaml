@@ -11,6 +11,10 @@ roadiz_rozier:
         oauth_client_id: '%env(string:OPEN_ID_CLIENT_ID)%'
         # OpenID identity provider OAuth2 client secret
         oauth_client_secret: '%env(string:OPEN_ID_CLIENT_SECRET)%'
+        # A local account must exists for each OpenID user.
+        requires_local_user: true
+        # Roles granted to user logged in with OpenId authentication process.
+        # Only when local users are not required, creating virtual users.
         granted_roles:
             - ROLE_USER
             - ROLE_BACKEND_USER
