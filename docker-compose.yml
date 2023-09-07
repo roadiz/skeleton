@@ -89,7 +89,7 @@ services:
             default:
 #            frontproxynet:
 #                aliases:
-#                    - ${APP_NAMESPACE}_app
+#                    - ${APP_NAMESPACE}_nginx
 #        labels:
 #            - "traefik.enable=true"
 #            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
