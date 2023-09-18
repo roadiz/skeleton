@@ -38,5 +38,5 @@ when@prod:
         reverseProxyCache:
             frontend:
                 default:
-                    host: '%env(VARNISH_URL)%'
+                    host: '%env(VARNISH_HOST)%'
                     domainName: '%env(VARNISH_DOMAIN)%'
