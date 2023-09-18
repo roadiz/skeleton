@@ -1,4 +1,9 @@
 ---
+parameters:
+    env(OPEN_ID_DISCOVERY_URL): ''
+    env(OPEN_ID_HOSTED_DOMAIN): ''
+    env(OPEN_ID_CLIENT_ID): ''
+    env(OPEN_ID_CLIENT_SECRET): ''
 roadiz_rozier:
     open_id:
         # Verify User info in JWT at each login

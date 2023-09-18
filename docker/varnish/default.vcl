@@ -31,6 +31,11 @@ sub vcl_recv {
         set req.http.X-Forwarded-Port = "80";
     }
 
+    # Exclude typically large files from caching
+    if (req.url ~ "\.(dmg|exe|gz|msi|pkg|tgz|zip|pdf)$") {
+        return(pass);
+    }
+
     # https://info.varnish-software.com/blog/varnish-cache-brotli-compression
     if (req.http.Accept-Encoding ~ "br" && req.url !~
         "\.(jpg|png|gif|zip|gz|mp3|mov|avi|mpg|mp4|swf|woff|woff2|wmf)$") {
