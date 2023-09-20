@@ -1,3 +1,10 @@
+## [v2.1.15](https://github.com/roadiz/skeleton/compare/v2.1.14...v2.1.15) (2023-09-20)
+
+
+### Bug Fixes
+
+* **CI:** Build and tag at the same time to avoid push same docker image digest from different jobs ([6a96982](https://github.com/roadiz/skeleton/commit/6a96982957e029c9fb19f771ae8a32b88b685798))
+
 ## [v2.1.14](https://github.com/roadiz/skeleton/compare/v2.1.13...v2.1.14) (2023-07-28)
 
 
