@@ -100,20 +100,16 @@ roadiz_skeleton_dev_docker:
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for develop\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
         # App image build
-        - "docker build -t ${CI_REGISTRY_IMAGE} ."
-        - "docker tag ${CI_REGISTRY_IMAGE} ${CI_REGISTRY_IMAGE}:develop"
+        - "docker build -t ${CI_REGISTRY_IMAGE}:develop ."
         - "docker push ${CI_REGISTRY_IMAGE}:develop"
         ## Solr image build
-        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr ./docker/solr"
-        #- "docker tag ${CI_REGISTRY_IMAGE}/solr ${CI_REGISTRY_IMAGE}/solr:develop"
+        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr:develop ./docker/solr"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:develop"
         # Nginx image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx -f docker/nginx/Dockerfile ."
-        - "docker tag ${CI_REGISTRY_IMAGE}/nginx ${CI_REGISTRY_IMAGE}/nginx:develop"
+        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx:develop -f docker/nginx/Dockerfile ."
         - "docker push ${CI_REGISTRY_IMAGE}/nginx:develop"
         # Varnish image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish ./docker/varnish"
-        - "docker tag ${CI_REGISTRY_IMAGE}/varnish ${CI_REGISTRY_IMAGE}/varnish:develop"
+        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish:develop ./docker/varnish"
         - "docker push ${CI_REGISTRY_IMAGE}/varnish:develop"
 
 #
@@ -143,23 +139,19 @@ roadiz_skeleton_docker:
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for tag ${CI_COMMIT_TAG}\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
         # App image build
-        - "docker build -t ${CI_REGISTRY_IMAGE} ."
-        - "docker tag ${CI_REGISTRY_IMAGE} ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+        - "docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG} ."
         - "docker push ${CI_REGISTRY_IMAGE}:latest"
         - "docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
         ## Solr image build
-        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr ./docker/solr"
-        #- "docker tag ${CI_REGISTRY_IMAGE}/solr ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG}"
+        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr:latest -t ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG} ./docker/solr"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:latest"
         #- "docker push ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG}"
         # Nginx image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx -f docker/nginx/Dockerfile ."
-        - "docker tag ${CI_REGISTRY_IMAGE}/nginx ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG}"
+        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx:latest -t ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG} -f docker/nginx/Dockerfile ."
         - "docker push ${CI_REGISTRY_IMAGE}/nginx:latest"
         - "docker push ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG}"
         # Varnish image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish ./docker/varnish"
-        - "docker tag ${CI_REGISTRY_IMAGE}/varnish ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG}"
+        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish:latest -t ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG} ./docker/varnish"
         - "docker push ${CI_REGISTRY_IMAGE}/varnish:latest"
         - "docker push ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG}"
         # Create Release on your app on Sentry
