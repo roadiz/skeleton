@@ -139,7 +139,7 @@ services:
 ##        ports:
 ##            - "${PUBLIC_SOLR_PORT}:8983/tcp"
 #        volumes:
-#            - "./.data/solr:/var/solr:delegated"
+#            - "solr_data:/var/solr:delegated"
 #        environment:
 #            SOLR_UID: ${USER_UID}
 #            SOLR_GID: ${USER_UID}
@@ -248,3 +248,6 @@ networks:
             driver: default
             config:
                 -   subnet: ${DEFAULT_GATEWAY}/16
+
+volumes:
+    solr_data:
