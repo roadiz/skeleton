@@ -157,6 +157,7 @@
     <dynamicField name="*_dtr"  type="rdate"    indexed="true"  stored="true"/>
     <dynamicField name="*_dts" type="pdate"    indexed="true"  stored="true" multiValued="true"/>
     <dynamicField name="*_p"  type="location" indexed="true" stored="true"/>
+    <dynamicField name="*_ps"  type="location" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*_srpt"  type="location_rpt" indexed="true" stored="true"/>
 
     <!-- payloaded dynamic fields -->
