@@ -1,5 +1,6 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
+name: skeleton
 services:
     db:
         image: mysql:8.0
@@ -44,6 +45,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-nginx-1,/skeleton-worker-1,/skeleton-cron-1"
             # Traefik v2 -----------------------------------------------------
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.port=80"
@@ -100,8 +102,7 @@ services:
             - app_assets_data:/var/www/html/public/assets:ro
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
-            # Force Watchtower to restart varnish after app update
-            - "com.centurylinklabs.watchtower.depends-on=skeleton-varnish-1"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-app-1"
 
     app:
         image: my-registry/roadiz_skeleton:latest
@@ -141,8 +142,7 @@ services:
             APP_DEBUG: 0
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
-            # Force Watchtower to restart nginx and varnish after app update
-            - "com.centurylinklabs.watchtower.depends-on=skeleton-nginx-1,skeleton-varnish-1"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     worker:
         extends:
@@ -155,6 +155,7 @@ services:
         restart: always
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     cron:
         extends:
@@ -165,6 +166,7 @@ services:
         restart: always
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     #solr:
     #    image: my-registry/roadiz_skeleton/solr:latest
@@ -177,32 +179,32 @@ services:
     #    networks:
     #        - default
 
-    backup:
-        image: ambroisemaupate/s3-backup
-        networks:
-            - default
-        depends_on:
-            - db
-        environment:
-            LOCAL_PATH: /var/www/html
-            DB_USER: ${MYSQL_USER}
-            DB_HOST: db
-            DB_PASS: ${MYSQL_PASSWORD}
-            DB_NAME: ${MYSQL_DATABASE}
-            S3_ACCESS_KEY: ${S3_ACCESS_KEY}
-            S3_SECRET_KEY: ${S3_SECRET_KEY}
-            S3_SIGNATURE: ${S3_SIGNATURE}
-            S3_BUCKET_LOCATION: ${S3_BUCKET_LOCATION}
-            S3_HOST_BASE: ${S3_HOST_BASE}
-            S3_HOST_BUCKET: ${S3_HOST_BUCKET}
-            S3_BUCKET_NAME: ${S3_BUCKET_NAME}
-            S3_FOLDER_NAME: ${S3_FOLDER_NAME}
-            S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
-            COMPRESS: 0
-        volumes:
-            - app_file_data:/var/www/html/public/files:ro
-            - app_assets_data:/var/www/html/public/assets:ro
-            - app_private_file_data:/var/www/html/var/files:ro
+    #backup:
+    #    image: ambroisemaupate/s3-backup
+    #    networks:
+    #        - default
+    #    depends_on:
+    #        - db
+    #    environment:
+    #        LOCAL_PATH: /var/www/html
+    #        DB_USER: ${MYSQL_USER}
+    #        DB_HOST: db
+    #        DB_PASS: ${MYSQL_PASSWORD}
+    #        DB_NAME: ${MYSQL_DATABASE}
+    #        S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+    #        S3_SECRET_KEY: ${S3_SECRET_KEY}
+    #        S3_SIGNATURE: ${S3_SIGNATURE}
+    #        S3_BUCKET_LOCATION: ${S3_BUCKET_LOCATION}
+    #        S3_HOST_BASE: ${S3_HOST_BASE}
+    #        S3_HOST_BUCKET: ${S3_HOST_BUCKET}
+    #        S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+    #        S3_FOLDER_NAME: ${S3_FOLDER_NAME}
+    #        S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
+    #        COMPRESS: 0
+    #    volumes:
+    #        - app_file_data:/var/www/html/public/files:ro
+    #        - app_assets_data:/var/www/html/public/assets:ro
+    #        - app_private_file_data:/var/www/html/var/files:ro
 
     # RESTIC backup services
     restic:
