@@ -255,7 +255,7 @@ services:
         extends:
             service: restic
         # Forget all snapshots older than 7 days and keep 12 monthly snapshots
-        command: 'forget -o s3.storage-class=${S3_STORAGE_CLASS} --keep-daily 7 --keep-monthly 12'
+        command: 'forget -o s3.storage-class=${S3_STORAGE_CLASS} --keep-daily 7 --keep-monthly 12 --prune'
 volumes:
     app_file_data:
     app_assets_data:
