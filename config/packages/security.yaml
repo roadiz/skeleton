@@ -81,9 +81,6 @@ security:
             logout:
                 path: logoutPage
             user_checker: RZ\Roadiz\CoreBundle\Security\UserChecker
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
             custom_authenticator:
                 - RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
                 # Enables OpenId on backoffice entrypoint
