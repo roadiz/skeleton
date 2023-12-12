@@ -83,7 +83,7 @@ Or manually:
 # Create Roadiz database schema
 docker compose exec -u www-data app bin/console doctrine:migrations:migrate
 # Migrate any existing data types
-docker compose exec -u www-data app bin/console themes:migrate ./src/Resources/config.yml
+docker compose exec -u www-data app bin/console app:install
 # Install base Roadiz fixtures, roles and settings
 docker compose exec -u www-data app bin/console install
 # Clear cache
@@ -191,9 +191,9 @@ You will need to use at least *MySQL* and *Redis* (and *Solr* if needed) service
 docker compose -f docker-compose.symfony.yml up -d 
 ```
 
-And configure your `.env` variables to use your local MySQL and Redis services. 
-Replacing `db`, `redis`, `mailer` and `solr` hostnames with `127.0.0.1`. Make sure to use `127.0.0.1` and not `localhost` 
-on *macOS* as it will not work with Docker.
+- Configure your `.env` variables to use your local MySQL and Redis services. Replacing `db`, `redis`, `mailer` and `solr` hostnames with `127.0.0.1`. Make sure to use `127.0.0.1` and not `localhost` on *macOS* as it will not work with Docker.
+- Remove `docker compose exec -u www-data app ` prefix from all commands in `Makefile` to execute recipes locally. 
+- Remove cache invalidation Varnish configuration from `config/packages/api_platform.yaml` and `config/packages/roadiz_core.yaml` file.
 
 Then you can start your local webserver:
 

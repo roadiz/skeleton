@@ -1,11 +1,9 @@
 ---
 RZ\Roadiz\CoreBundle\Entity\Node:
-    shortName: Node
-    collectionOperations: []
-    itemOperations:
-        get:
+    operations:
+        ApiPlatform\Metadata\Get:
             method: 'GET'
-            normalization_context:
+            normalizationContext:
                 groups:
                     - node
                     - tag_base

@@ -89,7 +89,7 @@ services:
             default:
 #            frontproxynet:
 #                aliases:
-#                    - ${APP_NAMESPACE}_app
+#                    - ${APP_NAMESPACE}_nginx
 #        labels:
 #            - "traefik.enable=true"
 #            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
@@ -113,7 +113,8 @@ services:
 #            - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
 
     worker:
-        extends: app
+        extends:
+            service: app
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
@@ -122,7 +123,8 @@ services:
         restart: unless-stopped
 
     cron:
-        extends: app
+        extends:
+            service: app
         # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
         init: true
         entrypoint: [ "crond", "-f", "-L", "15" ]
@@ -137,7 +139,7 @@ services:
 ##        ports:
 ##            - "${PUBLIC_SOLR_PORT}:8983/tcp"
 #        volumes:
-#            - "./.data/solr:/var/solr:delegated"
+#            - "solr_data:/var/solr:delegated"
 #        environment:
 #            SOLR_UID: ${USER_UID}
 #            SOLR_GID: ${USER_UID}
@@ -246,3 +248,6 @@ networks:
             driver: default
             config:
                 -   subnet: ${DEFAULT_GATEWAY}/16
+
+volumes:
+    solr_data:

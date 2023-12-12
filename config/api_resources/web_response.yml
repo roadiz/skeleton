@@ -1,30 +1,33 @@
 RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
-    collectionOperations: {}
-    itemOperations:
+    operations:
         getByPath:
+            class: ApiPlatform\Metadata\Get
             method: 'GET'
-            path: '/web_response_by_path'
+            uriTemplate: '/web_response_by_path'
             read: false
             controller: RZ\Roadiz\CoreBundle\Api\Controller\GetWebResponseByPathController
             pagination_enabled: false
-            normalization_context:
+            normalizationContext:
+                enable_max_depth: true
                 pagination_enabled: false
                 groups:
                     - get
                     - web_response
-                    #- position
+                    - position
                     - walker
                     - walker_level
                     - meta
                     - children
+                    - children_count
                     - nodes_sources
                     - urls
                     - tag_base
                     - translation_base
                     - document_display
                     - document_thumbnails
+                    - node_attributes
                     - document_display_sources
-            openapi_context:
+            openapiContext:
                 summary: Get a resource by its path wrapped in a WebResponse object
                 description: |
                     Get a resource by its path wrapped in a WebResponse

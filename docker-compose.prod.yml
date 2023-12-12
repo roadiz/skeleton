@@ -1,5 +1,6 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
+name: skeleton
 services:
     db:
         image: mysql:8.0
@@ -44,6 +45,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-nginx-1,/skeleton-worker-1,/skeleton-cron-1"
             # Traefik v2 -----------------------------------------------------
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.port=80"
@@ -68,7 +70,7 @@ services:
             #
             # Apply middlewares
             #
-            - "traefik.http.routers.${APP_NAMESPACE}_secure.middlewares=${APP_NAMESPACE}Redirectregex"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.middlewares=${APP_NAMESPACE}Redirectregex,${APP_NAMESPACE}Sts"
             - "traefik.http.routers.${APP_NAMESPACE}.middlewares=${APP_NAMESPACE}Redirectregex,${APP_NAMESPACE}Redirectscheme"
             # Add domain redirection (${APP_NAMESPACE} non-www to www redir)
             - "traefik.http.middlewares.${APP_NAMESPACE}Redirectregex.redirectregex.regex=${REDIRECT_REGEX}"
@@ -77,6 +79,12 @@ services:
             # Add SSL redirection
             - "traefik.http.middlewares.${APP_NAMESPACE}Redirectscheme.redirectscheme.scheme=https"
             - "traefik.http.middlewares.${APP_NAMESPACE}Redirectscheme.redirectscheme.permanent=true"
+            # HSTS headers
+            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stsincludesubdomains=false"
+            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stspreload=true"
+            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stsseconds=31536000"
+            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.isdevelopment=false"
+
 
     nginx:
         image: my-registry/roadiz_skeleton/nginx:latest
@@ -94,8 +102,7 @@ services:
             - app_assets_data:/var/www/html/public/assets:ro
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
-            # Force Watchtower to restart varnish after app update
-            - "com.centurylinklabs.watchtower.depends-on=skeleton-varnish-1"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-app-1"
 
     app:
         image: my-registry/roadiz_skeleton:latest
@@ -135,11 +142,11 @@ services:
             APP_DEBUG: 0
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
-            # Force Watchtower to restart nginx and varnish after app update
-            - "com.centurylinklabs.watchtower.depends-on=skeleton-nginx-1,skeleton-varnish-1"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     worker:
-        extends: app
+        extends:
+            service: app
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
@@ -148,15 +155,18 @@ services:
         restart: always
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     cron:
-        extends: app
+        extends:
+            service: app
         # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
         init: true
         entrypoint: [ "crond", "-f", "-L", "15" ]
         restart: always
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
+            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     #solr:
     #    image: my-registry/roadiz_skeleton/solr:latest
@@ -169,38 +179,62 @@ services:
     #    networks:
     #        - default
 
-    backup:
-        image: ambroisemaupate/s3-backup
+    # RESTIC incremental backup services
+    restic:
+        # Keep the same hostname for all Restic services
+        hostname: restic-api-backup
+        image: restic/restic:latest
         networks:
             - default
+        environment:
+            AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY}
+            AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY}
+            S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
+            RESTIC_REPOSITORY: ${RESTIC_REPOSITORY}
+            RESTIC_PASSWORD: ${RESTIC_PASSWORD}
+        volumes:
+            # If no restore needed, this volume should remain read-only
+            - app_file_data:/srv/public/files:ro
+            - app_assets_data:/srv/public/assets:ro
+            - app_private_file_data:/srv/var/files:ro
+            - restic_cache:/root/.cache/restic
+    backup_files:
+        # Keep the same hostname for all Restic services
+        extends:
+            service: restic
+        command: 'backup -o s3.storage-class=${S3_STORAGE_CLASS} --tag files /srv'
+    backup_mysql:
+        # Keep the same hostname for all Restic services
+        hostname: restic-api-backup
+        image: ambroisemaupate/restic-database
+        environment:
+            AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY}
+            AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY}
+            S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
+            RESTIC_REPOSITORY: ${RESTIC_REPOSITORY}
+            RESTIC_PASSWORD: ${RESTIC_PASSWORD}
+            # MySQL credentials
+            MYSQL_HOST: ${MYSQL_HOST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_DUMP_FILENAME: ${MYSQL_DUMP_FILENAME}
+        volumes:
+            - restic_cache:/root/.cache/restic
         depends_on:
             - db
-        environment:
-            LOCAL_PATH: /var/www/html
-            DB_USER: ${MYSQL_USER}
-            DB_HOST: db
-            DB_PASS: ${MYSQL_PASSWORD}
-            DB_NAME: ${MYSQL_DATABASE}
-            S3_ACCESS_KEY: ${S3_ACCESS_KEY}
-            S3_SECRET_KEY: ${S3_SECRET_KEY}
-            S3_SIGNATURE: ${S3_SIGNATURE}
-            S3_BUCKET_LOCATION: ${S3_BUCKET_LOCATION}
-            S3_HOST_BASE: ${S3_HOST_BASE}
-            S3_HOST_BUCKET: ${S3_HOST_BUCKET}
-            S3_BUCKET_NAME: ${S3_BUCKET_NAME}
-            S3_FOLDER_NAME: ${S3_FOLDER_NAME}
-            S3_STORAGE_CLASS: ${S3_STORAGE_CLASS}
-            COMPRESS: 0
-        volumes:
-            - app_file_data:/var/www/html/public/files:ro
-            - app_assets_data:/var/www/html/public/assets:ro
-            - app_private_file_data:/var/www/html/var/files:ro
-
+        command: 'backup -o s3.storage-class=${S3_STORAGE_CLASS} --tag db ${MYSQL_DUMP_FILENAME}'
+    forget:
+        extends:
+            service: restic
+        # Forget all snapshots older than 7 days and keep 12 monthly snapshots
+        command: 'forget -o s3.storage-class=${S3_STORAGE_CLASS} --keep-daily 7 --keep-monthly 12 --prune'
 volumes:
     app_file_data:
     app_assets_data:
     app_private_file_data:
     app_secret_data:
+    restic_cache:
     ##
     ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
     ## Uncomment these if you DO want to persist and edit node-types on production env

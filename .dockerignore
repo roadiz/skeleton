@@ -22,8 +22,6 @@ docker-compose.standalone.yml
 */*/temp*
 docker
 .vagrant
-.data
-.idea
 var/sessions/*
 var/log/*
 var/cache/*

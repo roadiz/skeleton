@@ -13,9 +13,6 @@ set -e
 
 # Print local env vars to .env.xxx.php file for performances and crontab jobs
 /usr/bin/sudo -u www-data -- bash -c  "/usr/local/bin/composer dump-env prod"
-/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console cache:clear -n"
-# Clear all cache pool on Symfony 5.4 https://symfony.com/doc/5.4/cache.html#clearing-the-cache
-/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console cache:pool:clear cache.global_clearer -n"
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console assets:install -n"
 /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:assets:install -n Rozier"
 
@@ -39,10 +36,14 @@ set -e
 ##
 ## Uncomment following lines to enable automatic migration for your theme at each docker start
 ##
-#if [ -e "./src/Resources/config.yml" ]; then
-#  # Perform migrations directly as database should be ready thanks to wait-for-it.sh
-#  /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console themes:migrate -n src/Resources/config.yml"
-#fi
+## Perform migrations directly as database should be ready thanks to wait-for-it.sh
+# /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console doctrine:migrations:migrate -n --allow-no-migration"
+# /usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console app:install -n"
+
+# Clear caches after migrations
+/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console cache:clear -n"
+# Clear all cache pool on Symfony 5.4 https://symfony.com/doc/5.4/cache.html#clearing-the-cache
+/usr/bin/sudo -u www-data -- bash -c "/var/www/html/bin/console cache:pool:clear cache.global_clearer -n"
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
