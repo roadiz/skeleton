@@ -1,3 +1,31 @@
+## [v2.2.0](https://github.com/roadiz/skeleton/compare/v2.1.15...v2.2.0) (2023-12-12)
+
+
+### Features
+
+* Added `APP_ROUTER_DEFAULT_URI` to configure framework.router.default_uri ([67ef138](https://github.com/roadiz/skeleton/commit/67ef1389069144257f43cc2df59da799a58902c7))
+* Added Restic services for production backup and restoration in development env ([fc28b13](https://github.com/roadiz/skeleton/commit/fc28b134f03e7bebeaec778ef673d8755f889daf))
+* Do not expose WebResponse resource directly ([a972b80](https://github.com/roadiz/skeleton/commit/a972b80a02e9e65e37f1fbc36d5f20c1c333a14c))
+* Do not use `themes:install` and `themes:migrate` command anymore as Roadiz will generate Doctrine migration at node-type changes ([09b1714](https://github.com/roadiz/skeleton/commit/09b171417d68349c0a77b0d05dd2318c73627af6))
+* Requires php 8.1 minimum ([424783d](https://github.com/roadiz/skeleton/commit/424783d01f95fa3c80536f372ccbc9e67a150217))
+* **Solr:** Added *_ps field type for multiple geolocations ([2c9f5e3](https://github.com/roadiz/skeleton/commit/2c9f5e36c6f0e81a05130c83f94d5872bc99478e))
+* **Solr:** Better Solr managed schema for French fields asciifolding ([141186c](https://github.com/roadiz/skeleton/commit/141186cd0743233e4283ebc5be0b7fd611846232))
+* Switched to php 82 ([8824e7e](https://github.com/roadiz/skeleton/commit/8824e7e9f21338c86ec6b47328fa808f03bc8835))
+* Updated docker-php-entrypoint to perform db migrations first then app:install ([4b2079a](https://github.com/roadiz/skeleton/commit/4b2079a5dbad0f17f3f91be822d5a02be663b6f4))
+* Updated README and Makefile for new `app:migrate` command, disabled default Varnish invalidation ([b34cf42](https://github.com/roadiz/skeleton/commit/b34cf42f8b03879bc3152653d8819d63e3e72ca9))
+* Upgraded configuration for Roadiz 2.2 ([8ef0d3f](https://github.com/roadiz/skeleton/commit/8ef0d3f18a74f78dd99df94c2d029ee5b1cd0a4b))
+
+
+### Bug Fixes
+
+* Configure API firewall as database-less JWT by default to ensure PreviewUser are not reloaded. Missing `user_checker` ([23d64e4](https://github.com/roadiz/skeleton/commit/23d64e49b613286f1a7b1818c8fbbea5db336dfa))
+* **Docker:** Clear caches after migrations and db ready ([91c6220](https://github.com/roadiz/skeleton/commit/91c62209a44ac4a6fc092e4cd1ffe57cf9e70a1d))
+* Fix docker compose watchtower depends-on labels ([f5afbd3](https://github.com/roadiz/skeleton/commit/f5afbd38294523b7d9ca4a6faa7ae87af49be54b))
+* Force watchtower to restart dependent containers ([a2b0357](https://github.com/roadiz/skeleton/commit/a2b0357f1ff1a8c6032b5e77b5b6d5f77c0c449e))
+* Removed deprecated `lexik_jwt_authentication.jwt_token_authenticator` ([42850a0](https://github.com/roadiz/skeleton/commit/42850a0cfe79628557c1454b65c75e2d4c78e57b))
+* Set default empty dotenv vars for OpenID and ignore large files and archives from Varnish cache ([94f3975](https://github.com/roadiz/skeleton/commit/94f3975ccdfdf5369acf1cbae7ea7a013ab5196b))
+* Use VARNISH_HOST instead of URL for reverseProxyCache host param ([5af0965](https://github.com/roadiz/skeleton/commit/5af0965020325714737c11b23c7b95c52b8fc63f))
+
 ## [v2.1.15](https://github.com/roadiz/skeleton/compare/v2.1.14...v2.1.15) (2023-09-20)
 
 
