@@ -3,7 +3,6 @@
     "type": "project",
     "license": "mit",
     "prefer-stable": true,
-    "minimum-stability": "dev",
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
@@ -66,7 +65,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd"
+            "themes:assets:install Rozier": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -83,6 +83,11 @@
     },
     "conflict": {
         "symfony/symfony": "*"
+    },
+    "suggest": {
+        "roadiz/two-factor-bundle": "Provides a two-factor authentication system for Roadiz CMS",
+        "roadiz/user-bundle": "Public user management bundle for Roadiz CMS",
+        "roadiz/font-bundle": "Manage and expose web fonts with Roadiz CMS"
     },
     "extra": {
         "symfony": {
