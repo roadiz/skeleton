@@ -1,5 +1,5 @@
 FROM roadiz/php82-fpm-alpine:latest
-MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 ARG USER_UID=1000
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
