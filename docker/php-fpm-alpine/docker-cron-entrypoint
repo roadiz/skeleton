@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+env >> /etc/environment
+
+# Need to fix permissions for be able to create cache dir
+/bin/chown -R www-data:www-data /var/www/html/var || true;
+/bin/mkdir -p /var/www/html/var/cache || true;
+# Need to fix permissions for be able to write in cache dir
+/bin/chown -R www-data:www-data /var/www/html/var || true;
+
+# Let cron take the wheel
+echo "Starting cron in foreground."
+/usr/sbin/crond -f -l 8

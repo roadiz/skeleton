@@ -1,5 +1,6 @@
 FROM roadiz/php82-fpm-alpine:latest
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+
 ARG USER_UID=1000
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
@@ -26,12 +27,14 @@ COPY docker/php-fpm-alpine/php.prod.ini /usr/local/etc/php/php.ini
 COPY docker/php-fpm-alpine/crontab.txt /crontab.txt
 COPY docker/php-fpm-alpine/wait-for-it.sh /wait-for-it.sh
 COPY docker/php-fpm-alpine/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+COPY docker/php-fpm-alpine/docker-cron-entrypoint /usr/local/bin/docker-cron-entrypoint
 COPY --chown=www-data:www-data . /var/www/html/
 
 RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
     && /usr/bin/crontab -u www-data /crontab.txt \
     && chmod +x /wait-for-it.sh \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
+    && chmod +x /usr/local/bin/docker-cron-entrypoint \
     && chown -R www-data:www-data /var/www/html/
 
 VOLUME /var/www/html/config/jwt \
