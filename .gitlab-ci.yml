@@ -1,6 +1,6 @@
 # Gitlab CI
 # Replace “roadiz_skeleton” with your project slug
-image: roadiz/php81-runner
+image: roadiz/php83-runner
 
 stages:
     - test

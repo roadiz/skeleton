@@ -1,4 +1,4 @@
-FROM roadiz/php82-fpm-alpine:latest
+FROM roadiz/php83-fpm-alpine:latest
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=1000

@@ -37,7 +37,6 @@ report.txt
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 openapi.json
-composer.lock
 /*.sql
 /*.zip
 /*.tar
