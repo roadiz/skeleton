@@ -18,8 +18,14 @@ final class CommonContent
     public ?NodesSources $home = null;
 
     #[Groups(["common_content"])]
+    public ?NodesSources $errorPage = null;
+
+    #[Groups(["common_content"])]
     public ?NodesSourcesHeadInterface $head = null;
 
     #[Groups(["common_content"])]
     public ?array $menus = null;
+
+    #[Groups(["common_content"])]
+    public ?array $footers = null;
 }

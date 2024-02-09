@@ -9,7 +9,9 @@ use App\TreeWalker\MenuNodeSourceWalker;
 use Doctrine\Persistence\ManagerRegistry;
 use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactoryInterface;
+use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
+use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,21 +21,12 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 final class GetCommonContentController extends AbstractController
 {
-    private ManagerRegistry $managerRegistry;
-    private NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory;
-    private PreviewResolverInterface $previewResolver;
-    private TreeWalkerGenerator $treeWalkerGenerator;
-
     public function __construct(
-        ManagerRegistry $managerRegistry,
-        NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory,
-        PreviewResolverInterface $previewResolver,
-        TreeWalkerGenerator $treeWalkerGenerator
+        private readonly ManagerRegistry $managerRegistry,
+        private readonly NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory,
+        private readonly PreviewResolverInterface $previewResolver,
+        private readonly TreeWalkerGenerator $treeWalkerGenerator
     ) {
-        $this->managerRegistry = $managerRegistry;
-        $this->nodesSourcesHeadFactory = $nodesSourcesHeadFactory;
-        $this->previewResolver = $previewResolver;
-        $this->treeWalkerGenerator = $treeWalkerGenerator;
     }
 
     public function __invoke(Request $request): ?CommonContent
@@ -46,11 +39,18 @@ final class GetCommonContentController extends AbstractController
             $request->attributes->set('data', $resource);
             $resource->head = $this->nodesSourcesHeadFactory->createForTranslation($translation);
             $resource->home = $resource->head->getHomePage();
+            $resource->errorPage = $this->getErrorPage($translation);
             $resource->menus = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
                 'Menu',
                 MenuNodeSourceWalker::class,
                 $translation,
                 3
+            );
+            $resource->footers = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
+                'Footer',
+                AutoChildrenNodeSourceWalker::class,
+                $translation,
+                4
             );
             return $resource;
         } catch (ResourceNotFoundException $exception) {
@@ -58,7 +58,20 @@ final class GetCommonContentController extends AbstractController
         }
     }
 
-    protected function getTranslationFromRequest(?Request $request): TranslationInterface
+    private function getErrorPage(TranslationInterface $translation): ?NodesSources
+    {
+        if (!class_exists('\App\GeneratedEntity\NSErrorPage')) {
+            return null;
+        }
+        // @phpstan-ignore-next-line
+        return $this->managerRegistry->getRepository('\App\GeneratedEntity\NSErrorPage')
+            ->findOneBy([
+                'translation' => $translation,
+                'node.nodeName' => 'error-page'
+            ]);
+    }
+
+    private function getTranslationFromRequest(?Request $request): TranslationInterface
     {
         $locale = null;
 
@@ -90,7 +103,7 @@ final class GetCommonContentController extends AbstractController
         return $translation;
     }
 
-    protected function getTranslationRepository(): TranslationRepository
+    private function getTranslationRepository(): TranslationRepository
     {
         $repository = $this->managerRegistry->getRepository(TranslationInterface::class);
         if (!$repository instanceof TranslationRepository) {
