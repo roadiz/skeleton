@@ -18,3 +18,9 @@ install:
 	make migrate;
 	docker compose exec -u www-data app bin/console install;
 	make cache;
+
+changelog:
+	git-cliff -o CHANGELOG.md
+
+bump:
+	git-cliff --bump -o CHANGELOG.md

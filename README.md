@@ -221,10 +221,27 @@ a local environment.
 **We do not recommend this workflow on complex applications** in which you will need to control and version your node-types
 schema. This is only recommended for small and basic websites.
 
-### Generate a CHANGELOG file
+### Conventional commits
 
-You can use `git-cliff` to generate a `CHANGELOG.md` file from your Git tags and commits.
+This project uses conventional commits to automate the release process and 
+*changelog* generation with [git-cliff](https://github.com/orhun/git-cliff).
 A `cliff.toml` configuration file is already provided in this skeleton.
+
+#### Generate a CHANGELOG file
+```bash
+git-cliff -o CHANGELOG.md
+```
+
+#### Before releasing
+
+- With a known tag
+    ```bash
+    git-cliff -o CHANGELOG.md --tag 1.0.0
+    ```
+- Without knowing tag, let `git-cliff` find the right version
+    ```bash
+    git-cliff -o CHANGELOG.md --bump
+    ```
 
 ### Credits
 
