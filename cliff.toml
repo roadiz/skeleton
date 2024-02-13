@@ -25,26 +25,36 @@ body = """
 {% endif %}\
 
 {% set_global breaking_descriptions = [] %}\
-{% for commit in commits | filter(attribute="breaking_description") %}\
-{% set_global breaking_descriptions = breaking_descriptions | concat(with=commit.breaking_description) %}\
+{% for commit in commits | filter(attribute="breaking", value=true) %}\
+    {% if commit.breaking_description %}\
+        {% set_global breaking_descriptions = breaking_descriptions | concat(with=commit.breaking_description) %}\
+    {% else %}\
+        {% set_global breaking_descriptions = breaking_descriptions | concat(with=commit.message) %}\
+    {% endif %}\
 {% endfor %}\
 {% if breaking_descriptions | length > 0 %}
-### Breaking changes
-{% for description in breaking_descriptions %}
-- {{ description | upper_first }}\
-{% endfor %}
+    ### ⚠ Breaking changes
+    {% for description in breaking_descriptions %}
+        - {{ description | upper_first }}\
+    {% endfor %}
 {% endif %}\
 
 {% for group, commits in commits | group_by(attribute="group") %}
-    ### {{ group | upper_first }}
-    {% for commit in commits %}
-        - {% if commit.breaking %}[**breaking**] {% endif %}{{ commit.message | upper_first }} - ([{{ commit.id | truncate(length=7, end="") }}](<REPO>/commit/{{ commit.id }}))\
-          {% if commit.links | length > 0 %}\
-              {% for link in commit.links %}\
-                  ([{{ link.text }}]({{ link.href }}))\
-              {% endfor %}\
-          {% endif %}\
-    {% endfor %}
+    ### {{ group | striptags | trim | upper_first }}
+    {% for commit in commits
+    | filter(attribute="scope")
+    | sort(attribute="scope") %}
+        - **({{commit.scope}})**{% if commit.breaking %} [**breaking**]{% endif %} \
+            {{ commit.message }} - ([{{ commit.id | truncate(length=7, end="") }}](<REPO>/commit/{{ commit.id }})) - {{ commit.author.name }}
+    {%- endfor -%}
+    {% raw %}\n{% endraw %}\
+    {%- for commit in commits %}
+        {%- if commit.scope -%}
+        {% else -%}
+            - {% if commit.breaking %} [**breaking**]{% endif %}\
+                {{ commit.message }} - ([{{ commit.id | truncate(length=7, end="") }}](<REPO>/commit/{{ commit.id }})) - {{ commit.author.name }}
+        {% endif -%}
+    {% endfor -%}
 {% endfor %}\n
 """
 # remove the leading and trailing whitespace from the template
@@ -55,7 +65,7 @@ footer = """
 """
 # postprocessors
 postprocessors = [
-  { pattern = '<REPO>', replace = "https://gitlab.com/example-project/example-project/-/" },
+  { pattern = '<REPO>', replace = "https://gitlab.com/example-project/example-project/-" },
 ]
 [git]
 # parse the commits based on https://www.conventionalcommits.org
