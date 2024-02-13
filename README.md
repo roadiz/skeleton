@@ -221,6 +221,11 @@ a local environment.
 **We do not recommend this workflow on complex applications** in which you will need to control and version your node-types
 schema. This is only recommended for small and basic websites.
 
+### Generate a CHANGELOG file
+
+You can use `git-cliff` to generate a `CHANGELOG.md` file from your Git tags and commits.
+A `cliff.toml` configuration file is already provided in this skeleton.
+
 ### Credits
 
 This skeleton uses https://github.com/vishnubob/wait-for-it script to wait for MySQL readiness before launching app entrypoint.
