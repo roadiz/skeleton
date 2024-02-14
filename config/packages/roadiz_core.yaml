@@ -11,8 +11,6 @@ roadiz_core:
     # Be careful if you are using a reverse-proxy cache, YOU MUST vary on Accept-Language header and normalize it.
     # @see https://varnish-cache.org/docs/6.3/users-guide/increasing-your-hitrate.html#http-vary
     useAcceptLanguageHeader: '%env(bool:APP_USE_ACCEPT_LANGUAGE_HEADER)%'
-    security:
-        private_key_name: default
     medias:
         unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
         soundcloud_client_id: '%env(string:APP_SOUNDCLOUD_CLIENT_ID)%'
