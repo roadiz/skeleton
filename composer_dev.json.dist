@@ -3,44 +3,32 @@
     "type": "project",
     "license": "mit",
     "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "nelmio/cors-bundle": "^2.2",
-        "roadiz/cms-pack": "*",
-        "sentry/sentry-symfony": "^4.2",
-        "symfony/flex": "*"
+        "nelmio/cors-bundle": "^2.4",
+        "roadiz/cms-pack": "dev-develop",
+        "sentry/sentry-symfony": "^4.13",
+        "symfony/flex": "*",
+        "symfony/requirements-checker": "^2.0"
     },
     "require-dev": {
-        "blackfire/php-sdk": "^1.28",
-        "phpstan/phpstan": "^1.5.3",
+        "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-doctrine": "^1.3.1",
-        "phpstan/phpstan-symfony": "^1.1.8",
+        "phpstan/phpstan-symfony": "^1.3.7",
         "phpunit/phpunit": "^9.5",
         "rezozero/intervention-request-bundle": "~3.0.0",
-        "roadiz/compat-bundle": "2.2.x-dev",
-        "roadiz/core-bundle": "2.2.x-dev",
-        "roadiz/documents": "2.2.x-dev",
-        "roadiz/entity-generator": "2.2.x-dev",
-        "roadiz/models": "2.2.x-dev",
-        "roadiz/rozier": "2.2.x-dev",
-        "roadiz/openid": "2.2.x-dev",
-        "roadiz/doc-generator": "2.2.x-dev",
-        "roadiz/dts-generator": "2.2.x-dev",
-        "roadiz/jwt": "2.2.x-dev",
-        "roadiz/random": "2.2.x-dev",
-        "roadiz/markdown": "2.2.x-dev",
-        "roadiz/rozier-bundle": "2.2.x-dev",
         "squizlabs/php_codesniffer": "^3.6",
-        "symfony/browser-kit": "5.4.*",
-        "symfony/css-selector": "5.4.*",
-        "symfony/debug-bundle": "5.4.*",
+        "symfony/browser-kit": "6.4.*",
+        "symfony/css-selector": "6.4.*",
+        "symfony/debug-bundle": "6.4.*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/phpunit-bridge": "5.4.*",
-        "symfony/stopwatch": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*"
+        "symfony/phpunit-bridge": "6.4.*",
+        "symfony/stopwatch": "6.4.*",
+        "symfony/web-profiler-bundle": "6.4.*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -71,13 +59,23 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
+        "post-root-package-install": [
+            "mkdir -p var/cache var/files var/log var/export var/secret"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd"
+            "themes:assets:install Rozier": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
+        ],
+        "post-create-project-cmd": [
+            "bin/console secrets:generate-keys",
+            "bin/console secrets:set JWT_PASSPHRASE --random",
+            "bin/console secrets:set APP_SECRET --random",
+            "bin/console lexik:jwt:generate-keypair"
         ],
         "post-update-cmd": [
             "@auto-scripts"
@@ -86,10 +84,15 @@
     "conflict": {
         "symfony/symfony": "*"
     },
+    "suggest": {
+        "roadiz/two-factor-bundle": "Provides a two-factor authentication system for Roadiz CMS",
+        "roadiz/user-bundle": "Public user management bundle for Roadiz CMS",
+        "roadiz/font-bundle": "Manage and expose web fonts with Roadiz CMS"
+    },
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.4.*",
+            "require": "6.4.*",
             "docker": false
         }
     }

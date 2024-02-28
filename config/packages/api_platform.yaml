@@ -7,7 +7,6 @@ api_platform:
     patch_formats:
         json: ['application/merge-patch+json']
     enable_swagger_ui: false
-    metadata_backward_compatibility_layer: false
     enable_re_doc: true
     graphql:
         graphiql:
@@ -26,6 +25,13 @@ api_platform:
             - '%kernel.project_dir%/vendor/rezozero/tree-walker/src'
             - '%kernel.project_dir%/config/api_resources'
     defaults:
+        stateless: true
+        extra_properties:
+            standard_put: true
+            rfc_7807_compliant_errors: false
+        enable_max_depth: true
+        normalization_context:
+            skip_null_values: true
         pagination_client_items_per_page: true
         pagination_items_per_page: 15
         pagination_maximum_items_per_page: 50
