@@ -13,20 +13,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-final class ContactFormController
+final readonly class ContactFormController
 {
-    private ContactFormManager $contactFormManager;
-    private RateLimiterFactory $contactFormLimiter;
-    private LiformInterface $liform;
-
     public function __construct(
-        ContactFormManager $contactFormManager,
-        RateLimiterFactory $contactFormLimiter,
-        LiformInterface $liform
+        private ContactFormManager $contactFormManager,
+        private RateLimiterFactory $contactFormLimiter,
+        private LiformInterface $liform
     ) {
-        $this->contactFormManager = $contactFormManager;
-        $this->contactFormLimiter = $contactFormLimiter;
-        $this->liform = $liform;
     }
 
     public function definitionAction(Request $request): JsonResponse
