@@ -26,4 +26,5 @@ return [
     Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Rollerworks\Bundle\PasswordCommonListBundle\RollerworksPasswordCommonListBundle::class => ['all' => true],
+    Liip\MonitorBundle\LiipMonitorBundle::class => ['all' => true],
 ];

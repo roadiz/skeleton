@@ -8,6 +8,8 @@ ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
 ENV MYSQL_HOST=db
 ENV MYSQL_PORT=3306
 
+HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q
+
 # Added ffmpeg to extract video files thumbnails
 RUN apk add --no-cache ffmpeg
 
