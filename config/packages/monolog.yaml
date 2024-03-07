@@ -55,7 +55,7 @@ when@prod:
             nested:
                 type: stream
                 path: php://stderr
-                level: debug
+                level: info
                 formatter: monolog.formatter.json
     #        sentry:
     #            type: sentry
