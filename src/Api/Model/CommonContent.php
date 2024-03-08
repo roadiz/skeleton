@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Api\Model;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Metadata\ApiProperty;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadInterface;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use Symfony\Component\Serializer\Annotation\Groups;
