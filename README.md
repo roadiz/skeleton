@@ -92,6 +92,35 @@ docker compose exec -u www-data app bin/console cache:clear
 docker compose exec -u www-data app bin/console users:create -m username@roadiz.io -b -s username
 ```
 
+### Manage Node-types
+
+Node-types can be managed through back-office interface or by editing JSON files in `src/Resources/node-types` directory.
+If you edit JSON files manually you need to synchronize your database with these files and generate Doctrine Migrations
+if this leads to database schema changes.
+
+#### Migrate node-types
+
+When you direct update the `node-types` JSON files, you need to add them into `src/Resources/config.yml` 
+and run the following command to update the database:
+
+```bash 
+make migrate
+```
+
+This command will **update PHP entities** and **create a Doctrine migration** file if necessary.
+
+#### Apply node-type migration
+
+When you pull the project and just want to sync your local node-types, you need to apply the migration:
+
+```bash 
+make update
+```
+
+This will **only load node-types** that are not already in the database. But it won't create any migration.
+This is the same script that is executed when you run `make install` and in your docker image entrypoint.
+
+
 ### Features
 
 - Configured to be used in headless mode with *API Platform*

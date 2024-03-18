@@ -8,6 +8,12 @@ test:
 	docker compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/phpcbf --report=full --report-file=./report.txt -p ./src
 	docker compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/phpstan analyse -c phpstan.neon
 
+update:
+	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate -n
+	# Do not perform files changes just apply existing migrations and import data
+	docker compose exec -u www-data app php bin/console app:install -n
+	make cache;
+
 migrate:
 	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate
 	# Apply files changes and create new Doctrine migrations if necessary
