@@ -1,18 +1,18 @@
----
-RZ\Roadiz\CoreBundle\Entity\Tag:
-    operations:
-        ApiPlatform\Metadata\GetCollection:
-            method: "GET"
-            normalizationContext:
-                enable_max_depth: true
-                groups:
-                    - tag_base
+resources:
+    RZ\Roadiz\CoreBundle\Entity\Tag:
+        operations:
+            ApiPlatform\Metadata\GetCollection:
+                method: "GET"
+                normalizationContext:
+                    enable_max_depth: true
+                    groups:
+                        - tag_base
 
-        ApiPlatform\Metadata\Get:
-            method: 'GET'
-            normalizationContext:
-                enable_max_depth: true
-                groups:
-                    - tag
-                    - tag_base
-                    - tag_parent
+            ApiPlatform\Metadata\Get:
+                method: 'GET'
+                normalizationContext:
+                    enable_max_depth: true
+                    groups:
+                        - tag
+                        - tag_base
+                        - tag_parent

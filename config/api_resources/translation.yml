@@ -1,17 +1,17 @@
----
-RZ\Roadiz\CoreBundle\Entity\Translation:
-    operations:
-        ApiPlatform\Metadata\GetCollection:
-            method: "GET"
-            normalizationContext:
-                enable_max_depth: true
-                groups:
-                    - translation_base
+resources:
+    RZ\Roadiz\CoreBundle\Entity\Translation:
+        operations:
+            ApiPlatform\Metadata\GetCollection:
+                method: "GET"
+                normalizationContext:
+                    enable_max_depth: true
+                    groups:
+                        - translation_base
 
-        ApiPlatform\Metadata\Get:
-            method: 'GET'
-            normalizationContext:
-                enable_max_depth: true
-                groups:
-                    - translation_base
+            ApiPlatform\Metadata\Get:
+                method: 'GET'
+                normalizationContext:
+                    enable_max_depth: true
+                    groups:
+                        - translation_base
 

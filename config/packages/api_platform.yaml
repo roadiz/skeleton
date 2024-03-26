@@ -9,7 +9,10 @@ api_platform:
     enable_swagger_ui: true
     enable_re_doc: true
     graphql:
+        introspection: '%kernel.debug%'
         graphiql:
+            enabled: false
+        graphql_playground:
             enabled: false
     show_webby: false
     swagger:
@@ -52,6 +55,12 @@ api_platform:
 
 when@prod:
     api_platform:
+        graphql:
+            introspection: false
+            graphiql:
+                enabled: false
+            graphql_playground:
+                enabled: false
         http_cache:
             invalidation:
                 enabled: true

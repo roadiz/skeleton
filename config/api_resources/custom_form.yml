@@ -1,110 +1,110 @@
----
-RZ\Roadiz\CoreBundle\Entity\CustomForm:
-    operations:
-        ApiPlatform\Metadata\GetCollection:
-            method: "GET"
-            normalizationContext:
-                enable_max_depth: true
+resources:
+    RZ\Roadiz\CoreBundle\Entity\CustomForm:
+        operations:
+            ApiPlatform\Metadata\GetCollection:
+                method: "GET"
+                normalizationContext:
+                    enable_max_depth: true
 
-        ApiPlatform\Metadata\Get:
-            method: 'GET'
-            normalizationContext:
-                enable_max_depth: true
+            ApiPlatform\Metadata\Get:
+                method: 'GET'
+                normalizationContext:
+                    enable_max_depth: true
 
-        api_custom_forms_item_post:
-            method: 'POST'
-            class: ApiPlatform\Metadata\Post
-            routeName: api_custom_forms_item_post
-            normalizationContext:
-                enable_max_depth: true
-            openapiContext:
-                summary: Post a user custom form
-                description: |
-                    Post a user custom form
-                requestBody:
-                    content:
-                        multipart/form-data:
-                            schema:
-                                type: object
-                                properties:
-                                    custom_form_slug[email]:
-                                        type: string
-                                        example: test@test.test
-                                    custom_form_slug[first_name]:
-                                        type: string
-                                        example: John
-                                    custom_form_slug[last_name]:
-                                        type: string
-                                        example: Doe
-                responses:
-                    201: ~
-                    400:
-                        description: Posted custom form has errors
+            api_custom_forms_item_post:
+                method: 'POST'
+                class: ApiPlatform\Metadata\Post
+                routeName: api_custom_forms_item_post
+                normalizationContext:
+                    enable_max_depth: true
+                openapiContext:
+                    summary: Post a user custom form
+                    description: |
+                        Post a user custom form
+                    requestBody:
                         content:
-                            application/json:
+                            multipart/form-data:
                                 schema:
                                     type: object
                                     properties:
-                                        email:
-                                            type: object
-                                            example:
-                                                email: This value is not a valid email address.
-                    202:
-                        description: Posted custom form was accepted
-                        content:
-                            application/json:
-                                schema:
-                                    type: object
-                                    properties: { }
-
-        api_custom_forms_item_definition:
-            method: 'GET'
-            class: ApiPlatform\Metadata\Get
-            routeName: api_custom_forms_item_definition
-            normalizationContext:
-                enable_max_depth: true
-            openapiContext:
-                summary: Get a custom form definition for frontend
-                description: |
-                    Get a custom form definition for frontend
-                responses:
-                    200:
-                        description: Custom form definition object
-                        content:
-                            application/json:
-                                schema:
-                                    type: object
-                                    properties:
-                                        title:
+                                        custom_form_slug[email]:
                                             type: string
-                                            description: Form inputs prefix
-                                            example: reiciendis_natus_ducimus_nostrum
-                                        type:
+                                            example: test@test.test
+                                        custom_form_slug[first_name]:
                                             type: string
-                                            description: Form definition type
-                                            example: object
+                                            example: John
+                                        custom_form_slug[last_name]:
+                                            type: string
+                                            example: Doe
+                    responses:
+                        201: ~
+                        400:
+                            description: Posted custom form has errors
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
                                         properties:
-                                            type: object
-                                            description: Form definition fields
-                                            example:
-                                                email:
-                                                    type: string
-                                                    title: Email
-                                                    attr:
-                                                        data-group: null
-                                                        placeholder: null
-                                                    widget: email
-                                                    propertyOrder: 1
-                                                first_name:
-                                                    type: string
-                                                    title: Firstname
-                                                    attr:
-                                                        data-group: null
-                                                        placeholder: null
-                                                    widget: string
-                                                    propertyOrder: 2
-                                        required:
-                                            type: array
-                                            description: Required fields names
-                                            example:
-                                                - 'email'
+                                            email:
+                                                type: object
+                                                example:
+                                                    email: This value is not a valid email address.
+                        202:
+                            description: Posted custom form was accepted
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties: { }
+
+            api_custom_forms_item_definition:
+                method: 'GET'
+                class: ApiPlatform\Metadata\Get
+                routeName: api_custom_forms_item_definition
+                normalizationContext:
+                    enable_max_depth: true
+                openapiContext:
+                    summary: Get a custom form definition for frontend
+                    description: |
+                        Get a custom form definition for frontend
+                    responses:
+                        200:
+                            description: Custom form definition object
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            title:
+                                                type: string
+                                                description: Form inputs prefix
+                                                example: reiciendis_natus_ducimus_nostrum
+                                            type:
+                                                type: string
+                                                description: Form definition type
+                                                example: object
+                                            properties:
+                                                type: object
+                                                description: Form definition fields
+                                                example:
+                                                    email:
+                                                        type: string
+                                                        title: Email
+                                                        attr:
+                                                            data-group: null
+                                                            placeholder: null
+                                                        widget: email
+                                                        propertyOrder: 1
+                                                    first_name:
+                                                        type: string
+                                                        title: Firstname
+                                                        attr:
+                                                            data-group: null
+                                                            placeholder: null
+                                                        widget: string
+                                                        propertyOrder: 2
+                                            required:
+                                                type: array
+                                                description: Required fields names
+                                                example:
+                                                    - 'email'
