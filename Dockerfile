@@ -50,5 +50,4 @@ VOLUME /var/www/html/config/jwt \
        #/var/www/html/src/GeneratedEntity \
        /var/www/html/public/files \
        /var/www/html/public/assets \
-       /var/www/html/var/files \
-       /var/www/html/var/secret
+       /var/www/html/var/files
