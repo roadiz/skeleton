@@ -3,11 +3,14 @@ set -e
 
 env >> /etc/environment
 
-# Need to fix permissions for be able to create cache dir
 /bin/chown -R www-data:www-data /var/www/html/var || true;
-/bin/mkdir -p /var/www/html/var/cache || true;
-# Need to fix permissions for be able to write in cache dir
-/bin/chown -R www-data:www-data /var/www/html/var || true;
+/bin/chown -R www-data:www-data /var/www/html/config || true;
+
+# Print local env vars to .env.xxx.php file for performances and crontab jobs
+/usr/bin/sudo -u www-data -- bash -c  "/usr/local/bin/composer dump-env prod"
+# To improve performance (i.e. avoid decrypting secrets at runtime),
+# you can decrypt your secrets during deployment to the "local" vault:
+/usr/bin/sudo -u www-data -- bash -c "APP_RUNTIME_ENV=prod /var/www/html/bin/console secrets:decrypt-to-local --force"
 
 # Let cron take the wheel
 echo "Starting cron in foreground."
