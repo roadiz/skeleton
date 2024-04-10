@@ -1,7 +1,7 @@
 # Restoring from a backup into development environment
 # Separate file to avoid running the restore services when using docker-compose up
 # docker compose -f docker-compose.restore.yml --env-file .env.local run --rm restore_files
-version: '3.6'
+name: skeleton
 services:
     restore_files:
         # Keep the same hostname for all Restic services

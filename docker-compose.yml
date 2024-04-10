@@ -1,3 +1,4 @@
+name: skeleton
 services:
     db:
         build:
