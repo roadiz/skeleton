@@ -34,3 +34,14 @@ changelog:
 
 bump:
 	git-cliff --bump -o CHANGELOG.md
+
+##
+## Start the development environment using Symfony server and Docker
+##
+dev:
+	docker compose -f docker-compose.symfony.yml up -d
+	symfony serve -d
+
+stop:
+	symfony server:stop
+	docker compose -f docker-compose.symfony.yml down

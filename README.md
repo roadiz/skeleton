@@ -37,6 +37,36 @@ When you're ready you can check that *Symfony* console responds through your Doc
 docker compose exec -u www-data app bin/console
 ```
 
+### Using `symfony server:start` instead of Docker
+
+If you are working on a *macOS* environment, you may prefer using `symfony` binary to start a local webserver instead of using
+a full _Docker_ stack. You will need to install `symfony` binary first:
+
+```shell
+curl -sS https://get.symfony.com/cli/installer | bash
+```
+
+And make sure your local PHP environment is configured with php-intl, php-redis, php-gd extensions.
+You will need to use at least *MySQL* and *Redis* (and *Solr* if needed) services from Docker stack in order to run your application.
+
+```shell
+docker compose -f docker-compose.symfony.yml up -d 
+```
+
+- Configure your `.env.local` variables to use your local MySQL and Redis services. Replacing `db`, `redis`, `mailer` and `solr` hostnames with `127.0.0.1`. Make sure to use `127.0.0.1` and not `localhost` on *macOS* as it will not work with Docker.
+- Remove `docker compose exec -u www-data app ` prefix from all commands in `Makefile` to execute recipes locally.
+- Remove cache invalidation Varnish configuration from `config/packages/api_platform.yaml` and `config/packages/roadiz_core.yaml` file.
+
+Then you can start your local webserver:
+
+```shell
+symfony serve -d
+```
+
+Perform all installation steps described above, without using `docker compose exec` command.
+
+Then your Roadiz backoffice will be available at `https://127.0.0.1:8000/rz-admin`
+
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
 
 When you run `composer create-project` first time, following command should have been executed automatically:
@@ -120,7 +150,6 @@ make update
 This will **only load node-types** that are not already in the database. But it won't create any migration.
 This is the same script that is executed when you run `make install` and in your docker image entrypoint.
 
-
 ### Features
 
 - Configured to be used in headless mode with *API Platform*
@@ -202,37 +231,7 @@ You can fetch this endpoint once in your website frontend, instead of embedding 
 
 Make sure your `.env` file does not contain any sensitive data as it must be added to your repository: `git add --force .env`
 in order to be overridden by `.env.local` file.
-Sensitive and local data must be filled in `.env.local` which is git-ignored. 
-
-### Using `symfony server:start` instead of Docker
-
-If you are working on a *macOS* environment, you may prefer using `symfony` binary to start a local webserver instead of using
-a full _Docker_ stack. You will need to install `symfony` binary first:
-
-```shell
-curl -sS https://get.symfony.com/cli/installer | bash
-```
-
-And make sure your local PHP environment is configured with php-intl, php-redis, php-gd extensions.
-You will need to use at least *MySQL* and *Redis* (and *Solr* if needed) services from Docker stack in order to run your application.
-
-```shell
-docker compose -f docker-compose.symfony.yml up -d 
-```
-
-- Configure your `.env` variables to use your local MySQL and Redis services. Replacing `db`, `redis`, `mailer` and `solr` hostnames with `127.0.0.1`. Make sure to use `127.0.0.1` and not `localhost` on *macOS* as it will not work with Docker.
-- Remove `docker compose exec -u www-data app ` prefix from all commands in `Makefile` to execute recipes locally. 
-- Remove cache invalidation Varnish configuration from `config/packages/api_platform.yaml` and `config/packages/roadiz_core.yaml` file.
-
-Then you can start your local webserver:
-
-```shell
-symfony server:start
-```
-
-Perform all installation steps described above, without using `docker compose exec` command.
-
-Then your Roadiz backoffice will be available at `https://127.0.0.1:8000/rz-admin`
+Sensitive and local data must be filled in `.env.local` which is git-ignored.
 
 ### Make node-types editable on production environment
 
