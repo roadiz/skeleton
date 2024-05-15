@@ -57,12 +57,16 @@ services:
             # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
             # Listen HTTP
             - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=http"
+            # Always use higher priority for your API app with PathPrefix rule
+            - "traefik.http.routers.${APP_NAMESPACE}.priority=11"
             # Combine Host and PathPrefix to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
             - "traefik.http.routers.${APP_NAMESPACE}.service=${APP_NAMESPACE}"
             # Listen HTTPS
             - "traefik.http.routers.${APP_NAMESPACE}_secure.entrypoints=https"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls=true"
+            # Always use higher priority for your API app with PathPrefix rule
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.priority=11"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.certresolver=letsencrypt"
             # Combine Host and PathPrefix to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
