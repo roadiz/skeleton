@@ -2,7 +2,27 @@
 
 All notable changes to project will be documented in this file.
 
-## [unreleased]
+## [2.3.0](https://github.com/roadiz/skeleton/compare/v2.2.1...v2.3.0) - 2024-05-15
+
+### Bug Fixes
+
+- Fixed docker compose specification with `extends` and `depends_on` - ([aefde96](https://github.com/roadiz/skeleton/commit/aefde96f3660dc6d54c16a4e0073a97c087c4bdf)) - Ambroise Maupate
+- Fixed monolog log level on prod - ([095cccc](https://github.com/roadiz/skeleton/commit/095cccca56e105bdbf40339391776e63e4cd8391)) - Ambroise Maupate
+- Attribute class ApiPlatform\Core\Annotation\ApiProperty does not exist. - ([970ba38](https://github.com/roadiz/skeleton/commit/970ba381ea4df3179decd74b1ccfb42c4790d557)) - Ambroise Maupate
+- Do not migrate app on make install - ([3c1024b](https://github.com/roadiz/skeleton/commit/3c1024b008491b1a86e0add6327b6b4a9a44698e)) - Ambroise Maupate
+- Prefix all api_resource config file with `resources` - ([981b3ef](https://github.com/roadiz/skeleton/commit/981b3efd74784da97574df7a8cc8b266423bd537)) - Ambroise Maupate
+- Improved docker cron entrypoint - ([185aefd](https://github.com/roadiz/skeleton/commit/185aefd733eb95624c7ebe3730694e49b92bee9c)) - Ambroise Maupate
+
+### CI/CD
+
+- Removed php 8.1 from version matrix - ([3341faa](https://github.com/roadiz/skeleton/commit/3341faa38d6dae06332e9710bd1943af666c009f)) - Ambroise Maupate
+- Added php-unit configuration for Gitlab CI - ([0e5e3c9](https://github.com/roadiz/skeleton/commit/0e5e3c9ae82630bb7ae209d913fbc0ac24de64b6)) - Ambroise Maupate
+- Removed /var/www/html/var/secret volume - ([6fd4063](https://github.com/roadiz/skeleton/commit/6fd4063a90e3c0b5b95bd3cea48f9a66c9467c89)) - Ambroise Maupate
+
+### Documentation
+
+- Improved README and added new Makefile recipe - ([bc721ea](https://github.com/roadiz/skeleton/commit/bc721ea2e3b5429f7a1f3697e07623614b3a6776)) - Ambroise Maupate
+- Added dev and stop Make recipes - ([1d7f233](https://github.com/roadiz/skeleton/commit/1d7f23350a38ed39dcc4b649c40ece5a83b6d962)) - Ambroise Maupate
 
 ### Features
 
@@ -12,6 +32,14 @@ All notable changes to project will be documented in this file.
 - Allow sub Menu - ([0be1cde](https://github.com/roadiz/skeleton/commit/0be1cdeadae888cea647356818344d3cee86bad0)) - Ambroise Maupate
 - Added git-cliff configuration template - ([2d514a8](https://github.com/roadiz/skeleton/commit/2d514a84c5c92b3d50d961579d090bbcba671a53)) - Ambroise Maupate
 - Added git-cliff configuration template - ([bd0f2e8](https://github.com/roadiz/skeleton/commit/bd0f2e840dbd416a1be927af8ae881cc118dbb6d)) - Ambroise Maupate
+- Upgrade to ApiPlatform 3.2 - ([4455344](https://github.com/roadiz/skeleton/commit/44553441627473572043d78e12a24f2fc264018f)) - Ambroise Maupate
+- Added *LiipMonitorBundle* for health-checking API docker container - ([59fcb39](https://github.com/roadiz/skeleton/commit/59fcb39f85e39e10eb2653ee027c194117801cef)) - Ambroise Maupate
+- Added simple `HEALTHCHECK` command for docker containers - ([997bd4e](https://github.com/roadiz/skeleton/commit/997bd4e172e96ac13504173213e80b9c0a909823)) - Ambroise Maupate
+- Upgraded example node-types entities - ([5377feb](https://github.com/roadiz/skeleton/commit/5377feb1d7b37bd3ed8b28e98560195f55f24e5a)) - Ambroise Maupate
+
+### Refactor
+
+- Changed MenuLinkPathNormalizer.php method signature - ([d51461e](https://github.com/roadiz/skeleton/commit/d51461e89a184ffbb885e4aa59ab2e9b1efef6e3)) - Ambroise Maupate
 
 ## [2.2.1](https://github.com/roadiz/skeleton/compare/v2.2.0...v2.2.1) - 2023-12-12
 
@@ -256,8 +284,8 @@ All notable changes to project will be documented in this file.
 
 - **(Performances)** Added php.ini preload configuration - ([0e291fd](https://github.com/roadiz/skeleton/commit/0e291fdd038fe1a5c393c9b9e2cfadbc8a7c3679)) - Ambroise Maupate
 - Added /api/common_content endpoint example - ([f909aa7](https://github.com/roadiz/skeleton/commit/f909aa78446b56803b2f6ee888d124c6dac2837c)) - Ambroise Maupate
-- Added realms api resource configuration - ([9f2d035](https://github.com/roadiz/skeleton/commit/9f2d0350cf9072f9e1019eef0a70fdc9723feaf0)) - Ambroise Maupate
 - Additional CORS allowed headers - ([6501e2c](https://github.com/roadiz/skeleton/commit/6501e2c5dc62f849ea5b692917900871f01dca17)) - Ambroise Maupate
+- Added realms api resource configuration - ([9f2d035](https://github.com/roadiz/skeleton/commit/9f2d0350cf9072f9e1019eef0a70fdc9723feaf0)) - Ambroise Maupate
 
 ## [2.0.1](https://github.com/roadiz/skeleton/compare/2.0.0...2.0.1) - 2022-07-04
 
