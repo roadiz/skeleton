@@ -18,7 +18,7 @@ return [
     RZ\InterventionRequestBundle\RZInterventionRequestBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     RZ\Roadiz\CoreBundle\RoadizCoreBundle::class => ['all' => true],
-    ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     RZ\Roadiz\CompatBundle\RoadizCompatBundle::class => ['all' => true],
     RZ\Roadiz\RozierBundle\RoadizRozierBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
@@ -26,4 +26,5 @@ return [
     Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Rollerworks\Bundle\PasswordCommonListBundle\RollerworksPasswordCommonListBundle::class => ['all' => true],
+    Liip\MonitorBundle\LiipMonitorBundle::class => ['all' => true],
 ];

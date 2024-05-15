@@ -1,4 +1,4 @@
 FROM roadiz/nginx-alpine
-MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 COPY ./public /var/www/html/public

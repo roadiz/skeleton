@@ -32,10 +32,6 @@ final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
         }
     }
 
-    /**
-     * @param NodeTypeInterface $nodeType
-     * @return callable
-     */
     protected function createDefinitionForNodeType(NodeTypeInterface $nodeType): callable
     {
         $context = $this->getContext();

@@ -21,7 +21,7 @@ acl local {
     "127.0.0.1";
     "::1";
     # Add here your $DEFAULT_GATEWAY CIDR to allow all containers in docker network to purge
-    #"172.144.0.0/24";
+    #"172.144.0.0/16";
 }
 
 sub vcl_recv {
@@ -69,10 +69,36 @@ sub vcl_recv {
         }
     }
 
+    # Some generic cookie manipulation, useful for all templates that follow
     # Remove has_js and Cloudflare/Google Analytics __* cookies.
     set req.http.Cookie = regsuball(req.http.Cookie, "(^|;\s*)(_[_a-z]+|has_js)=[^;]*", "");
-    # Remove a ";" prefix, if present.
-    set req.http.Cookie = regsub(req.http.Cookie, "^;\s*", "");
+    # Remove Axeptio cookies.
+    set req.http.Cookie = regsuball(req.http.Cookie, "(^|;\s*)(axeptio_[_a-z]+)=[^;]*", "");
+    # Remove the "has_js" cookie
+    set req.http.Cookie = regsuball(req.http.Cookie, "has_js=[^;]+(; )?", "");
+
+    # Remove any Google Analytics based cookies
+    set req.http.Cookie = regsuball(req.http.Cookie, "__utm[^=]+=[^;]+(; )?", "");
+    set req.http.Cookie = regsuball(req.http.Cookie, "_ga[^=]*=[^;]+(; )?", "");
+    set req.http.Cookie = regsuball(req.http.Cookie, "_gcl_[^=]+=[^;]+(; )?", "");
+    set req.http.Cookie = regsuball(req.http.Cookie, "_gid=[^;]+(; )?", "");
+
+    # Remove DoubleClick offensive cookies
+    set req.http.Cookie = regsuball(req.http.Cookie, "__gads=[^;]+(; )?", "");
+
+    # Remove the Quant Capital cookies (added by some plugin, all __qca)
+    set req.http.Cookie = regsuball(req.http.Cookie, "__qc.=[^;]+(; )?", "");
+
+    # Remove the AddThis cookies
+    set req.http.Cookie = regsuball(req.http.Cookie, "__atuv.=[^;]+(; )?", "");
+
+    # Remove a ";" prefix in the cookie if present
+    set req.http.Cookie = regsuball(req.http.Cookie, "^;\s*", "");
+
+    # Are there cookies left with only spaces or that are empty?
+    if (req.http.cookie ~ "^\s*$") {
+        unset req.http.cookie;
+    }
 
     # Happens before we check if we have this in cache already.
     #

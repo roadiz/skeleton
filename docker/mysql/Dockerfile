@@ -1,5 +1,5 @@
 FROM mysql:8.0
-MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=1000
 

@@ -13,9 +13,9 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter as OrmFilter;
-use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter as OrmFilter;
+use ApiPlatform\Serializer\Filter\PropertyFilter;
 
 /**
  * DO NOT EDIT
@@ -35,6 +35,7 @@ class NSMenuLink extends \RZ\Roadiz\CoreBundle\Entity\NodesSources
     #[
         SymfonySerializer\SerializedName(serializedName: "linkExternalUrl"),
         SymfonySerializer\Groups(["nodes_sources", "nodes_sources_default"]),
+        \ApiPlatform\Metadata\ApiProperty(description: "URL externe"),
         SymfonySerializer\MaxDepth(2),
         Gedmo\Versioned,
         ORM\Column(
@@ -76,6 +77,7 @@ class NSMenuLink extends \RZ\Roadiz\CoreBundle\Entity\NodesSources
      * linkInternalReferenceSources NodesSources direct field buffer.
      * (Virtual field, this var is a buffer)
      *
+     * Node reference (internal link).
      * Default values: Page
      * @var \RZ\Roadiz\CoreBundle\Entity\NodesSources[]|null
      */
@@ -83,6 +85,7 @@ class NSMenuLink extends \RZ\Roadiz\CoreBundle\Entity\NodesSources
         Serializer\Exclude,
         SymfonySerializer\SerializedName(serializedName: "linkInternalReference"),
         SymfonySerializer\Groups(["nodes_sources", "nodes_sources_default", "nodes_sources_nodes"]),
+        \ApiPlatform\Metadata\ApiProperty(description: "Node reference (internal link)"),
         SymfonySerializer\MaxDepth(2)
     ]
     private ?array $linkInternalReferenceSources = null;
@@ -100,16 +103,12 @@ class NSMenuLink extends \RZ\Roadiz\CoreBundle\Entity\NodesSources
     public function getLinkInternalReferenceSources(): array
     {
         if (null === $this->linkInternalReferenceSources) {
-            if (
-                null !== $this->objectManager &&
-                null !== $this->getNode() &&
-                null !== $this->getNode()->getNodeType()
-            ) {
+            if (null !== $this->objectManager) {
                 $this->linkInternalReferenceSources = $this->objectManager
                     ->getRepository(\RZ\Roadiz\CoreBundle\Entity\NodesSources::class)
-                    ->findByNodesSourcesAndFieldAndTranslation(
+                    ->findByNodesSourcesAndFieldNameAndTranslation(
                         $this,
-                        $this->getNode()->getNodeType()->getFieldByName("link_internal_reference")
+                        'link_internal_reference'
                     );
             } else {
                 $this->linkInternalReferenceSources = [];

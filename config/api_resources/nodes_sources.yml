@@ -1,66 +1,66 @@
----
-RZ\Roadiz\CoreBundle\Entity\NodesSources:
-    operations:
-        ApiPlatform\Metadata\GetCollection:
-            method: "GET"
-            normalizationContext:
-                groups:
-                    - nodes_sources_base
-                    - nodes_sources_default
-                    - user
-                    - urls
-                    - tag_base
-                    - translation_base
-                    - document_display
+resources:
+    RZ\Roadiz\CoreBundle\Entity\NodesSources:
+        operations:
+            ApiPlatform\Metadata\GetCollection:
+                method: "GET"
+                normalizationContext:
+                    groups:
+                        - nodes_sources_base
+                        - nodes_sources_default
+                        - user
+                        - urls
+                        - tag_base
+                        - translation_base
+                        - document_display
 
-        api_nodes_sources_archives:
-            class: ApiPlatform\Metadata\GetCollection
-            method: 'GET'
-            uriTemplate: '/nodes_sources/archives'
-            pagination_enabled: false
-            pagination_client_enabled: false
-            extraProperties:
-                archive_enabled: true
-                archive_publication_field_name: publishedAt
-            normalizationContext:
-                groups:
-                    - get
-                    - archives
-            openapiContext:
-                summary: Get available NodesSources archives
-                parameters: ~
-                description: |
-                    Get available NodesSources archives (years and months) based on their `publishedAt` field
+            api_nodes_sources_archives:
+                class: ApiPlatform\Metadata\GetCollection
+                method: 'GET'
+                uriTemplate: '/nodes_sources/archives'
+                pagination_enabled: false
+                pagination_client_enabled: false
+                extraProperties:
+                    archive_enabled: true
+                    archive_publication_field_name: publishedAt
+                normalizationContext:
+                    groups:
+                        - get
+                        - archives
+                openapiContext:
+                    summary: Get available NodesSources archives
+                    parameters: ~
+                    description: |
+                        Get available NodesSources archives (years and months) based on their `publishedAt` field
 
-        api_nodes_sources_search:
-            class: ApiPlatform\Metadata\GetCollection
-            method: 'GET'
-            uriTemplate: '/nodes_sources/search'
-            controller: RZ\Roadiz\CoreBundle\Api\Controller\NodesSourcesSearchController
-            read: false
-            normalizationContext:
-                groups:
-                    - get
-                    - nodes_sources_base
-                    - nodes_sources_default
-                    - urls
-                    - tag_base
-                    - translation_base
-                    - document_display
-            openapiContext:
-                summary: Search NodesSources resources
-                description: |
-                    Search all website NodesSources resources using **Solr** full-text search engine
-                parameters:
-                    -   type: string
-                        name: search
-                        in: query
-                        required: true
-                        description: Search pattern
-                        schema:
-                            type: string
+            api_nodes_sources_search:
+                class: ApiPlatform\Metadata\GetCollection
+                method: 'GET'
+                uriTemplate: '/nodes_sources/search'
+                controller: RZ\Roadiz\CoreBundle\Api\Controller\NodesSourcesSearchController
+                read: false
+                normalizationContext:
+                    groups:
+                        - get
+                        - nodes_sources_base
+                        - nodes_sources_default
+                        - urls
+                        - tag_base
+                        - translation_base
+                        - document_display
+                openapiContext:
+                    summary: Search NodesSources resources
+                    description: |
+                        Search all website NodesSources resources using **Solr** full-text search engine
+                    parameters:
+                        -   type: string
+                            name: search
+                            in: query
+                            required: true
+                            description: Search pattern
+                            schema:
+                                type: string
 
-        ApiPlatform\Metadata\Get:
-            method: 'GET'
-            normalizationContext:
-                groups: ["nodes_sources", "urls", "tag_base", "translation_base", "document_display"]
+            ApiPlatform\Metadata\Get:
+                method: 'GET'
+                normalizationContext:
+                    groups: ["nodes_sources", "urls", "tag_base", "translation_base", "document_display"]

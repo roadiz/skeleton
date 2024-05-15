@@ -57,12 +57,16 @@ services:
             # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
             # Listen HTTP
             - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=http"
+            # Always use higher priority for your API app with PathPrefix rule
+            - "traefik.http.routers.${APP_NAMESPACE}.priority=11"
             # Combine Host and PathPrefix to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
             - "traefik.http.routers.${APP_NAMESPACE}.service=${APP_NAMESPACE}"
             # Listen HTTPS
             - "traefik.http.routers.${APP_NAMESPACE}_secure.entrypoints=https"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls=true"
+            # Always use higher priority for your API app with PathPrefix rule
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.priority=11"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.certresolver=letsencrypt"
             # Combine Host and PathPrefix to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=Host(${HOSTNAME}) && PathPrefix(${PATH_PREFIX})"
@@ -104,7 +108,7 @@ services:
             - "com.centurylinklabs.watchtower.enable=true"
             - "com.centurylinklabs.watchtower.depends-on=/skeleton-app-1"
 
-    app:
+    app: &app_template
         image: my-registry/roadiz_skeleton:latest
         restart: always
         depends_on:
@@ -145,28 +149,16 @@ services:
             - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     worker:
-        extends:
-            service: app
+        <<: *app_template
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
             replicas: 1
         entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
-        restart: always
-        labels:
-            - "com.centurylinklabs.watchtower.enable=true"
-            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
 
     cron:
-        extends:
-            service: app
-        # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
-        init: true
-        entrypoint: [ "crond", "-f", "-L", "15" ]
-        restart: always
-        labels:
-            - "com.centurylinklabs.watchtower.enable=true"
-            - "com.centurylinklabs.watchtower.depends-on=/skeleton-redis-1"
+        <<: *app_template
+        entrypoint: 'docker-cron-entrypoint'
 
     #solr:
     #    image: my-registry/roadiz_skeleton/solr:latest

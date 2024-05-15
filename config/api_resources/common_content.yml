@@ -1,28 +1,29 @@
-App\Api\Model\CommonContent:
-    operations:
-        getCommonContent:
-            class: ApiPlatform\Metadata\Get
-            method: 'GET'
-            uriTemplate: '/common_content'
-            read: false
-            controller: App\Controller\GetCommonContentController
-            pagination_enabled: false
-            normalizationContext:
-                enable_max_depth: true
+resources:
+    App\Api\Model\CommonContent:
+        operations:
+            getCommonContent:
+                class: ApiPlatform\Metadata\Get
+                method: 'GET'
+                uriTemplate: '/common_content'
+                read: false
+                controller: App\Controller\GetCommonContentController
                 pagination_enabled: false
-                groups:
-                    - get
-                    - common_content
-                    - web_response
-                    - walker
-                    - walker_level
-                    - children
-                    - children_count
-                    - nodes_sources_base
-                    - nodes_sources_default
-                    - urls
-                    #- blocks_urls
-                    - tag_base
-                    - translation_base
-                    - document_display
-                    - document_folders
+                normalizationContext:
+                    enable_max_depth: true
+                    pagination_enabled: false
+                    groups:
+                        - get
+                        - common_content
+                        - web_response
+                        - walker
+                        - walker_level
+                        - children
+                        - children_count
+                        - nodes_sources_base
+                        - nodes_sources_default
+                        - urls
+                        #- blocks_urls
+                        - tag_base
+                        - translation_base
+                        - document_display
+                        - document_folders

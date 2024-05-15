@@ -1,6 +1,6 @@
 # Gitlab CI
 # Replace “roadiz_skeleton” with your project slug
-image: roadiz/php81-runner
+image: roadiz/php83-runner
 
 stages:
     - test
@@ -29,6 +29,17 @@ roadiz_skeleton_test:
         key: ${CI_COMMIT_REF_SLUG}
         paths:
             - vendor/
+    variables:
+        XDEBUG_MODE: "coverage"
+    artifacts:
+        expire_in: 1 day
+        paths:
+            - coverage
+        reports:
+            junit: coverage/report.xml
+            coverage_report:
+                coverage_format: cobertura
+                path: coverage/cobertura.xml
     #before_script:
         #- eval "$(ssh-agent -s)"
         #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -44,6 +55,7 @@ roadiz_skeleton_test:
         - composer install
         - php -d memory_limit=-1 vendor/bin/phpcs -p ./src
         - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
+        - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
 
 roadiz_skeleton_build:
     stage: build

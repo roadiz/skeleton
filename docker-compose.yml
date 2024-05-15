@@ -1,3 +1,4 @@
+name: skeleton
 services:
     db:
         build:
@@ -49,7 +50,7 @@ services:
             - "traefik.http.routers.${APP_NAMESPACE}_pma_secure.rule=Host(${HOSTNAME_PMA})"
             - "traefik.http.routers.${APP_NAMESPACE}_pma_secure.service=${APP_NAMESPACE}_pma"
 
-    app:
+    app: &app_template
         # Need to pass all vars to docker env for Crontab and supervisor scripts
         #env_file: "./.env.local"
         build:
@@ -113,8 +114,7 @@ services:
 #            - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
 
     worker:
-        extends:
-            service: app
+        <<: *app_template
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
@@ -123,11 +123,8 @@ services:
         restart: unless-stopped
 
     cron:
-        extends:
-            service: app
-        # https://github.com/dubiousjim/dcron/issues/13#issuecomment-1406937781
-        init: true
-        entrypoint: [ "crond", "-f", "-L", "15" ]
+        <<: *app_template
+        entrypoint: 'docker-cron-entrypoint'
         restart: unless-stopped
 
 #    solr:

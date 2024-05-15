@@ -1,5 +1,5 @@
 FROM solr:8-slim
-MAINTAINER Ambroise Maupate <ambroise@rezo-zero.com>
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=8983
 

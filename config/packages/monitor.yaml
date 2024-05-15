@@ -1,0 +1,30 @@
+liip_monitor:
+    # enabling the controller requires that `assets` are enabled in the framework bundle
+    enable_controller: false
+    checks:
+        groups:
+            default:
+                # Checks to see if the disk usage is below warning/critical percent thresholds
+                disk_usage:
+                    warning:              70
+                    critical:             90
+                    path:                 '%kernel.cache_dir%'
+
+                # Connection name or an array of connection names
+                doctrine_dbal:       [default]
+
+                # Checks to see if migrations from specified configuration file are applied
+                doctrine_migrations:
+                    migrations:
+                        connection: default
+
+                # Validate that a Redis service is running
+#                redis:
+#                    cache_service:
+#                        dsn: '%env(string:REDIS_DSN)%'
+
+                # Validate that a messenger transport does not contain more than warning/critical messages
+                # Transport must implement MessageCountAwareInterface
+                messenger_transports:
+                    async:
+                        critical_threshold:   10   # required

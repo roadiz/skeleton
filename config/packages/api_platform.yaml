@@ -1,11 +1,18 @@
+parameters:
+    env(HTTP_CACHE_STALE_WHILE_REVALIDATE): 3600
+    env(HTTP_CACHE_MAX_AGE): 60
+    env(HTTP_CACHE_SHARED_MAX_AGE): 600
+
 api_platform:
     patch_formats:
         json: ['application/merge-patch+json']
-    enable_swagger_ui: false
-    metadata_backward_compatibility_layer: false
+    enable_swagger_ui: true
     enable_re_doc: true
     graphql:
+        introspection: '%kernel.debug%'
         graphiql:
+            enabled: false
+        graphql_playground:
             enabled: false
     show_webby: false
     swagger:
@@ -21,6 +28,13 @@ api_platform:
             - '%kernel.project_dir%/vendor/rezozero/tree-walker/src'
             - '%kernel.project_dir%/config/api_resources'
     defaults:
+        stateless: true
+        extra_properties:
+            standard_put: true
+            rfc_7807_compliant_errors: false
+        enable_max_depth: true
+        normalization_context:
+            skip_null_values: true
         pagination_client_items_per_page: true
         pagination_items_per_page: 15
         pagination_maximum_items_per_page: 50
@@ -32,6 +46,7 @@ api_platform:
             max_age: '%env(int:HTTP_CACHE_MAX_AGE)%'
             # Default value for the response shared (proxy) max age.
             shared_max_age: '%env(int:HTTP_CACHE_SHARED_MAX_AGE)%'
+            stale_while_revalidate: '%env(int:HTTP_CACHE_STALE_WHILE_REVALIDATE)%'
             # Default values of the "Vary" HTTP header.
             vary: ['Accept', 'Authorization', 'Origin', 'Accept-Encoding', 'Content-Type']
     collection:
@@ -40,6 +55,12 @@ api_platform:
 
 when@prod:
     api_platform:
+        graphql:
+            introspection: false
+            graphiql:
+                enabled: false
+            graphql_playground:
+                enabled: false
         http_cache:
             invalidation:
                 enabled: true
