@@ -16,16 +16,16 @@ update:
 	make cache;
 
 migrate:
-	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate
+	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate -n
 	# Apply files changes and create new Doctrine migrations if necessary
 	docker compose exec -u www-data app php bin/console app:migrate
 	# Stop workers to force restart them (Supervisord)
 	docker compose exec -u www-data app php bin/console messenger:stop-workers
 
 install:
-	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate
+	docker compose exec -u www-data app php bin/console doctrine:migrations:migrate -n
 	# Do not perform files changes on the database
-	docker compose exec -u www-data app php bin/console app:install
+	docker compose exec -u www-data app php bin/console app:install -n
 	docker compose exec -u www-data app bin/console install;
 	make cache;
 
