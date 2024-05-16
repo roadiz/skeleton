@@ -1,4 +1,4 @@
-name: skeleton
+#name: skeleton
 services:
     db:
         build:
@@ -21,8 +21,8 @@ services:
 
     pma:
         image: phpmyadmin/phpmyadmin
-#        ports:
-#            - ${PUBLIC_PMA_PORT}:80/tcp
+        ports:
+            - ${PUBLIC_PMA_PORT}:80/tcp
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -77,8 +77,8 @@ services:
 
     nginx:
         image: roadiz/nginx-alpine:latest
-#        ports:
-#            - ${PUBLIC_APP_PORT}:80/tcp
+        ports:
+            - ${PUBLIC_APP_PORT}:80/tcp
         depends_on:
             - app
         # Nginx does not resolve `app` hostname correctly
