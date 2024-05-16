@@ -1,6 +1,6 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
-name: skeleton
+#name: skeleton
 services:
     db:
         image: mysql:8.0
