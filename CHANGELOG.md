@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.1](https://github.com/roadiz/skeleton/compare/v2.3.0...v2.3.1) - 2024-05-16
+
+### Bug Fixes
+
+- Missing redis-messenger package at composer create-project. Missing JWT_PASSPHRASE default value. - ([c27aebc](https://github.com/roadiz/skeleton/commit/c27aebc8d60ef5df21e5ba0fdc16b8a520d7a1bb)) - Ambroise Maupate
+
 ## [2.3.0](https://github.com/roadiz/skeleton/compare/v2.2.1...v2.3.0) - 2024-05-15
 
 ### Bug Fixes
