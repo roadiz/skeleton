@@ -3,6 +3,7 @@ LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=1000
 ENV APP_ENV=prod
+ENV APP_RUNTIME_ENV=prod
 ENV APP_DEBUG=0
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
 ENV MYSQL_HOST=db
