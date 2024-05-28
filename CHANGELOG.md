@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.3](https://github.com/roadiz/skeleton/compare/v2.3.2...v2.3.3) - 2024-05-28
+
+### Features
+
+- Allow exposing `Cache-Tags` header when Varnish serve API and Nuxt responses - ([0833570](https://github.com/roadiz/skeleton/commit/083357092318e9b08ba400a5270457d563655f10)) - Ambroise Maupate
+
 ## [2.3.1](https://github.com/roadiz/skeleton/compare/v2.3.0...v2.3.1) - 2024-05-16
 
 ### Bug Fixes

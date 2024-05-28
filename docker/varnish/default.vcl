@@ -195,9 +195,9 @@ sub vcl_deliver {
     #
     # You can do accounting or modifying the final object here.
 
-    # Remove cache-tags, unless you want Cloudflare or other to see them
+    # Remove cache-tags, unless you want Cloudflare or Nuxt to see them (to use cache tags on Nuxt responses)
+    # Make sure to allow CORS on Cache-Tags header if you want to use it on Nuxt.
     unset resp.http.X-Cache-Tags;
-    # Comment the following line to send the "Cache-Tags" header to the client (e.g. to use CloudFlare cache tags)
     unset resp.http.Cache-Tags;
 }
 
