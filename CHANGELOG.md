@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.4](https://github.com/roadiz/skeleton/compare/v2.3.3...v2.3.4) - 2024-05-29
+
+### Features
+
+- **(Sentry)** Added more options to expose environment - ([1009bdc](https://github.com/roadiz/skeleton/commit/1009bdc84fcb1d07f9f9f6705752737d12b1a581)) - Ambroise Maupate
+
 ## [2.3.3](https://github.com/roadiz/skeleton/compare/v2.3.2...v2.3.3) - 2024-05-28
 
 ### Features
