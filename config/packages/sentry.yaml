@@ -1,6 +1,12 @@
+parameters:
+    env(SENTRY_ENVIRONMENT): 'preproduction'
+
 sentry:
     register_error_listener: false
 
 when@prod:
     sentry:
         dsn: '%env(SENTRY_DSN)%'
+        options:
+            release: '%env(APP_VERSION)%'
+            environment: '%env(SENTRY_ENVIRONMENT)%'
