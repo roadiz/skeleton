@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.5](https://github.com/roadiz/skeleton/compare/v2.3.4...v2.3.5) - 2024-05-31
+
+### Features
+
+- Use Redis for session storage in production - ([b7932d3](https://github.com/roadiz/skeleton/commit/b7932d3021d1a2509f7330da47342ff19c77e3f9)) - Ambroise Maupate
+
 ## [2.3.4](https://github.com/roadiz/skeleton/compare/v2.3.3...v2.3.4) - 2024-05-29
 
 ### Features
