@@ -50,3 +50,9 @@ when@test:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+
+# Use Redis for session storage in production
+when@prod:
+    framework:
+        session:
+            handler_id: '%env(string:REDIS_DSN)%'
