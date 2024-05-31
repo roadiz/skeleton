@@ -53,6 +53,9 @@ when@test:
 
 when@prod:
     framework:
+        # Use Redis for session storage in production
+        session:
+            handler_id: '%env(string:REDIS_DSN)%'
         php_errors:
             # E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
             log: 22519
