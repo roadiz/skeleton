@@ -1,12 +1,23 @@
 parameters:
     env(SENTRY_ENVIRONMENT): 'preproduction'
 
-sentry:
-    register_error_listener: false
-
 when@prod:
     sentry:
         dsn: '%env(SENTRY_DSN)%'
+
+        # If you are using Monolog, you also need this additional configuration to log the errors correctly:
+        # https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
+        register_error_listener: false
+        register_error_handler: false
+
         options:
-            release: '%env(APP_VERSION)%'
+            release: '%env(API_VERSION)%'
             environment: '%env(SENTRY_ENVIRONMENT)%'
+
+    monolog:
+        handlers:
+            sentry:
+                type: sentry
+                level: !php/const Monolog\Logger::ERROR
+                hub_id: Sentry\State\HubInterface
+                fill_extra_context: true # Enables sending monolog context to Sentry
