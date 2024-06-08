@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.6](https://github.com/roadiz/skeleton/compare/v2.3.5...v2.3.6) - 2024-06-08
+
+### Bug Fixes
+
+- Improved Sentry integration - ([0f07a87](https://github.com/roadiz/skeleton/commit/0f07a875cb2c68d1c20c290e64eb36f87afde31b)) - Ambroise Maupate
+
 ## [2.3.5](https://github.com/roadiz/skeleton/compare/v2.3.4...v2.3.5) - 2024-05-31
 
 ### Features
