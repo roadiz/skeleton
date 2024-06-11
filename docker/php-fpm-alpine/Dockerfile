@@ -37,5 +37,4 @@ RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
     && /usr/bin/crontab -u www-data /crontab.txt \
     && chmod +x /wait-for-it.sh \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
-    && chmod +x /usr/local/bin/docker-cron-entrypoint \
-    && chown -R www-data:www-data /var/www/html/
+    && chmod +x /usr/local/bin/docker-cron-entrypoint
