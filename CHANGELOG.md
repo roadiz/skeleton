@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.7](https://github.com/roadiz/skeleton/compare/v2.3.6...v2.3.7) - 2024-06-11
+
+### Bug Fixes
+
+- Fix root folder permissions, do not chown twice during Dockerfile build - ([fe8a101](https://github.com/roadiz/skeleton/commit/fe8a10189d5b361800990bb765103a2f6c59c5ed)) - Ambroise Maupate
+
 ## [2.3.6](https://github.com/roadiz/skeleton/compare/v2.3.5...v2.3.6) - 2024-06-08
 
 ### Bug Fixes

@@ -38,7 +38,21 @@ RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
     && chmod +x /wait-for-it.sh \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && chmod +x /usr/local/bin/docker-cron-entrypoint \
-    && chown -R www-data:www-data /var/www/html/
+    && chmod 0755 /var/www/html/bin/console \
+    && chmod 0750 /var/www/html \
+    && chmod 0750 \
+        /var/www/html/bin \
+        /var/www/html/config \
+        /var/www/html/docker \
+        /var/www/html/migrations \
+        /var/www/html/public \
+        /var/www/html/src \
+        /var/www/html/templates \
+        /var/www/html/themes \
+        /var/www/html/translations \
+        /var/www/html/var \
+        /var/www/html/vendor \
+    && chown www-data:www-data /var/www/html
 
 VOLUME /var/www/html/config/jwt \
        /var/www/html/config/secrets \
