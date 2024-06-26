@@ -11,7 +11,7 @@ when@prod:
         register_error_handler: false
 
         options:
-            release: '%env(API_VERSION)%'
+            release: '%env(APP_VERSION)%'
             environment: '%env(SENTRY_ENVIRONMENT)%'
 
     monolog:
