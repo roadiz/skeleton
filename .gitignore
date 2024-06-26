@@ -46,6 +46,11 @@ openapi.json
 
 /public/assets/*
 /public/files/*
+
+# We need to track main .env and phpstan.neon files
+!/.env
+!/phpstan.neon
+
 !/public/assets/.gitkeep
 !/public/files/.gitkeep
 !/var/secret/.gitkeep

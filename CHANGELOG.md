@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.8](https://github.com/roadiz/skeleton/compare/v2.3.7...v2.3.8) - 2024-06-26
+
+### Bug Fixes
+
+- DotEnv var name - ([2a0e4f1](https://github.com/roadiz/skeleton/commit/2a0e4f1d0b7c703346e63dc7136697a4fd529ad4)) - Ambroise Maupate
+
 ## [2.3.7](https://github.com/roadiz/skeleton/compare/v2.3.6...v2.3.7) - 2024-06-11
 
 ### Bug Fixes
