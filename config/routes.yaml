@@ -16,7 +16,6 @@ api_login_check:
     methods: [POST]
     path: /api/token
 
-
 api_contact_form_definition:
     methods: [GET]
     path: /api/contact_form/definition

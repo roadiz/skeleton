@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.3.9](https://github.com/roadiz/skeleton/compare/v2.3.8...v2.3.9) - 2024-08-01
+
+### Bug Fixes
+
+- Removed useless `themes` folder - ([f06198c](https://github.com/roadiz/skeleton/commit/f06198ce0b7584b8b7294cb42662a73b9fe9b7c0)) - Ambroise Maupate
+
 ## [2.3.8](https://github.com/roadiz/skeleton/compare/v2.3.7...v2.3.8) - 2024-06-26
 
 ### Bug Fixes
