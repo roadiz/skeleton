@@ -76,6 +76,16 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
+            # Enable login-link feature
+            # https://symfony.com/doc/current/security/login_link.html
+            login_link:
+                check_route: login_link_check
+                signature_properties: [ 'id', 'email' ]
+                # lifetime in seconds
+                lifetime: 300
+                # only allow the link to be used 3 times
+                max_uses: 3
+                success_handler: RZ\Roadiz\CoreBundle\Security\Authentication\BackofficeAuthenticationSuccessHandler
             login_throttling:
                 max_attempts: 3
             logout:
