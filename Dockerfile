@@ -48,7 +48,6 @@ RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
         /var/www/html/public \
         /var/www/html/src \
         /var/www/html/templates \
-        /var/www/html/themes \
         /var/www/html/translations \
         /var/www/html/var \
         /var/www/html/vendor \

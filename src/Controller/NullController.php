@@ -9,8 +9,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Do not serve nodes-sources from their Path or Path + .json.
- *
- * @package App\Controller
  */
 final class NullController
 {
