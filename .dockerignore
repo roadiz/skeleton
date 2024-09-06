@@ -14,9 +14,10 @@ tests
 README.md
 Dockerfile
 Dockerfile.archive
-docker-compose.yml
-docker-compose.env
-docker-compose.standalone.yml
+compose.yml
+compose.env
+compose.standalone.yml
+compose.override.yml
 
 */temp*
 */*/temp*
