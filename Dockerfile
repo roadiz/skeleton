@@ -53,6 +53,8 @@ RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
         /var/www/html/vendor \
     && chown www-data:www-data /var/www/html
 
+USER www-data
+
 VOLUME /var/www/html/config/jwt \
        /var/www/html/config/secrets \
        ##

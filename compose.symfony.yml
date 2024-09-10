@@ -1,7 +1,7 @@
 #
 # Only use this docker compose template if you prefer using symfony server:start
 #
-#name: skeleton
+name: skeleton
 services:
     db:
         build:

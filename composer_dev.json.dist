@@ -13,6 +13,7 @@
         "nelmio/cors-bundle": "^2.4",
         "roadiz/cms-pack": "dev-develop",
         "sentry/sentry-symfony": "^4.13",
+        "symfony/redis-messenger": "6.4.*",
         "symfony/flex": "*",
         "symfony/requirements-checker": "^2.0"
     },

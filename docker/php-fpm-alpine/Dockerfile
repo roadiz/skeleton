@@ -38,3 +38,5 @@ RUN ln -s /var/www/html/bin/console /usr/local/bin/console \
     && chmod +x /wait-for-it.sh \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && chmod +x /usr/local/bin/docker-cron-entrypoint
+
+USER www-data

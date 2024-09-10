@@ -11,6 +11,7 @@
 /public/themes/
 /var/
 /vendor/
+compose.override.yml
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

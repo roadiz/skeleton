@@ -1,4 +1,4 @@
-#name: skeleton
+name: skeleton
 services:
     db:
         build:
@@ -126,6 +126,7 @@ services:
         <<: *app_template
         entrypoint: 'docker-cron-entrypoint'
         restart: unless-stopped
+        user: root
 
 #    solr:
 #        build:
