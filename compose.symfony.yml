@@ -11,8 +11,6 @@ services:
                 USER_UID: ${USER_UID}
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
-        ports:
-            - ${PUBLIC_DB_PORT}:3306/tcp
         networks:
             default:
         volumes:

@@ -18,6 +18,7 @@ compose.yml
 compose.env
 compose.standalone.yml
 compose.override.yml
+compose.override.yml.dist
 
 */temp*
 */*/temp*

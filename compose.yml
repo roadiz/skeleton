@@ -21,8 +21,6 @@ services:
 
     pma:
         image: phpmyadmin/phpmyadmin
-        ports:
-            - ${PUBLIC_PMA_PORT}:80/tcp
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -77,8 +75,6 @@ services:
 
     nginx:
         image: roadiz/nginx-alpine:latest
-        ports:
-            - ${PUBLIC_APP_PORT}:80/tcp
         depends_on:
             - app
         # Nginx does not resolve `app` hostname correctly
@@ -134,8 +130,6 @@ services:
 #            context: ./docker/solr
 #            args:
 #                USER_UID: ${USER_UID}
-##        ports:
-##            - "${PUBLIC_SOLR_PORT}:8983/tcp"
 #        volumes:
 #            - "solr_data:/var/solr:delegated"
 #        environment:
@@ -166,8 +160,6 @@ services:
 
     mailer:
         image: mailhog/mailhog
-#        ports:
-#            - ${PUBLIC_MAILER_PORT}:8025/tcp
         networks:
             frontproxynet:
                 aliases:
@@ -205,8 +197,6 @@ services:
             - app:app
             - cron:cron
             - worker:worker
-#        ports:
-#            - ${PUBLIC_VARNISH_PORT}:80/tcp
         networks:
             frontproxynet:
                 aliases:
