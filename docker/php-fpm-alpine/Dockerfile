@@ -26,7 +26,7 @@ ADD php.ini /usr/local/etc/php/php.ini
 ADD crontab.txt /crontab.txt
 ADD wait-for-it.sh /wait-for-it.sh
 ADD docker-php-entrypoint-dev /usr/local/bin/docker-php-entrypoint
-ADD docker-cron-entrypoint /usr/local/bin/docker-cron-entrypoint
+ADD docker-cron-entrypoint-dev /usr/local/bin/docker-cron-entrypoint
 
 VOLUME /var/www/html
 WORKDIR /var/www/html

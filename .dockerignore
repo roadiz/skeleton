@@ -57,7 +57,9 @@ project_env.sh
 !docker/solr/managed-schema.xml
 !docker/php-fpm-alpine/crontab.txt
 !docker/php-fpm-alpine/docker-php-entrypoint
+!docker/php-fpm-alpine/docker-php-entrypoint-dev
 !docker/php-fpm-alpine/docker-cron-entrypoint
+!docker/php-fpm-alpine/docker-cron-entrypoint-dev
 !docker/php-fpm-alpine/php.ini
 !docker/php-fpm-alpine/php.prod.ini
 !docker/php-fpm-alpine/wait-for-it.sh

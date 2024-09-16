@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+env >> /etc/environment
+
+# Print env infos
+echo "APP_ENV=${APP_ENV}";
+echo "APP_RUNTIME_ENV=${APP_RUNTIME_ENV}";
+echo "APP_DEBUG=${APP_DEBUG}";
+# Debug infos
+/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_ENV=${APP_ENV}\"";
+/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_RUNTIME_ENV=${APP_RUNTIME_ENV}\"";
+/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_DEBUG=${APP_DEBUG}\"";
+
+/bin/chown -R www-data:www-data /var/www/html/var || true;
+/bin/chown -R www-data:www-data /var/www/html/config || true;
+
+# DO NOT Print local env vars to .env.xxx.php file in DEV mode
+
+# Let cron take the wheel
+echo "Starting cron in foreground."
+/usr/sbin/crond -f -l 8
