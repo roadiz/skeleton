@@ -3,6 +3,12 @@ set -e
 
 env >> /etc/environment
 
+# cron entrypoint must be run as root as it spawns crontab for each system user
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Please run as root"
+    exit 1
+fi
+
 # Print env infos
 echo "APP_ENV=${APP_ENV}";
 echo "APP_RUNTIME_ENV=${APP_RUNTIME_ENV}";
