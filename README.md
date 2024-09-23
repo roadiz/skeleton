@@ -37,7 +37,55 @@ When you're ready you can check that *Symfony* console responds through your Doc
 docker compose exec -u www-data app bin/console
 ```
 
-### Using `symfony server:start` instead of Docker
+#### Using Docker for development
+
+If you want to ensure that your local environment is as close as possible to your production environment, 
+you should use Docker. This skeleton comes with development and production `Dockerfile` configurations. So you will
+avoid troubles with installing PHP extensions, Solr, Varnish, Redis, MySQL, etc. You can also use `composer` inside
+your app container to install your dependencies.
+
+```shell
+# This command will run once APP container to install your dependencies without starting other services
+docker compose run --rm --no-deps --entrypoint= app composer install
+```
+
+To access your app services, you will have to expose ports locally in your `compose.override.yml` file.
+Copy `compose.override.yml.dist` to `compose.override.yml` file to override your `compose.yml` file and expose 
+your app container ports for local development:
+
+```yaml
+# Expose all services default ports for local development
+services:
+    db:
+        ports:
+            - ${PUBLIC_DB_PORT}:3306/tcp
+    nginx:
+        ports:
+            - ${PUBLIC_NGINX_PORT}:80/tcp
+    mailer:
+        ports:
+            - ${PUBLIC_MAILER_PORT}:8025/tcp
+    varnish:
+        ports:
+            - ${PUBLIC_VARNISH_PORT}:80/tcp
+    redis:
+        ports:
+            - ${PUBLIC_REDIS_PORT}:6379/tcp
+    pma:
+        ports:
+            - ${PUBLIC_PMA_PORT}:80/tcp
+    #app:
+    #    # If your project requires private package you can share your ssh keys with the container
+    #    volumes:
+    #        - ./:/var/www/html:cached
+    #        - /home/my-user/.ssh/id_ed25519:/home/www-data/.ssh/id_ed25519:ro
+
+    #solr:
+    #    ports:
+    #        - "${PUBLIC_SOLR_PORT}:8983/tcp"
+```
+
+#### Or use `symfony server:start` instead of Docker
 
 If you are working on a *macOS* environment, you may prefer using `symfony` binary to start a local webserver instead of using
 a full _Docker_ stack. You will need to install `symfony` binary first:
