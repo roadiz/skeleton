@@ -13,3 +13,5 @@ RUN set -ex; \
 COPY managed-schema.xml /opt/solr/server/solr/configsets/_default/conf/managed-schema
 
 USER $SOLR_USER
+# Redeclare VOLUME to change permissions
+VOLUME /var/solr
