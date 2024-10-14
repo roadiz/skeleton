@@ -1,4 +1,4 @@
-name: skeleton
+name: ${APP_NAMESPACE}
 services:
     db:
         build:
