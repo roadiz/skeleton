@@ -5,7 +5,7 @@ cache:
 	docker compose exec -u www-data app php bin/console messenger:stop-workers
 
 test:
-	docker compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/phpcbf --report=full --report-file=./report.txt -p ./src
+	docker compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
 	docker compose exec -u www-data app php -d "memory_limit=-1" vendor/bin/phpstan analyse -c phpstan.neon
 	XDEBUG_MODE=coverage php -d "memory_limit=-1" vendor/bin/phpunit
 

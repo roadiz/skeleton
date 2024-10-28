@@ -11,10 +11,8 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 final class MenuLinkPathNormalizer extends AbstractPathNormalizer
 {
     /**
-     * @param mixed $object
-     * @param string|null $format
-     * @param array $context
      * @return array|\ArrayObject|bool|float|int|mixed|string|null
+     *
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function normalize(mixed $object, ?string $format = null, array $context = []): mixed
@@ -26,12 +24,13 @@ final class MenuLinkPathNormalizer extends AbstractPathNormalizer
                 $actualUrl = $this->urlGenerator->generate(
                     RouteObjectInterface::OBJECT_BASED_ROUTE_NAME,
                     [
-                        RouteObjectInterface::ROUTE_OBJECT => $object->getLinkInternalReferenceSources()[0]
+                        RouteObjectInterface::ROUTE_OBJECT => $object->getLinkInternalReferenceSources()[0],
                     ]
                 );
             }
             $data['url'] = $actualUrl;
         }
+
         return $data;
     }
 }

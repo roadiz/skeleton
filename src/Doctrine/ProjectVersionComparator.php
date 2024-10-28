@@ -12,6 +12,7 @@ class ProjectVersionComparator implements Comparator
     private function getClassname(Version $version): string
     {
         $tokens = explode('\\', (string) $version);
+
         return $tokens[count($tokens) - 1];
     }
 
@@ -19,6 +20,7 @@ class ProjectVersionComparator implements Comparator
     {
         $classA = $this->getClassname($a);
         $classB = $this->getClassname($b);
+
         /*
          * Only compare class-name timestamp
          */

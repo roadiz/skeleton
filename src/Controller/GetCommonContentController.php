@@ -25,7 +25,7 @@ final class GetCommonContentController extends AbstractController
         private readonly ManagerRegistry $managerRegistry,
         private readonly NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory,
         private readonly PreviewResolverInterface $previewResolver,
-        private readonly TreeWalkerGenerator $treeWalkerGenerator
+        private readonly TreeWalkerGenerator $treeWalkerGenerator,
     ) {
     }
 
@@ -52,6 +52,7 @@ final class GetCommonContentController extends AbstractController
                 $translation,
                 4
             );
+
             return $resource;
         } catch (ResourceNotFoundException $exception) {
             throw $this->createNotFoundException($exception->getMessage(), $exception);
@@ -63,11 +64,12 @@ final class GetCommonContentController extends AbstractController
         if (!class_exists('\App\GeneratedEntity\NSErrorPage')) {
             return null;
         }
+
         // @phpstan-ignore-next-line
         return $this->managerRegistry->getRepository('\App\GeneratedEntity\NSErrorPage')
             ->findOneBy([
                 'translation' => $translation,
-                'node.nodeName' => 'error-page'
+                'node.nodeName' => 'error-page',
             ]);
     }
 
@@ -98,8 +100,9 @@ final class GetCommonContentController extends AbstractController
                 ->findOneAvailableByLocaleOrOverrideLocale((string) $locale);
         }
         if (null === $translation) {
-            throw new NotFoundHttpException('No translation for locale ' . $locale);
+            throw new NotFoundHttpException('No translation for locale '.$locale);
         }
+
         return $translation;
     }
 
@@ -107,11 +110,9 @@ final class GetCommonContentController extends AbstractController
     {
         $repository = $this->managerRegistry->getRepository(TranslationInterface::class);
         if (!$repository instanceof TranslationRepository) {
-            throw new \RuntimeException(
-                'Translation repository must be instance of ' .
-                TranslationRepository::class
-            );
+            throw new \RuntimeException('Translation repository must be instance of '.TranslationRepository::class);
         }
+
         return $repository;
     }
 }

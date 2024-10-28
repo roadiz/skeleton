@@ -34,10 +34,6 @@ compose.override.yml
 .phpcs-cache
 report.txt
 
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-/phpcs.xml
-###< squizlabs/php_codesniffer ###
 openapi.json
 /*.sql
 /*.zip
@@ -59,3 +55,8 @@ openapi.json
 !/var/export/.gitkeep
 
 supervisord.pid
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

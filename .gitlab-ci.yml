@@ -53,7 +53,7 @@ roadiz_skeleton_test:
         #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
     script:
         - composer install
-        - php -d memory_limit=-1 vendor/bin/phpcs -p ./src
+        - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
 

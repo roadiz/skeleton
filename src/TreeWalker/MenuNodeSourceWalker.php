@@ -10,9 +10,6 @@ use RZ\Roadiz\CoreBundle\Api\TreeWalker\NodeSourceWalkerContext;
 use RZ\TreeWalker\AbstractCycleAwareWalker;
 use RZ\TreeWalker\Definition\ZeroChildrenDefinition;
 
-/**
- * @package App\TreeWalker
- */
 final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
 {
     protected function initializeDefinitions(): void
@@ -35,10 +32,7 @@ final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
     {
         $context = $this->getContext();
         if (!$context instanceof NodeSourceWalkerContext) {
-            throw new \InvalidArgumentException(
-                'TreeWalker context must be instance of ' .
-                NodeSourceWalkerContext::class
-            );
+            throw new \InvalidArgumentException('TreeWalker context must be instance of '.NodeSourceWalkerContext::class);
         }
         $childrenNodeTypes = $context->getNodeTypeResolver()->getChildrenNodeTypeList($nodeType);
         if (count($childrenNodeTypes) > 0) {
