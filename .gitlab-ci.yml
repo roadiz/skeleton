@@ -40,18 +40,11 @@ roadiz_skeleton_test:
             coverage_report:
                 coverage_format: cobertura
                 path: coverage/cobertura.xml
-    #before_script:
-        #- eval "$(ssh-agent -s)"
-        #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-        ##
-        ## Create the SSH directory and give it the right permissions
-        ##
-        #- mkdir -p ~/.ssh
-        #- chmod 700 ~/.ssh
-        ## Use your Gitlab instance URL
-        #- ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-        #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
     script:
+        #
+        # If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
+        # in your Gitlab / GitHub CI/CD settings. This deploy-token must have read access to your private repositories.
+        #
         - composer install
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
@@ -79,17 +72,6 @@ roadiz_skeleton_build:
             # Keep themes assets to include them in docker image
             - public/themes/
             - public/bundles/
-    #before_script:
-        #- eval "$(ssh-agent -s)"
-        #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-        ##
-        ## Create the SSH directory and give it the right permissions
-        ##
-        #- mkdir -p ~/.ssh
-        #- chmod 700 ~/.ssh
-        ## Use your Gitlab instance URL
-        #- ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-        #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
     script:
         - composer install --no-dev --optimize-autoloader
 
