@@ -36,6 +36,6 @@ jobs:
             - name: Install Dependencies
               run: composer install --no-scripts --no-ansi --no-interaction --no-progress
             - name: Run PHP Code Sniffer
-              run: vendor/bin/phpcs -p ./src
+              run: vendor/bin/php-cs-fixer check --ansi -vvv
             - name: Run PHPStan
               run: vendor/bin/phpstan analyse --no-progress -c phpstan.neon
