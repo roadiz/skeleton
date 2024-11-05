@@ -3,7 +3,7 @@
 name: ${APP_NAMESPACE}
 services:
     db:
-        image: mysql:8.0
+        image: mysql:8.0.40
         restart: always
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
