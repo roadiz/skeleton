@@ -1,4 +1,4 @@
-FROM mysql:8.0
+FROM mysql:8.0.40
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=1000
