@@ -7,8 +7,6 @@ ENV APP_ENV=dev
 ENV APP_RUNTIME_ENV=dev
 ENV APP_DEBUG=1
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
-ENV MYSQL_HOST=db
-ENV MYSQL_PORT=3306
 
 HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q
 

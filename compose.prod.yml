@@ -245,4 +245,4 @@ networks:
         ipam:
             driver: default
             config:
-                -   subnet: ${DEFAULT_GATEWAY}/16
+                -   subnet: ${DEFAULT_GATEWAY}/24

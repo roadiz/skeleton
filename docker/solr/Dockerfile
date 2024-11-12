@@ -1,4 +1,4 @@
-FROM solr:8-slim
+FROM solr:9-slim
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG USER_UID=8983

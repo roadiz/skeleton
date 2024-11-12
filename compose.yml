@@ -1,6 +1,7 @@
 name: ${APP_NAMESPACE}
 services:
     db:
+        hostname: db
         build:
             # Custom image for file permissions
             context: ./docker/mysql
@@ -9,30 +10,28 @@ services:
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
         networks:
-            default:
+            - default
         volumes:
             - "./.data/db:/var/lib/mysql:delegated"
             - "./docker/mysql/performances.cnf:/etc/mysql/conf.d/performances.cnf"
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+            MYSQL_DATABASE: ${MYSQL_DATABASE:-roadiz}
+            MYSQL_USER: ${MYSQL_USER:-roadiz}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-roadiz}
 
     pma:
-        image: phpmyadmin/phpmyadmin
+        image: phpmyadmin:5.2.1
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_PORT: ${MYSQL_PORT}
+            PMA_HOST: ${MYSQL_HOST:-db}
+            UPLOAD_LIMIT: 64M
+            PMA_USER: ${MYSQL_USER:-roadiz}
+            PMA_PASSWORD: ${MYSQL_PASSWORD:-roadiz}
+        depends_on:
+            - db
         networks:
-            frontproxynet:
-                aliases:
-                    - ${APP_NAMESPACE}_pma
-            default:
+            - frontproxynet
+            - default
         labels:
             - "traefik.enable=true"
             - "traefik.http.services.${APP_NAMESPACE}_pma.loadbalancer.server.scheme=http"
@@ -49,6 +48,8 @@ services:
             - "traefik.http.routers.${APP_NAMESPACE}_pma_secure.service=${APP_NAMESPACE}_pma"
 
     app: &app_template
+        # Nginx does not resolve `app` hostname correctly
+        hostname: app
         # Need to pass all vars to docker env for Crontab and supervisor scripts
         #env_file: "./.env.local"
         build:
@@ -67,19 +68,11 @@ services:
             TRUSTED_PROXIES: ${TRUSTED_PROXIES}
             USER_UID: ${USER_UID}
             DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_PORT: ${MYSQL_PORT}
-            APP_ENV: dev
-            APP_RUNTIME_ENV: dev
-            APP_DEBUG: 1
 
     nginx:
         image: roadiz/nginx-alpine:latest
         depends_on:
             - app
-        # Nginx does not resolve `app` hostname correctly
-        links:
-            - app:app
         volumes:
             - ./:/var/www/html:cached
         networks:
@@ -111,6 +104,7 @@ services:
 
     worker:
         <<: *app_template
+        hostname: worker
         deploy:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
@@ -120,6 +114,7 @@ services:
 
     cron:
         <<: *app_template
+        hostname: cron
         entrypoint: 'docker-cron-entrypoint'
         restart: unless-stopped
         user: root
@@ -159,12 +154,11 @@ services:
 #            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.service=${APP_NAMESPACE}_solr"
 
     mailer:
+        hostname: mailer
         image: axllent/mailpit
         networks:
-            frontproxynet:
-                aliases:
-                    - ${APP_NAMESPACE}_mailer
-            default:
+            - frontproxynet
+            - default
         labels:
             - "traefik.enable=true"
             - "traefik.http.services.${APP_NAMESPACE}_mailer.loadbalancer.server.scheme=http"
@@ -182,6 +176,7 @@ services:
 
     # Use Redis for Cache, Messaging and Sessions
     redis:
+        hostname: redis
         image: redis:7-alpine
         networks:
             - default
@@ -198,10 +193,8 @@ services:
             - cron:cron
             - worker:worker
         networks:
-            frontproxynet:
-                aliases:
-                    - ${APP_NAMESPACE}_varnish
-            default:
+            - frontproxynet
+            - default
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         labels:
@@ -235,7 +228,7 @@ networks:
         ipam:
             driver: default
             config:
-                -   subnet: ${DEFAULT_GATEWAY}/16
+                -   subnet: ${DEFAULT_GATEWAY}/24
 
 volumes:
     solr_data:
