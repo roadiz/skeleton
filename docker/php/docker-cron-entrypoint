@@ -21,8 +21,12 @@ echo "APP_DEBUG=${APP_DEBUG}";
 /bin/chown -R www-data:www-data /var/www/html/var || true;
 /bin/chown -R www-data:www-data /var/www/html/config || true;
 
-# DO NOT Print local env vars to .env.xxx.php file in DEV mode
+# Print local env vars to .env.xxx.php file for performances and crontab jobs
+/usr/bin/sudo -E -u www-data -- bash -c  "/usr/local/bin/composer dump-env prod"
+# To improve performance (i.e. avoid decrypting secrets at runtime),
+# you can decrypt your secrets during deployment to the "local" vault:
+/usr/bin/sudo -E -u www-data -- bash -c "APP_RUNTIME_ENV=prod /var/www/html/bin/console secrets:decrypt-to-local --force"
 
 # Let cron take the wheel
 echo "Starting cron in foreground."
-/usr/sbin/crond -f -l 8
+/usr/sbin/cron -f -l 7

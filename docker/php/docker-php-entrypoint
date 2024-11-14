@@ -26,14 +26,6 @@ echo "APP_DEBUG=${APP_DEBUG}";
 /wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
 
 ##
-## Uncomment following lines to generate node-types found in database
-## This disallow automatic node-type update from Docker image, and local database
-## has priority over committed changes
-##
-#/var/www/html/bin/console generate:nsentities
-#/var/www/html/bin/console generate:api-resources
-
-##
 ## Uncomment following lines to enable automatic migration for your theme at each docker start
 ##
 ## Perform migrations directly as database should be ready thanks to wait-for-it.sh

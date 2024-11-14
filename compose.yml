@@ -3,8 +3,8 @@ services:
     db:
         hostname: db
         build:
-            # Custom image for file permissions
-            context: ./docker/mysql
+            # Custom image for file permissions and performances
+            target: mysql
             args:
                 USER_UID: ${USER_UID}
         cap_add:
@@ -12,8 +12,7 @@ services:
         networks:
             - default
         volumes:
-            - "./.data/db:/var/lib/mysql:delegated"
-            - "./docker/mysql/performances.cnf:/etc/mysql/conf.d/performances.cnf"
+            - "./.data/db:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
             MYSQL_DATABASE: ${MYSQL_DATABASE:-roadiz}
@@ -53,15 +52,15 @@ services:
         # Need to pass all vars to docker env for Crontab and supervisor scripts
         #env_file: "./.env.local"
         build:
-            context: ./docker/php-fpm-alpine
+            target: php-dev
             args:
                 USER_UID: ${USER_UID}
         depends_on:
             - db
-            #- solr
+            - solr
             - redis
         volumes:
-            - ./:/var/www/html:cached
+            - ./:/var/www/html
         networks:
             default:
         environment:
@@ -74,7 +73,7 @@ services:
         depends_on:
             - app
         volumes:
-            - ./:/var/www/html:cached
+            - ./:/var/www/html
         networks:
             default:
 #            frontproxynet:
@@ -109,49 +108,53 @@ services:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
             replicas: 1
+        # official php-fpm image uses SIGQUIT
+        stop_signal: SIGTERM
         entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=600" ]
         restart: unless-stopped
 
     cron:
         <<: *app_template
         hostname: cron
+        # official php-fpm image uses SIGQUIT
+        stop_signal: SIGTERM
         entrypoint: 'docker-cron-entrypoint'
         restart: unless-stopped
         user: root
 
-#    solr:
-#        build:
-#            # Custom image for file permissions
-#            context: ./docker/solr
-#            args:
-#                USER_UID: ${USER_UID}
-#        volumes:
-#            - "solr_data:/var/solr:delegated"
-#        environment:
-#            SOLR_UID: ${USER_UID}
-#            SOLR_GID: ${USER_UID}
-#        command:
-#            - solr-precreate
-#            - ${SOLR_CORE_NAME}
-#        networks:
-#            frontproxynet:
-#                aliases:
-#                    - ${APP_NAMESPACE}_solr
-#            default:
-#        labels:
-#            - "traefik.enable=true"
-#            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.scheme=http"
-#            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.port=8983"
-#            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.passhostheader=true"
-#            # Listen HTTP
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr.entrypoints=http"
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr.rule=Host(${HOSTNAME_SOLR})"
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr.service=${APP_NAMESPACE}_solr"
-#            # Listen HTTPS
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.entrypoints=https"
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.tls=true"
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.rule=Host(${HOSTNAME_SOLR})"
-#            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.service=${APP_NAMESPACE}_solr"
+    solr:
+        build:
+            # Custom image for file permissions
+            target: solr
+            args:
+                USER_UID: ${USER_UID}
+        volumes:
+            - "solr:/var/solr"
+        environment:
+            SOLR_UID: ${USER_UID}
+            SOLR_GID: ${USER_UID}
+        command:
+            - solr-precreate
+            - ${SOLR_CORE_NAME}
+        networks:
+            frontproxynet:
+                aliases:
+                    - ${APP_NAMESPACE}_solr
+            default:
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.scheme=http"
+            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.port=8983"
+            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.passhostheader=true"
+            # Listen HTTP
+            - "traefik.http.routers.${APP_NAMESPACE}_solr.entrypoints=http"
+            - "traefik.http.routers.${APP_NAMESPACE}_solr.rule=Host(${HOSTNAME_SOLR})"
+            - "traefik.http.routers.${APP_NAMESPACE}_solr.service=${APP_NAMESPACE}_solr"
+            # Listen HTTPS
+            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.entrypoints=https"
+            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.tls=true"
+            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.rule=Host(${HOSTNAME_SOLR})"
+            - "traefik.http.routers.${APP_NAMESPACE}_solr_secure.service=${APP_NAMESPACE}_solr"
 
     mailer:
         hostname: mailer
@@ -178,12 +181,21 @@ services:
     redis:
         hostname: redis
         image: redis:7-alpine
+        volumes:
+            - redis:/data
         networks:
             - default
 
+    redis-commander:
+        image: ghcr.io/joeferner/redis-commander:0.9.0
+        environment:
+            REDIS_HOST: redis
+        depends_on:
+            - redis
+
     varnish:
         build:
-            context: ./docker/varnish
+            target: varnish
         tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - nginx
@@ -231,4 +243,5 @@ networks:
                 -   subnet: ${DEFAULT_GATEWAY}/24
 
 volumes:
-    solr_data:
+    redis:
+    solr:

@@ -1,5 +1,3 @@
-# Ignore Roadiz tools and cache for
-# creating a docker image
 .dockerignore
 .DS_Store
 .git
@@ -14,54 +12,37 @@ tests
 README.md
 Dockerfile
 Dockerfile.archive
-compose.yml
-compose.env
-compose.standalone.yml
-compose.override.yml
-compose.override.yml.dist
+compose.*
+sonar-project.properties
 
 */temp*
 */*/temp*
-docker
-.vagrant
-var/sessions/*
-var/log/*
-var/cache/*
-var/secret/*
+var
 /config/secrets/prod/prod.decrypt.private.php
 /config/secrets/prod/prod.encrypt.private.php
-var/*.zip
-var/*.sql
-var/*.tar.gz
 *.zip
 *.sql
 *.log
+*.tar
 *.tar.gz
-themes/*/build
-themes/*/node_modules
-themes/*/app
 */*/*/node_modules
 files/*
 public/files/*
 */*/*/src-img
 */*/src-img
 */*.log
-Vagrantfile
-pimple.json
+.phpcs-cache
 supervisord.pid
 project_env.sh
-.phpcs-cache
+.php-cs-fixer.cache
+vendor
+Makefile
+.editorconfig
+.gitignore
+phpcs.*
+phpstan.*
+restic.*
 
 !.env
-!vendor
-!docker/solr/managed-schema.xml
-!docker/php-fpm-alpine/crontab.txt
-!docker/php-fpm-alpine/docker-php-entrypoint
-!docker/php-fpm-alpine/docker-php-entrypoint-dev
-!docker/php-fpm-alpine/docker-cron-entrypoint
-!docker/php-fpm-alpine/docker-cron-entrypoint-dev
-!docker/php-fpm-alpine/php.ini
-!docker/php-fpm-alpine/php.prod.ini
-!docker/php-fpm-alpine/wait-for-it.sh
 !public/themes/*
 

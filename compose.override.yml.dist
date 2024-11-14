@@ -12,16 +12,13 @@ services:
     varnish:
         ports:
             - ${PUBLIC_VARNISH_PORT}:80/tcp
-    redis:
-        ports:
-            - ${PUBLIC_REDIS_PORT}:6379/tcp
     pma:
         ports:
             - ${PUBLIC_PMA_PORT}:80/tcp
     #app:
     #    # If your project requires private package you can share your ssh keys with the container
     #    volumes:
-    #        - ./:/var/www/html:cached
+    #        - ./:/var/www/html
     #        - /home/my-user/.ssh/id_ed25519:/home/www-data/.ssh/id_ed25519:ro
 
     #solr:
