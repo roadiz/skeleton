@@ -24,6 +24,9 @@ If Composer complains about memory limit issue, just prefix with `COMPOSER_MEMOR
 Edit your `.env.local` and `docker-compose.yml` files according to your local environment.
 
 ```shell
+# Copy override file to customize your local environment
+cp compose.override.yml.dist compose.override.yml
+
 docker compose build
 docker compose up -d --force-recreate
 ```
@@ -34,7 +37,7 @@ to initialize (filesystem, database and user creation).
 When you're ready you can check that *Symfony* console responds through your Docker service:
 
 ```shell
-docker compose exec -u www-data app bin/console
+docker compose exec app bin/console
 ```
 
 #### Using Docker for development
@@ -90,14 +93,14 @@ services:
 When you run `composer create-project` first time, following command should have been executed automatically:
 
 ```shell script
-docker compose exec -u www-data app bin/console secrets:generate-keys
+docker compose exec app bin/console secrets:generate-keys
 ```
 
 Then generate secrets values for your configuration variables such as `APP_SECRET` or `JWT_PASSPHRASE`:
 
 ```shell script
-docker compose exec -u www-data app bin/console secrets:set JWT_PASSPHRASE --random
-docker compose exec -u www-data app bin/console secrets:set APP_SECRET --random
+docker compose exec app bin/console secrets:set JWT_PASSPHRASE --random
+docker compose exec app bin/console secrets:set APP_SECRET --random
 ```
 
 **Make sure your remove any of these variables from your `.env` and `.env.local` files**, it would override your
@@ -108,14 +111,14 @@ secrets (empty values for example), and lose all benefits from encrypting your s
 Use built-in command to generate your key pair (following command should have been executed automatically at `composer create-project`):
 
 ```shell
-docker compose exec -u www-data app bin/console lexik:jwt:generate-keypair
+docker compose exec app bin/console lexik:jwt:generate-keypair
 ```
 
 Or manually using `openssl`
 
 ```shell script
 # Reveal your JWT_PASSPHRASE
-docker compose exec -u www-data app bin/console secrets:list --reveal
+docker compose exec app bin/console secrets:list --reveal
 # Fill JWT_PASSPHRASE env var.
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
@@ -129,15 +132,15 @@ Or manually:
 
 ```shell
 # Create Roadiz database schema
-docker compose exec -u www-data app bin/console doctrine:migrations:migrate
+docker compose exec app bin/console doctrine:migrations:migrate
 # Migrate any existing data types
-docker compose exec -u www-data app bin/console app:install
+docker compose exec app bin/console app:install
 # Install base Roadiz fixtures, roles and settings
-docker compose exec -u www-data app bin/console install
+docker compose exec app bin/console install
 # Clear cache
-docker compose exec -u www-data app bin/console cache:clear
+docker compose exec app bin/console cache:clear
 # Create your admin account
-docker compose exec -u www-data app bin/console users:create -m username@roadiz.io -b -s username
+docker compose exec app bin/console users:create -m username@roadiz.io -b -s username
 ```
 
 ### Manage Node-types

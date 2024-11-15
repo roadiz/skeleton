@@ -1,4 +1,7 @@
 ARG PHP_VERSION=8.3.13
+ARG MYSQL_VERSION=8.0.40
+ARG SOLR_VERSION=9
+ARG VARNISH_VERSION=7.1
 ARG USER_UID=1000
 
 #######
@@ -112,6 +115,9 @@ USER www-data
 
 FROM php AS php-prod
 
+# If you want to use a private repository, you can use a deploy token
+#ARG COMPOSER_DEPLOY_TOKEN
+
 ENV APP_ENV=prod
 ENV APP_RUNTIME_ENV=prod
 ENV APP_DEBUG=0
@@ -128,7 +134,11 @@ USER www-data
 
 # Composer
 COPY --link --chown=www-data:www-data composer.* symfony.* .
-RUN composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+RUN <<EOF
+# If you want to use a private repository, you can use a deploy token
+#composer config --global gitlab-token.gitlab.com $COMPOSER_DEPLOY_TOKEN
+composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+EOF
 
 COPY --link --chown=www-data:www-data . .
 
@@ -175,7 +185,7 @@ COPY --link --from=php-prod --chown=www-data:www-data /var/www/html/public /var/
 # MySQL #
 #########
 
-FROM mysql:8.0.40 AS mysql
+FROM mysql:${MYSQL_VERSION} AS mysql
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
@@ -195,7 +205,7 @@ COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
 # Solr #
 ########
 
-FROM solr:9-slim AS solr
+FROM solr:${SOLR_VERSION}-slim AS solr
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
@@ -225,10 +235,10 @@ VOLUME /var/solr
 # Varnish #
 ###########
 
-FROM varnish:7.1-alpine AS varnish
+FROM varnish:${VARNISH_VERSION}-alpine AS varnish
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-ENV VARNISH_SIZE 1G
+ENV VARNISH_SIZE 512G
 
 COPY --link docker/varnish/default.vcl /etc/varnish/
