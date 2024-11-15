@@ -38,7 +38,7 @@ roadiz_skeleton_test:
                 path: coverage/cobertura.xml
 # If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
 #    before_script:
-#        - composer config --global gitlab-token.gitlab.com $COMPOSER_DEPLOY_TOKEN
+#        - composer config gitlab-token.gitlab.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
     script:
         #
         # If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
