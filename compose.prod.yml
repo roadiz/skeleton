@@ -21,6 +21,8 @@ services:
     redis:
         image: redis:7-alpine
         restart: always
+        volumes:
+            - redis:/data
         networks:
             - default
 
@@ -164,7 +166,7 @@ services:
     #solr:
     #    image: my-registry/roadiz_skeleton/solr:latest
     #    volumes:
-    #        - "solr_data:/var/solr:delegated"
+    #        - "solr_data:/var/solr"
     #    command:
     #        - solr-precreate
     #        - ${SOLR_CORE_NAME}
@@ -227,6 +229,7 @@ volumes:
     app_assets_data:
     app_private_file_data:
     app_secret_data:
+    redis:
     restic_cache:
     ##
     ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2

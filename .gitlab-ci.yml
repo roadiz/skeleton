@@ -67,7 +67,7 @@ roadiz_skeleton_build_develop:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for develop\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        #- "docker buildx bake -set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        #- "docker buildx bake --set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
         - "docker buildx bake --push"
 
 #
@@ -94,7 +94,7 @@ roadiz_skeleton_build_tag:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for tag ${CI_COMMIT_TAG}\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        #- "docker buildx bake -set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        #- "docker buildx bake --set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
         - "docker buildx bake --push"
 
 create_gitlab_release:

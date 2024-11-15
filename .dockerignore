@@ -42,6 +42,7 @@ Makefile
 phpcs.*
 phpstan.*
 restic.*
+auth.json
 
 !.env
 !public/themes/*

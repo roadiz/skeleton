@@ -136,7 +136,7 @@ USER www-data
 COPY --link --chown=www-data:www-data composer.* symfony.* .
 RUN <<EOF
 # If you want to use a private repository, you can use a deploy token
-#composer config --global gitlab-token.gitlab.com $COMPOSER_DEPLOY_TOKEN
+#composer config gitlab-token.gitlab.com ${COMPOSER_DEPLOY_TOKEN}
 composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 EOF
 
