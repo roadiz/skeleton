@@ -52,7 +52,6 @@ roadiz_skeleton_test:
 roadiz_skeleton_build_develop:
     stage: build
     image: docker:git
-    # Create a docker image only when a new tag is pushed
     only:
         - develop
     services:
@@ -67,18 +66,12 @@ roadiz_skeleton_build_develop:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for develop\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        #- "docker buildx bake --set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        #- "docker buildx bake --set *.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
         - "docker buildx bake --push"
 
-#
-# Build App docker image with vendor and built assets
-# included. You must configure your Gitlab Runner to
-# support Docker-in-docker commands.
-#
 roadiz_skeleton_build_tag:
     stage: build
     image: docker:git
-    # Create a docker image only when a new tag is pushed
     only:
         - tags
     services:
@@ -94,7 +87,7 @@ roadiz_skeleton_build_tag:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for tag ${CI_COMMIT_TAG}\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        #- "docker buildx bake --set=api-php.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        #- "docker buildx bake --set *.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
         - "docker buildx bake --push"
 
 create_gitlab_release:

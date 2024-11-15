@@ -37,6 +37,7 @@ apt-get --quiet --yes --purge --autoremove upgrade
 apt-get --quiet --yes --no-install-recommends --verbose-versions install \
     less \
     sudo \
+    git \
     cron \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
@@ -98,9 +99,7 @@ RUN <<EOF
 apt-get --quiet update
 apt-get --quiet --yes --purge --autoremove upgrade
 # Packages - System
-apt-get --quiet --yes --no-install-recommends --verbose-versions install \
-    make \
-    git
+apt-get --quiet --yes --no-install-recommends --verbose-versions install make
 rm -rf /var/lib/apt/lists/*
 EOF
 
@@ -115,8 +114,9 @@ USER www-data
 
 FROM php AS php-prod
 
-# If you want to use a private repository, you can use a deploy token
+# If you depend on private Gitlab repositories, you must use a deploy token and username
 #ARG COMPOSER_DEPLOY_TOKEN
+#ARG COMPOSER_DEPLOY_TOKEN_USER="gitlab+deploy-token-1"
 
 ENV APP_ENV=prod
 ENV APP_RUNTIME_ENV=prod
@@ -133,10 +133,10 @@ COPY --link --chmod=755 docker/php/docker-cron-entrypoint /usr/local/bin/docker-
 USER www-data
 
 # Composer
-COPY --link --chown=www-data:www-data composer.* symfony.* .
+COPY --link --chown=www-data:www-data composer.* symfony.* ./
 RUN <<EOF
-# If you want to use a private repository, you can use a deploy token
-#composer config gitlab-token.gitlab.com ${COMPOSER_DEPLOY_TOKEN}
+# If you depend on private Gitlab repositories, you must use a deploy token and username
+#composer config gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
 composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 EOF
 
@@ -147,20 +147,6 @@ composer dump-autoload --classmap-authoritative --no-dev
 bin/console cache:warmup --no-optional-warmers
 bin/console assets:install
 bin/console themes:assets:install Rozier
-chmod 0755 /var/www/html/bin/console
-chmod 0750 /var/www/html
-chmod 0750 \
-    /var/www/html/bin \
-    /var/www/html/config \
-    /var/www/html/docker \
-    /var/www/html/migrations \
-    /var/www/html/public \
-    /var/www/html/src \
-    /var/www/html/templates \
-    /var/www/html/translations \
-    /var/www/html/var \
-    /var/www/html/vendor
-chown www-data:www-data /var/www/html
 EOF
 
 VOLUME /var/www/html/config/jwt \
