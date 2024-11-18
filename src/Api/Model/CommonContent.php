@@ -21,11 +21,23 @@ final class CommonContent
     public ?NodesSources $errorPage = null;
 
     #[Groups(['common_content'])]
+    #[ApiProperty(
+        identifier: false,
+        genId: false,
+    )]
     public ?NodesSourcesHeadInterface $head = null;
 
     #[Groups(['common_content'])]
+    #[ApiProperty(
+        identifier: false,
+        genId: false,
+    )]
     public ?array $menus = null;
 
     #[Groups(['common_content'])]
+    #[ApiProperty(
+        identifier: false,
+        genId: false,
+    )]
     public ?array $footers = null;
 }
