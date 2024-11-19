@@ -14,13 +14,14 @@ variables:
     TIMEZONE: "Europe/Paris"
     SENTRY_URL: ""
 
-roadiz_skeleton_test:
+test:
     image: roadiz/php83-runner
     stage: test
     interruptible: true
     only:
         - develop
         - tags
+        - merge_requests
     cache:
         key: ${CI_COMMIT_REF_SLUG}
         paths:
@@ -49,7 +50,7 @@ roadiz_skeleton_test:
         - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
 
-roadiz_skeleton_build_develop:
+build_develop:
     stage: build
     image: docker:git
     only:
@@ -69,7 +70,7 @@ roadiz_skeleton_build_develop:
         #- "docker buildx bake --set *.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
         - "docker buildx bake --push"
 
-roadiz_skeleton_build_tag:
+build_tag:
     stage: build
     image: docker:git
     only:
@@ -97,7 +98,7 @@ create_gitlab_release:
         - if: $CI_COMMIT_TAG
     script:
         - echo "Running the release job."
-    needs: [ "roadiz_skeleton_build_tag" ]
+    needs: [ "build_tag" ]
     when: on_success
     release:
         tag_name: $CI_COMMIT_TAG
