@@ -15,6 +15,9 @@ update:
 	docker compose exec app php bin/console app:install -n
 	make cache;
 
+update_deps:
+	docker compose run --rm --entrypoint= app composer update -o
+
 migrate:
 	docker compose exec app php bin/console doctrine:migrations:migrate -n
 	# Apply files changes and create new Doctrine migrations if necessary
