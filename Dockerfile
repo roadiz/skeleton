@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.3.13
+ARG PHP_VERSION=8.3.14
 ARG MYSQL_VERSION=8.0.40
 ARG SOLR_VERSION=9
 ARG VARNISH_VERSION=7.1
@@ -56,7 +56,6 @@ curl -sSLf  https://github.com/mlocati/docker-php-extension-installer/releases/l
 chmod +x /usr/local/bin/install-php-extensions
 install-php-extensions \
     @composer-${COMPOSER_VERSION} \
-    amqp \
     bcmath \
     exif \
     fileinfo \
@@ -71,7 +70,6 @@ install-php-extensions \
     pcntl \
     pdo_mysql \
     simplexml \
-    soap \
     xsl \
     zip \
     redis-${PHP_EXTENSION_REDIS_VERSION}
@@ -84,6 +82,11 @@ WORKDIR /var/www/html
 ###################
 
 FROM php AS php-dev
+
+# If you depend on private Gitlab repositories, you must use a deploy token and username
+# to use composer commands inside you
+#ARG COMPOSER_DEPLOY_TOKEN
+#ARG COMPOSER_DEPLOY_TOKEN_USER="gitlab+deploy-token-1"
 
 ENV APP_ENV=dev
 ENV APP_RUNTIME_ENV=dev
@@ -101,11 +104,16 @@ apt-get --quiet --yes --purge --autoremove upgrade
 # Packages - System
 apt-get --quiet --yes --no-install-recommends --verbose-versions install make
 rm -rf /var/lib/apt/lists/*
+# Prepare folder to install composer credentials
+install --owner=www-data --group=www-data --mode=755 --directory /var/www/.composer
 EOF
 
 VOLUME /var/www/html
 
 USER www-data
+
+# If you depend on private Gitlab repositories, you must use a deploy token and username
+#RUN composer config --global gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
 
 
 ##################

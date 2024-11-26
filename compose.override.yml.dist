@@ -15,11 +15,14 @@ services:
     pma:
         ports:
             - ${PUBLIC_PMA_PORT}:80/tcp
+
+    # If you depend on private Gitlab repositories, you must use a deploy token and username
     #app:
-    #    # If your project requires private package you can share your ssh keys with the container
-    #    volumes:
-    #        - ./:/var/www/html
-    #        - /home/my-user/.ssh/id_ed25519:/home/www-data/.ssh/id_ed25519:ro
+    #    build:
+    #        args:
+    #            USER_UID: ${USER_UID}
+    #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
+    #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
 
     #solr:
     #    ports:

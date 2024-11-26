@@ -26,7 +26,8 @@ Edit your `.env.local` and `docker-compose.yml` files according to your local en
 ```shell
 # Copy override file to customize your local environment
 cp compose.override.yml.dist compose.override.yml
-
+# Do not forget to add your COMPOSER_DEPLOY_TOKEN and COMPOSER_DEPLOY_TOKEN_USER
+# in compose.override.yml to configure your container to fetch private repositories.
 docker compose build
 docker compose up -d --force-recreate
 ```
@@ -49,7 +50,7 @@ your app container to install your dependencies.
 
 ```shell
 # This command will run once APP container to install your dependencies without starting other services
-docker compose run --rm --no-deps --entrypoint= app composer install
+docker compose run --rm --no-deps --entrypoint= app composer install -o
 ```
 
 To access your app services, you will have to expose ports locally in your `compose.override.yml` file.
@@ -77,11 +78,13 @@ services:
     pma:
         ports:
             - ${PUBLIC_PMA_PORT}:80/tcp
+    # If you depend on private Gitlab repositories, you must use a deploy token and username
     #app:
-    #    # If your project requires private package you can share your ssh keys with the container
-    #    volumes:
-    #        - ./:/var/www/html:cached
-    #        - /home/my-user/.ssh/id_ed25519:/home/www-data/.ssh/id_ed25519:ro
+    #    build:
+    #        args:
+    #            USER_UID: ${USER_UID}
+    #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
+    #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
 
     #solr:
     #    ports:
