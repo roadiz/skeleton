@@ -6,7 +6,7 @@ services:
             # Custom image for file permissions and performances
             target: mysql
             args:
-                USER_UID: ${USER_UID}
+                UID: ${UID}
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
         networks:
@@ -54,26 +54,29 @@ services:
         build:
             target: php-dev
             args:
-                USER_UID: ${USER_UID}
+                UID: ${UID}
         depends_on:
             - db
             - solr
             - redis
         volumes:
-            - ./:/var/www/html
+            - ./:/app
         networks:
             default:
         environment:
             TRUSTED_PROXIES: ${TRUSTED_PROXIES}
-            USER_UID: ${USER_UID}
+            UID: ${UID}
             DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
 
     nginx:
-        image: roadiz/nginx-alpine:latest
+        build:
+            target: nginx-dev
+            args:
+                UID: ${UID}
         depends_on:
             - app
         volumes:
-            - ./:/var/www/html
+            - ./:/app
         networks:
             default:
 #            frontproxynet:
@@ -110,7 +113,7 @@ services:
             replicas: 1
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
-        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=600" ]
+        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
         restart: unless-stopped
 
     cron:
@@ -127,12 +130,9 @@ services:
             # Custom image for file permissions
             target: solr
             args:
-                USER_UID: ${USER_UID}
+                UID: ${UID}
         volumes:
             - "solr:/var/solr"
-        environment:
-            SOLR_UID: ${USER_UID}
-            SOLR_GID: ${USER_UID}
         command:
             - solr-precreate
             - ${SOLR_CORE_NAME}

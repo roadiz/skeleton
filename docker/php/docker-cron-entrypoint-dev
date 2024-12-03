@@ -14,12 +14,12 @@ echo "APP_ENV=${APP_ENV}";
 echo "APP_RUNTIME_ENV=${APP_RUNTIME_ENV}";
 echo "APP_DEBUG=${APP_DEBUG}";
 # Debug infos
-/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_ENV=${APP_ENV}\"";
-/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_RUNTIME_ENV=${APP_RUNTIME_ENV}\"";
-/usr/bin/sudo -E -u www-data -- bash -c "echo \"[sudo] APP_DEBUG=${APP_DEBUG}\"";
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_ENV=${APP_ENV}\"";
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_RUNTIME_ENV=${APP_RUNTIME_ENV}\"";
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_DEBUG=${APP_DEBUG}\"";
 
-/bin/chown -R www-data:www-data /var/www/html/var || true;
-/bin/chown -R www-data:www-data /var/www/html/config || true;
+/bin/chown -R php:php /app/var || true;
+/bin/chown -R php:php /app/config || true;
 
 # DO NOT Print local env vars to .env.xxx.php file in DEV mode
 
