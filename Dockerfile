@@ -246,7 +246,9 @@ COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 # Copy public files from API
 COPY --link --from=php-prod --chown=${USER_UID}:${USER_UID} /app/public /app/public
 
-
+# Only enable healthcheck in production when the app is ready to serve requests on root path
+# This could prevent Traefik or an ingress controller to route traffic to the app
+#HEALTHCHECK --start-period=1m30s --interval=1m --timeout=6s CMD curl --fail -I http://localhost
 
 #########
 # MySQL #
