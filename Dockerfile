@@ -200,6 +200,15 @@ echo "nginx ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nginx
 install --verbose --owner nginx --group nginx --mode 0755 --directory /app
 EOF
 
+ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
+# Config
+COPY --link docker/nginx/nginx.conf               /etc/nginx/nginx.conf
+COPY --link docker/nginx/redirections.conf        /etc/nginx/redirections.conf
+COPY --link docker/nginx/mime.types               /etc/nginx/mime.types
+COPY --link docker/nginx/conf.d/_gzip.conf        /etc/nginx/conf.d/_gzip.conf
+COPY --link docker/nginx/conf.d/_security.conf    /etc/nginx/conf.d/_security.conf
+COPY --link docker/nginx/conf.d/default.conf  /etc/nginx/conf.d/default.conf
+
 WORKDIR /app
 
 
@@ -211,15 +220,6 @@ WORKDIR /app
 FROM nginx AS nginx-dev
 
 # Silence entrypoint logs
-ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
-
-# Config
-COPY --link docker/nginx/nginx.conf               /etc/nginx/nginx.conf
-COPY --link docker/nginx/redirections.conf        /etc/nginx/redirections.conf
-COPY --link docker/nginx/mime.types               /etc/nginx/mime.types
-COPY --link docker/nginx/conf.d/_gzip.conf        /etc/nginx/conf.d/_gzip.conf
-COPY --link docker/nginx/conf.d/_security.conf    /etc/nginx/conf.d/_security.conf
-COPY --link docker/nginx/conf.d/default.conf  /etc/nginx/conf.d/default.conf
 
 # Declare a volume for development
 VOLUME /app
@@ -231,18 +231,6 @@ VOLUME /app
 ##############
 
 FROM nginx AS nginx-prod
-
-# Silence entrypoint logs
-ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
-
-# Config
-COPY --link docker/nginx/nginx.conf               /etc/nginx/nginx.conf
-COPY --link docker/nginx/redirections.conf        /etc/nginx/redirections.conf
-COPY --link docker/nginx/mime.types               /etc/nginx/mime.types
-COPY --link docker/nginx/conf.d/_gzip.conf        /etc/nginx/conf.d/_gzip.conf
-COPY --link docker/nginx/conf.d/_security.conf    /etc/nginx/conf.d/_security.conf
-COPY --link docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-
 # Copy public files from API
 COPY --link --from=php-prod --chown=${USER_UID}:${USER_UID} /app/public /app/public
 
