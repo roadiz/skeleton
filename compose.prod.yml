@@ -103,9 +103,9 @@ services:
         networks:
             - default
         volumes:
-            - ./robots.txt:/var/www/html/public/robots.txt:ro
-            - app_file_data:/var/www/html/public/files:ro
-            - app_assets_data:/var/www/html/public/assets:ro
+            - ./robots.txt:/app/public/robots.txt:ro
+            - app_file_data:/app/public/files:ro
+            - app_assets_data:/app/public/assets:ro
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
             - "com.centurylinklabs.watchtower.depends-on=/skeleton-app-1"
@@ -118,24 +118,24 @@ services:
             - redis
             #- solr
         volumes:
-            - app_file_data:/var/www/html/public/files
-            - app_assets_data:/var/www/html/public/assets
-            - app_private_file_data:/var/www/html/var/files
-            - app_secret_data:/var/www/html/config/secrets
+            - app_file_data:/app/public/files
+            - app_assets_data:/app/public/assets
+            - app_private_file_data:/app/var/files
+            - app_secret_data:/app/config/secrets
             ## Use docker-compose env file as .env.local in container
-            - ./.env:/var/www/html/.env.local:ro
+            - ./.env:/app/.env.local:ro
             ## Generate JWT certificates on your host and share them to docker container
             ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096; chmod 0644 jwt_private.pem;
-            - ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
+            - ./jwt_private.pem:/app/config/jwt/private.pem:ro
             ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout; chmod 0644 jwt_public.pem;
-            - ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
+            - ./jwt_public.pem:/app/config/jwt/public.pem:ro
             ##
             ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
             ## Uncomment these if you DO want to persist and edit node-types on production env
             ##
-            #- app_node_types_api:/var/www/html/config/api_resources
-            #- app_node_types_resource:/var/www/html/src/Resources
-            #- app_node_types_entities:/var/www/html/src/GeneratedEntity
+            #- app_node_types_api:/app/config/api_resources
+            #- app_node_types_resource:/app/src/Resources
+            #- app_node_types_entities:/app/src/GeneratedEntity
         networks:
             - default
         environment:
@@ -156,7 +156,7 @@ services:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
             replicas: 1
-        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
+        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
 
     cron:
         <<: *app_template

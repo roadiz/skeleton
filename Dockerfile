@@ -1,8 +1,9 @@
 ARG PHP_VERSION=8.3.14
 ARG MYSQL_VERSION=8.0.40
+ARG NGINX_VERSION=1.27.2
 ARG SOLR_VERSION=9
 ARG VARNISH_VERSION=7.1
-ARG USER_UID=1000
+ARG UID=1000
 
 #######
 # PHP #
@@ -12,7 +13,7 @@ FROM php:${PHP_VERSION}-fpm-bookworm AS php
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-ARG USER_UID
+ARG UID
 
 ARG COMPOSER_VERSION=2.8.1
 ARG PHP_EXTENSION_INSTALLER_VERSION=2.6.0
@@ -23,8 +24,6 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
 ENV MYSQL_HOST=db
 ENV MYSQL_PORT=3306
-
-HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q
 
 COPY --link docker/php/crontab.txt /crontab.txt
 COPY --link docker/php/wait-for-it.sh /wait-for-it.sh
@@ -42,13 +41,17 @@ apt-get --quiet --yes --no-install-recommends --verbose-versions install \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
 
-usermod -u ${USER_UID} www-data
-groupmod -g ${USER_UID} www-data
-echo "www-data ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/www-data
+# User
+addgroup --gid ${UID} php
+adduser --home /home/php --shell /bin/bash --uid ${UID} --gecos php --ingroup php --disabled-password php
+echo "php ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/php
 
-/usr/bin/crontab -u www-data /crontab.txt
+# App
+install --verbose --owner php --group php --mode 0755 --directory /app
+
+/usr/bin/crontab -u php /crontab.txt
 chmod +x /wait-for-it.sh
-chown -R www-data:www-data /var/www/html
+chown -R php:php /app
 
 # Php extensions
 curl -sSLf  https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
@@ -75,7 +78,7 @@ install-php-extensions \
     redis-${PHP_EXTENSION_REDIS_VERSION}
 EOF
 
-WORKDIR /var/www/html
+WORKDIR /app
 
 ###################
 # PHP Development #
@@ -105,12 +108,12 @@ apt-get --quiet --yes --purge --autoremove upgrade
 apt-get --quiet --yes --no-install-recommends --verbose-versions install make
 rm -rf /var/lib/apt/lists/*
 # Prepare folder to install composer credentials
-install --owner=www-data --group=www-data --mode=755 --directory /var/www/.composer
+install --owner=php --group=php --mode=755 --directory /home/php/.composer
 EOF
 
-VOLUME /var/www/html
+VOLUME /app
 
-USER www-data
+USER php
 
 # If you depend on private Gitlab repositories, you must use a deploy token and username
 #RUN composer config --global gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
@@ -138,17 +141,17 @@ COPY --link docker/php/conf.d/php.prod.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
 COPY --link --chmod=755 docker/php/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY --link --chmod=755 docker/php/docker-cron-entrypoint /usr/local/bin/docker-cron-entrypoint
 
-USER www-data
+USER php
 
 # Composer
-COPY --link --chown=www-data:www-data composer.* symfony.* ./
+COPY --link --chown=php:php composer.* symfony.* ./
 RUN <<EOF
 # If you depend on private Gitlab repositories, you must use a deploy token and username
 #composer config gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
 composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 EOF
 
-COPY --link --chown=www-data:www-data . .
+COPY --link --chown=php:php . .
 
 RUN <<EOF
 composer dump-autoload --classmap-authoritative --no-dev
@@ -157,23 +160,83 @@ bin/console assets:install
 bin/console themes:assets:install Rozier
 EOF
 
-VOLUME /var/www/html/config/jwt \
-       /var/www/html/config/secrets \
-       /var/www/html/public/files \
-       /var/www/html/public/assets \
-       /var/www/html/var/files
+HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q
+
+VOLUME /app/config/jwt \
+       /app/config/secrets \
+       /app/public/files \
+       /app/public/assets \
+       /app/var/files
+
 
 
 #########
 # Nginx #
 #########
 
-FROM roadiz/nginx-alpine AS nginx-prod
+FROM nginx:${NGINX_VERSION}-bookworm AS nginx
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-COPY --link --from=php-prod --chown=www-data:www-data /var/www/html/public /var/www/html/public
+ARG UID
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+RUN <<EOF
+# Packages
+apt-get --quiet update
+apt-get --quiet --yes --purge --autoremove upgrade
+apt-get --quiet --yes --no-install-recommends --verbose-versions install \
+    less \
+    sudo
+rm -rf /var/lib/apt/lists/*
+
+# User
+groupmod --gid ${UID} nginx
+usermod --uid ${UID} nginx
+echo "nginx ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nginx
+
+# App
+install --verbose --owner nginx --group nginx --mode 0755 --directory /app
+EOF
+
+ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
+# Config
+COPY --link docker/nginx/nginx.conf               /etc/nginx/nginx.conf
+COPY --link docker/nginx/redirections.conf        /etc/nginx/redirections.conf
+COPY --link docker/nginx/mime.types               /etc/nginx/mime.types
+COPY --link docker/nginx/conf.d/_gzip.conf        /etc/nginx/conf.d/_gzip.conf
+COPY --link docker/nginx/conf.d/_security.conf    /etc/nginx/conf.d/_security.conf
+COPY --link docker/nginx/conf.d/default.conf  /etc/nginx/conf.d/default.conf
+
+WORKDIR /app
+
+
+
+##############
+# Nginx DEV  #
+##############
+
+FROM nginx AS nginx-dev
+
+# Silence entrypoint logs
+
+# Declare a volume for development
+VOLUME /app
+
+
+
+##############
+# Nginx PROD #
+##############
+
+FROM nginx AS nginx-prod
+# Copy public files from API
+COPY --link --from=php-prod --chown=${USER_UID}:${USER_UID} /app/public /app/public
+
+# Only enable healthcheck in production when the app is ready to serve requests on root path
+# This could prevent Traefik or an ingress controller to route traffic to the app
+#HEALTHCHECK --start-period=1m30s --interval=1m --timeout=6s CMD curl --fail -I http://localhost
 
 #########
 # MySQL #
@@ -183,14 +246,14 @@ FROM mysql:${MYSQL_VERSION} AS mysql
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-ARG USER_UID
+ARG UID
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 RUN <<EOF
-usermod -u ${USER_UID} mysql
-groupmod -g ${USER_UID} mysql
-echo "USER_UID: ${USER_UID}\n"
+usermod -u ${UID} mysql
+groupmod -g ${UID} mysql
+echo "UID: ${UID}\n"
 EOF
 
 COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
@@ -203,7 +266,7 @@ FROM solr:${SOLR_VERSION}-slim AS solr
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-ARG USER_UID
+ARG UID
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
@@ -211,10 +274,10 @@ USER root
 
 RUN <<EOF
 set -ex
-echo "USER_UID: ${USER_UID}\n"
-usermod -u ${USER_UID} "$SOLR_USER"
-groupmod -g ${USER_UID} "$SOLR_GROUP"
-chown -R ${USER_UID}:${USER_UID} /var/solr
+echo "UID: ${UID}\n"
+usermod -u ${UID} "$SOLR_USER"
+groupmod -g ${UID} "$SOLR_GROUP"
+chown -R ${UID}:${UID} /var/solr
 EOF
 
 COPY --link docker/solr/managed-schema.xml /opt/solr/server/solr/configsets/_default/conf/managed-schema

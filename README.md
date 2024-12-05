@@ -82,7 +82,7 @@ services:
     #app:
     #    build:
     #        args:
-    #            USER_UID: ${USER_UID}
+    #            UID: ${UID}
     #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
     #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
 
