@@ -1,9 +1,9 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
-#name: skeleton
+name: ${APP_NAMESPACE}
 services:
     db:
-        image: mysql:8.0
+        image: my-registry/roadiz_skeleton/mariadb:latest
         restart: always
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
@@ -12,15 +12,17 @@ services:
         volumes:
             - db_data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+            MARIADB_DATABASE: ${MARIADB_DATABASE}
+            MARIADB_USER: ${MARIADB_USER}
+            MARIADB_PASSWORD: ${MARIADB_PASSWORD}
 
     # Use Redis for Cache, Messaging and Sessions
     redis:
         image: redis:7-alpine
         restart: always
+        volumes:
+            - redis:/data
         networks:
             - default
 
@@ -101,9 +103,9 @@ services:
         networks:
             - default
         volumes:
-            - ./robots.txt:/var/www/html/public/robots.txt:ro
-            - app_file_data:/var/www/html/public/files:ro
-            - app_assets_data:/var/www/html/public/assets:ro
+            #- ./robots.txt:/app/public/robots.txt:ro
+            - app_file_data:/app/public/files:ro
+            - app_assets_data:/app/public/assets:ro
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
             - "com.centurylinklabs.watchtower.depends-on=/skeleton-app-1"
@@ -116,29 +118,16 @@ services:
             - redis
             #- solr
         volumes:
-            - app_file_data:/var/www/html/public/files
-            - app_assets_data:/var/www/html/public/assets
-            - app_private_file_data:/var/www/html/var/files
-            - app_secret_data:/var/www/html/config/secrets
-            ## Use docker-compose env file as .env.local in container
-            - ./.env:/var/www/html/.env.local:ro
-            ## Generate JWT certificates on your host and share them to docker container
-            ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096; chmod 0644 jwt_private.pem;
-            - ./jwt_private.pem:/var/www/html/config/jwt/private.pem:ro
-            ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout; chmod 0644 jwt_public.pem;
-            - ./jwt_public.pem:/var/www/html/config/jwt/public.pem:ro
-            ##
-            ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
-            ## Uncomment these if you DO want to persist and edit node-types on production env
-            ##
-            #- app_node_types_api:/var/www/html/config/api_resources
-            #- app_node_types_resource:/var/www/html/src/Resources
-            #- app_node_types_entities:/var/www/html/src/GeneratedEntity
+            - app_file_data:/app/public/files
+            - app_assets_data:/app/public/assets
+            - app_private_file_data:/app/var/files
+            - app_secret_data:/app/config/secrets
+            - app_jwt_data:/app/config/jwt
+            ## Use docker-compose env file as .env.local in container or use env vars
+            - ./.env:/app/.env.local:ro
         networks:
             - default
         environment:
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_PORT: ${MYSQL_PORT}
             # Can only override env in docker environment
             # because these are hardcoded in Docker image definition
             APP_ENV: prod
@@ -154,16 +143,17 @@ services:
             # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
             # from your workers. Varnish ACL hostnames won't be resolved correctly.
             replicas: 1
-        entrypoint: [ "php", "/var/www/html/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
+        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
 
     cron:
         <<: *app_template
         entrypoint: 'docker-cron-entrypoint'
+        user: root
 
     #solr:
     #    image: my-registry/roadiz_skeleton/solr:latest
     #    volumes:
-    #        - "solr_data:/var/solr:delegated"
+    #        - "solr_data:/var/solr"
     #    command:
     #        - solr-precreate
     #        - ${SOLR_CORE_NAME}
@@ -206,10 +196,10 @@ services:
             RESTIC_REPOSITORY: ${RESTIC_REPOSITORY}
             RESTIC_PASSWORD: ${RESTIC_PASSWORD}
             # MySQL credentials
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_HOST: db
+            MYSQL_DATABASE: ${MARIADB_DATABASE}
+            MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+            MYSQL_USER: ${MARIADB_USER}
             MYSQL_DUMP_FILENAME: ${MYSQL_DUMP_FILENAME}
         volumes:
             - restic_cache:/root/.cache/restic
@@ -221,19 +211,16 @@ services:
             service: restic
         # Forget all snapshots older than 7 days and keep 12 monthly snapshots
         command: 'forget -o s3.storage-class=${S3_STORAGE_CLASS} --keep-daily 7 --keep-monthly 12 --prune'
+
+
 volumes:
     app_file_data:
     app_assets_data:
     app_private_file_data:
     app_secret_data:
+    app_jwt_data:
+    redis:
     restic_cache:
-    ##
-    ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
-    ## Uncomment these if you DO want to persist and edit node-types on production env
-    ##
-    #app_node_types_api:
-    #app_node_types_resource:
-    #app_node_types_entities:
     db_data:
     #solr_data:
 
@@ -244,4 +231,4 @@ networks:
         ipam:
             driver: default
             config:
-                -   subnet: ${DEFAULT_GATEWAY}/16
+                -   subnet: ${DEFAULT_GATEWAY}/24

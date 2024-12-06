@@ -4,6 +4,16 @@ parameters:
     env(HTTP_CACHE_SHARED_MAX_AGE): 600
 
 api_platform:
+    # required for WebResponse and CommonContent endpoints
+    use_symfony_listeners: true
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+        x-www-form-urlencoded: ['application/x-www-form-urlencoded']
+    docs_formats:
+        jsonld: ['application/ld+json']
+        jsonopenapi: ['application/vnd.openapi+json']
+        html: ['text/html']
     patch_formats:
         json: ['application/merge-patch+json']
     enable_swagger_ui: true

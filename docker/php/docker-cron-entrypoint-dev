@@ -1,0 +1,28 @@
+#!/bin/sh
+set -e
+
+env >> /etc/environment
+
+# cron entrypoint must be run as root as it spawns crontab for each system user
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Please run as root"
+    exit 1
+fi
+
+# Print env infos
+echo "APP_ENV=${APP_ENV}";
+echo "APP_RUNTIME_ENV=${APP_RUNTIME_ENV}";
+echo "APP_DEBUG=${APP_DEBUG}";
+# Debug infos
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_ENV=${APP_ENV}\"";
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_RUNTIME_ENV=${APP_RUNTIME_ENV}\"";
+/usr/bin/sudo -E -u php -- bash -c "echo \"[sudo] APP_DEBUG=${APP_DEBUG}\"";
+
+/bin/chown -R php:php /app/var || true;
+/bin/chown -R php:php /app/config || true;
+
+# DO NOT Print local env vars to .env.xxx.php file in DEV mode
+
+# Let cron take the wheel
+echo "Starting cron in foreground."
+/usr/sbin/cron -f -l 7

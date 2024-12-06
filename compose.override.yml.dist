@@ -1,0 +1,29 @@
+# Expose all services default ports for local development
+services:
+    db:
+        ports:
+            - ${PUBLIC_DB_PORT}:3306/tcp
+    nginx:
+        ports:
+            - ${PUBLIC_NGINX_PORT}:80/tcp
+    mailer:
+        ports:
+            - ${PUBLIC_MAILER_PORT}:8025/tcp
+    varnish:
+        ports:
+            - ${PUBLIC_VARNISH_PORT}:80/tcp
+    pma:
+        ports:
+            - ${PUBLIC_PMA_PORT}:80/tcp
+
+    # If you depend on private Gitlab repositories, you must use a deploy token and username
+    #app:
+    #    build:
+    #        args:
+    #            UID: ${UID}
+    #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
+    #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
+
+    #solr:
+    #    ports:
+    #        - "${PUBLIC_SOLR_PORT}:8983/tcp"

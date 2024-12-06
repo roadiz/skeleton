@@ -37,7 +37,6 @@ resources:
                                             type: string
                                             example: Doe
                     responses:
-                        201: ~
                         400:
                             description: Posted custom form has errors
                             content:

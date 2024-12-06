@@ -2,6 +2,7 @@
 ###> symfony/framework-bundle ###
 /!.env
 /.env.local
+/restic.env
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -10,6 +11,7 @@
 /public/themes/
 /var/
 /vendor/
+compose.override.yml
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -32,10 +34,6 @@
 .phpcs-cache
 report.txt
 
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-/phpcs.xml
-###< squizlabs/php_codesniffer ###
 openapi.json
 /*.sql
 /*.zip
@@ -57,3 +55,8 @@ openapi.json
 !/var/export/.gitkeep
 
 supervisord.pid
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

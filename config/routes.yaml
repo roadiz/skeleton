@@ -15,19 +15,3 @@ rz_intervention_request:
 api_login_check:
     methods: [POST]
     path: /api/token
-
-api_contact_form_definition:
-    methods: [GET]
-    path: /api/contact_form/definition
-    defaults:
-        _controller: App\Controller\ContactFormController::definitionAction
-        _locale: en
-        _format: json
-
-api_contact_form_post:
-    methods: [POST]
-    path: /api/contact_form/post
-    defaults:
-        _controller: App\Controller\ContactFormController::formAction
-        _locale: en
-        _format: json

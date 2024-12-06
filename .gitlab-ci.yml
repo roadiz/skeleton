@@ -1,11 +1,6 @@
-# Gitlab CI
-# Replace “roadiz_skeleton” with your project slug
-image: roadiz/php83-runner
-
 stages:
     - test
     - build
-    - deploy
     - release
 
 # AutoDevOps templates for security
@@ -19,12 +14,14 @@ variables:
     TIMEZONE: "Europe/Paris"
     SENTRY_URL: ""
 
-roadiz_skeleton_test:
+test:
+    image: roadiz/php83-runner
     stage: test
     interruptible: true
     only:
         - develop
         - tags
+        - merge_requests
     cache:
         key: ${CI_COMMIT_REF_SLUG}
         paths:
@@ -40,63 +37,22 @@ roadiz_skeleton_test:
             coverage_report:
                 coverage_format: cobertura
                 path: coverage/cobertura.xml
-    #before_script:
-        #- eval "$(ssh-agent -s)"
-        #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-        ##
-        ## Create the SSH directory and give it the right permissions
-        ##
-        #- mkdir -p ~/.ssh
-        #- chmod 700 ~/.ssh
-        ## Use your Gitlab instance URL
-        #- ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-        #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
+# If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
+#    before_script:
+#        - composer config gitlab-token.gitlab.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
     script:
+        #
+        # If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
+        # in your Gitlab / GitHub CI/CD settings. This deploy-token must have read access to your private repositories.
+        #
         - composer install
-        - php -d memory_limit=-1 vendor/bin/phpcs -p ./src
+        - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
 
-roadiz_skeleton_build:
+build_develop:
     stage: build
-    interruptible: true
-    only:
-        - develop
-        - tags
-    cache:
-        key: ${CI_COMMIT_REF_SLUG}
-        paths:
-            - vendor/
-    variables:
-        # temporary vars for composer scripts only
-        APP_ENV: prod
-        JWT_PASSPHRASE: changeme
-        APP_SECRET: changeme
-    artifacts:
-        expire_in: 1 hour
-        paths:
-            - vendor/
-            # Keep themes assets to include them in docker image
-            - public/themes/
-            - public/bundles/
-    #before_script:
-        #- eval "$(ssh-agent -s)"
-        #- echo "$COMPOSER_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-        ##
-        ## Create the SSH directory and give it the right permissions
-        ##
-        #- mkdir -p ~/.ssh
-        #- chmod 700 ~/.ssh
-        ## Use your Gitlab instance URL
-        #- ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
-        #- ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
-    script:
-        - composer install --no-dev --optimize-autoloader
-
-roadiz_skeleton_dev_docker:
-    stage: deploy
     image: docker:git
-    # Create a docker image only when a new tag is pushed
     only:
         - develop
     services:
@@ -104,35 +60,19 @@ roadiz_skeleton_dev_docker:
     variables:
         DOCKER_DRIVER: overlay2
         DOCKER_TLS_CERTDIR: "/certs"
+        # Provide env vars for docker bake
+        REGISTRY: ${CI_REGISTRY_IMAGE}
     when: on_success
-    needs: ["roadiz_skeleton_build"]
-    dependencies: ["roadiz_skeleton_build"]
     script:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for develop\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        # App image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}:develop ."
-        - "docker push ${CI_REGISTRY_IMAGE}:develop"
-        ## Solr image build
-        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr:develop ./docker/solr"
-        #- "docker push ${CI_REGISTRY_IMAGE}/solr:develop"
-        # Nginx image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx:develop -f docker/nginx/Dockerfile ."
-        - "docker push ${CI_REGISTRY_IMAGE}/nginx:develop"
-        # Varnish image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish:develop ./docker/varnish"
-        - "docker push ${CI_REGISTRY_IMAGE}/varnish:develop"
+        #- "docker buildx bake --set *.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        - "docker buildx bake --push"
 
-#
-# Build App docker image with vendor and built assets
-# included. You must configure your Gitlab Runner to
-# support Docker-in-docker commands.
-#
-roadiz_skeleton_docker:
-    stage: deploy
+build_tag:
+    stage: build
     image: docker:git
-    # Create a docker image only when a new tag is pushed
     only:
         - tags
     services:
@@ -140,34 +80,16 @@ roadiz_skeleton_docker:
     variables:
         DOCKER_DRIVER: overlay2
         DOCKER_TLS_CERTDIR: "/certs"
+        # Provide env vars for docker bake
+        VERSION: ${CI_COMMIT_TAG}
+        REGISTRY: ${CI_REGISTRY_IMAGE}
     when: on_success
-    needs: ["roadiz_skeleton_build"]
-    dependencies: ["roadiz_skeleton_build"]
-    before_script:
-        # Need curl for pushing release to Sentry
-        #- apk add curl
     script:
         # Connect to your Gitlab Registry
         - "echo \"Registry image: ${CI_REGISTRY_IMAGE} for tag ${CI_COMMIT_TAG}\""
         - "docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}"
-        # App image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG} ."
-        - "docker push ${CI_REGISTRY_IMAGE}:latest"
-        - "docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
-        ## Solr image build
-        #- "docker build -t ${CI_REGISTRY_IMAGE}/solr:latest -t ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG} ./docker/solr"
-        #- "docker push ${CI_REGISTRY_IMAGE}/solr:latest"
-        #- "docker push ${CI_REGISTRY_IMAGE}/solr:${CI_COMMIT_TAG}"
-        # Nginx image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/nginx:latest -t ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG} -f docker/nginx/Dockerfile ."
-        - "docker push ${CI_REGISTRY_IMAGE}/nginx:latest"
-        - "docker push ${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_TAG}"
-        # Varnish image build
-        - "docker build -t ${CI_REGISTRY_IMAGE}/varnish:latest -t ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG} ./docker/varnish"
-        - "docker push ${CI_REGISTRY_IMAGE}/varnish:latest"
-        - "docker push ${CI_REGISTRY_IMAGE}/varnish:${CI_COMMIT_TAG}"
-        # Create Release on your app on Sentry
-        #- "curl ${SENTRY_URL} -X POST -H \"Content-Type: application/json\" -d \"{\\\"version\\\": \\\"${CI_COMMIT_TAG}\\\"}\""
+        #- "docker buildx bake --set *.args.COMPOSER_DEPLOY_TOKEN=${COMPOSER_DEPLOY_TOKEN} --push"
+        - "docker buildx bake --push"
 
 create_gitlab_release:
     stage: release
@@ -176,7 +98,7 @@ create_gitlab_release:
         - if: $CI_COMMIT_TAG
     script:
         - echo "Running the release job."
-    needs: [ "roadiz_skeleton_docker" ]
+    needs: [ "build_tag" ]
     when: on_success
     release:
         tag_name: $CI_COMMIT_TAG
