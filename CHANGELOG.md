@@ -2,6 +2,49 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.0](https://github.com/roadiz/skeleton/compare/v2.3.9...v2.4.0) - 2024-12-06
+
+### ⚠ Breaking changes
+
+- Base PHP image is now `php:8.3.13-fpm-bookworm`
+
+### Bug Fixes
+
+- Enable login-link feature - ([45b947a](https://github.com/roadiz/skeleton/commit/45b947affe23e254f2f935ea9d133e398f3159ce)) - Ambroise Maupate
+- Removed `themes` from Dockerfile, removed ContactFormController in favor of Custom-forms - ([79f5167](https://github.com/roadiz/skeleton/commit/79f51679990c14ec27a152012792d6d5b7de1b47)) - Ambroise Maupate
+- Use DEV cron entrypoint to prevent dumping production .env during development - ([b927159](https://github.com/roadiz/skeleton/commit/b9271593018c8de9c1647209bc2eab2903083376)) - Ambroise Maupate
+- Update Github Action - ([85fdd82](https://github.com/roadiz/skeleton/commit/85fdd8298cf5a5198af1f61d8ccd68dc35938e68)) - Ambroise Maupate
+- Do not use SSH keys volumes to share credentials between host and container, use `COMPOSER_DEPLOY_TOKEN` - ([4d01411](https://github.com/roadiz/skeleton/commit/4d01411b82475e7434cb37f4c8dc9d1a2db73e31)) - Ambroise Maupate
+
+### CI/CD
+
+- Set default docker user to `www-data` for docker images - ([45658ff](https://github.com/roadiz/skeleton/commit/45658ff21dc53ed637fcce0cf8ae9d45a39a5ca0)) - Ambroise Maupate
+- Removed Composer private key, use a deploy token instead for private packages - ([18bbe92](https://github.com/roadiz/skeleton/commit/18bbe92329aa831c639b3f56d82a22d9baeaae38)) - Ambroise Maupate
+- Added ParallelConfigFactory to PhpCsFixer - ([8018801](https://github.com/roadiz/skeleton/commit/801880193767fa2efd9869164a834cede7cea1c1)) - Ambroise Maupate
+- Upgraded docker compose dev environment - ([dcbf346](https://github.com/roadiz/skeleton/commit/dcbf3463c7324cbd883d6ae9fd9ef1773d95f219)) - Ambroise Maupate
+- Unnecessary job prefix, allow tests on merge_requests - ([de69c2c](https://github.com/roadiz/skeleton/commit/de69c2c8e9cede23982781be506010f23e176d07)) - Ambroise Maupate
+
+### Documentation
+
+- Improve README.md - ([fcd081c](https://github.com/roadiz/skeleton/commit/fcd081c54cfedf6b2a13c1083eecaf937f695f12)) - Ambroise Maupate
+- Add suggestion about create first admin user with command line ([#6](https://github.com/roadiz/skeleton/issues/6)) - ([5e50725](https://github.com/roadiz/skeleton/commit/5e50725e9d89194cb1732873a9f9bc0357851489)) - Eliot
+
+### Features
+
+- Config updates for api-platform 3.3 - ([3baf2d0](https://github.com/roadiz/skeleton/commit/3baf2d0308dd4d6de461267c8a86ec61d3225163)) - Ambroise Maupate
+- Prevent cron docker entrypoint to run as non-root user - ([2dc6c62](https://github.com/roadiz/skeleton/commit/2dc6c6248a6ef72f0a557c3727ad8286ce8d0fed)) - Ambroise Maupate
+- Replace `squizlabs/php_codesniffer` package with  `friendsofphp/php-cs-fixer` - ([a369090](https://github.com/roadiz/skeleton/commit/a36909011b085eb91aa6a0579a14859edbd9d234)) - Ambroise Maupate
+-  [**breaking**]Migrate Dockerfile to multi-stage build and get rid of `roadiz/php83-fpm-alpine` base image - ([d2f3899](https://github.com/roadiz/skeleton/commit/d2f3899d10e2fc5df5e341354a387e8129f26789)) - Ambroise Maupate
+- Use Docker Buildx Bake - ([f9f0fe9](https://github.com/roadiz/skeleton/commit/f9f0fe9a42af3d598e8cd5475570f7cd5a5f3eb9)) - Ambroise Maupate
+- Use Docker Buildx Bake with COMPOSER_DEPLOY_TOKEN - ([ba8ef7c](https://github.com/roadiz/skeleton/commit/ba8ef7c944e0c9c6154faeecc02759535a25e3b1)) - Ambroise Maupate
+- Upgraded sentry/sentry-symfony to ^5.1 - ([82ce87e](https://github.com/roadiz/skeleton/commit/82ce87e61fa21e5ceda8fee3be0381b30f2fbb5c)) - Ambroise Maupate
+- Use dedicated images for php and nginx, aligned workdirs ([#4](https://github.com/roadiz/skeleton/issues/4)) - ([464b4ac](https://github.com/roadiz/skeleton/commit/464b4ac5c77247c22a77d847d9d1e3eead3309d9)) - Ambroise Maupate
+- Use mariadb by default - ([3d9a3ee](https://github.com/roadiz/skeleton/commit/3d9a3ee8d80013b1f4144002ce787cfd27be717e)) - Ambroise Maupate
+
+### Refactor
+
+- Remove sensio_framework_extra - ([7c4b921](https://github.com/roadiz/skeleton/commit/7c4b921565fc52aadce661c863b10b3f70ac3c90)) - eliot lauger
+
 ## [2.3.9](https://github.com/roadiz/skeleton/compare/v2.3.8...v2.3.9) - 2024-08-01
 
 ### Bug Fixes
