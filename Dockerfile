@@ -1,9 +1,12 @@
 ARG PHP_VERSION=8.3.14
 ARG MYSQL_VERSION=8.0.40
 ARG NGINX_VERSION=1.27.2
+ARG MARIADB_VERSION=10.11.9
 ARG SOLR_VERSION=9
 ARG VARNISH_VERSION=7.1
+
 ARG UID=1000
+ARG GID=${UID}
 
 #######
 # PHP #
@@ -257,6 +260,26 @@ echo "UID: ${UID}\n"
 EOF
 
 COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
+
+
+#############
+# MariaDB   #
+#############
+
+FROM mariadb:${MARIADB_VERSION} AS mariadb
+
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+
+ARG UID
+ARG GID
+
+COPY --link docker/mariadb/performances.cnf /etc/mariadb/conf.d/performances.cnf
+
+RUN <<EOF
+usermod -u ${UID} mysql
+groupmod -g ${GID} mysql
+EOF
+
 
 ########
 # Solr #

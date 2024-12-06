@@ -4,7 +4,7 @@ services:
         hostname: db
         build:
             # Custom image for file permissions and performances
-            target: mysql
+            target: mariadb
             args:
                 UID: ${UID}
         cap_add:
@@ -14,18 +14,18 @@ services:
         volumes:
             - "./.data/db:/var/lib/mysql"
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-            MYSQL_DATABASE: ${MYSQL_DATABASE:-roadiz}
-            MYSQL_USER: ${MYSQL_USER:-roadiz}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-roadiz}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
+            MARIADB_DATABASE: ${MARIADB_DATABASE:-roadiz}
+            MARIADB_USER: ${MARIADB_USER:-roadiz}
+            MARIADB_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
 
     pma:
         image: phpmyadmin:5.2.1
         environment:
-            PMA_HOST: ${MYSQL_HOST:-db}
+            PMA_HOST: db
             UPLOAD_LIMIT: 64M
-            PMA_USER: ${MYSQL_USER:-roadiz}
-            PMA_PASSWORD: ${MYSQL_PASSWORD:-roadiz}
+            PMA_USER: ${MARIADB_USER:-roadiz}
+            PMA_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
         depends_on:
             - db
         networks:

@@ -3,7 +3,7 @@
 name: ${APP_NAMESPACE}
 services:
     db:
-        image: mysql:8.0.40
+        image: my-registry/roadiz_skeleton/mariadb:latest
         restart: always
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
@@ -12,10 +12,10 @@ services:
         volumes:
             - db_data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+            MARIADB_DATABASE: ${MARIADB_DATABASE}
+            MARIADB_USER: ${MARIADB_USER}
+            MARIADB_PASSWORD: ${MARIADB_PASSWORD}
 
     # Use Redis for Cache, Messaging and Sessions
     redis:
@@ -103,7 +103,7 @@ services:
         networks:
             - default
         volumes:
-            - ./robots.txt:/app/public/robots.txt:ro
+            #- ./robots.txt:/app/public/robots.txt:ro
             - app_file_data:/app/public/files:ro
             - app_assets_data:/app/public/assets:ro
         labels:
@@ -122,25 +122,12 @@ services:
             - app_assets_data:/app/public/assets
             - app_private_file_data:/app/var/files
             - app_secret_data:/app/config/secrets
-            ## Use docker-compose env file as .env.local in container
+            - app_jwt_data:/app/config/jwt
+            ## Use docker-compose env file as .env.local in container or use env vars
             - ./.env:/app/.env.local:ro
-            ## Generate JWT certificates on your host and share them to docker container
-            ## openssl genpkey -out jwt_private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096; chmod 0644 jwt_private.pem;
-            - ./jwt_private.pem:/app/config/jwt/private.pem:ro
-            ## openssl pkey -in jwt_private.pem -out jwt_public.pem -pubout; chmod 0644 jwt_public.pem;
-            - ./jwt_public.pem:/app/config/jwt/public.pem:ro
-            ##
-            ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
-            ## Uncomment these if you DO want to persist and edit node-types on production env
-            ##
-            #- app_node_types_api:/app/config/api_resources
-            #- app_node_types_resource:/app/src/Resources
-            #- app_node_types_entities:/app/src/GeneratedEntity
         networks:
             - default
         environment:
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_PORT: ${MYSQL_PORT}
             # Can only override env in docker environment
             # because these are hardcoded in Docker image definition
             APP_ENV: prod
@@ -209,10 +196,10 @@ services:
             RESTIC_REPOSITORY: ${RESTIC_REPOSITORY}
             RESTIC_PASSWORD: ${RESTIC_PASSWORD}
             # MySQL credentials
-            MYSQL_HOST: ${MYSQL_HOST}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_HOST: db
+            MYSQL_DATABASE: ${MARIADB_DATABASE}
+            MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+            MYSQL_USER: ${MARIADB_USER}
             MYSQL_DUMP_FILENAME: ${MYSQL_DUMP_FILENAME}
         volumes:
             - restic_cache:/root/.cache/restic
@@ -224,20 +211,16 @@ services:
             service: restic
         # Forget all snapshots older than 7 days and keep 12 monthly snapshots
         command: 'forget -o s3.storage-class=${S3_STORAGE_CLASS} --keep-daily 7 --keep-monthly 12 --prune'
+
+
 volumes:
     app_file_data:
     app_assets_data:
     app_private_file_data:
     app_secret_data:
+    app_jwt_data:
     redis:
     restic_cache:
-    ##
-    ## Do not add volume for src/GeneratedEntity, they are versioned since Roadiz v2
-    ## Uncomment these if you DO want to persist and edit node-types on production env
-    ##
-    #app_node_types_api:
-    #app_node_types_resource:
-    #app_node_types_entities:
     db_data:
     #solr_data:
 

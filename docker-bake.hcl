@@ -16,6 +16,10 @@ target "api" {
     matrix = {
         item = [
             {
+                name = "mariadb"
+                target = "mariadb"
+            },
+            {
                 name = "php"
                 target = "php-prod"
             },
