@@ -56,6 +56,7 @@ test:
 build_develop:
     stage: build
     image: docker:git
+    interruptible: true
     only:
         - develop
     services:
@@ -108,6 +109,7 @@ deploy_develop:
         - develop
     needs:
         - build_develop
+    interruptible: true
     when: on_success
     after_script:
         - rm -rf ~/.ssh
