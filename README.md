@@ -117,16 +117,6 @@ Use built-in command to generate your key pair (following command should have be
 docker compose exec app bin/console lexik:jwt:generate-keypair
 ```
 
-Or manually using `openssl`
-
-```shell script
-# Reveal your JWT_PASSPHRASE
-docker compose exec app bin/console secrets:list --reveal
-# Fill JWT_PASSPHRASE env var.
-openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096;
-openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout;
-```
-
 ### Install database
 
 Use `make install` command to install your database schema and fixtures.

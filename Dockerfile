@@ -319,6 +319,6 @@ FROM varnish:${VARNISH_VERSION}-alpine AS varnish
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
-ENV VARNISH_SIZE 512G
+ENV VARNISH_SIZE 256G
 
 COPY --link docker/varnish/default.vcl /etc/varnish/
