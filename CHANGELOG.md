@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.1](https://github.com/roadiz/skeleton/compare/v2.4.0...v2.4.1) - 2024-12-11
+
+### Documentation
+
+- Added Gitlab CI example how to deploy docker compose to distant SSH servers - ([d0ee7b3](https://github.com/roadiz/skeleton/commit/d0ee7b3ffdc65748ae6a74672d45fd0b08946c97)) - Ambroise Maupate
+
 ## [2.4.0](https://github.com/roadiz/skeleton/compare/v2.3.9...v2.4.0) - 2024-12-06
 
 ### ⚠ Breaking changes
@@ -31,7 +37,6 @@ All notable changes to project will be documented in this file.
 
 ### Features
 
-- Config updates for api-platform 3.3 - ([3baf2d0](https://github.com/roadiz/skeleton/commit/3baf2d0308dd4d6de461267c8a86ec61d3225163)) - Ambroise Maupate
 - Prevent cron docker entrypoint to run as non-root user - ([2dc6c62](https://github.com/roadiz/skeleton/commit/2dc6c6248a6ef72f0a557c3727ad8286ce8d0fed)) - Ambroise Maupate
 - Replace `squizlabs/php_codesniffer` package with  `friendsofphp/php-cs-fixer` - ([a369090](https://github.com/roadiz/skeleton/commit/a36909011b085eb91aa6a0579a14859edbd9d234)) - Ambroise Maupate
 -  [**breaking**]Migrate Dockerfile to multi-stage build and get rid of `roadiz/php83-fpm-alpine` base image - ([d2f3899](https://github.com/roadiz/skeleton/commit/d2f3899d10e2fc5df5e341354a387e8129f26789)) - Ambroise Maupate
@@ -50,6 +55,10 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - Removed useless `themes` folder - ([f06198c](https://github.com/roadiz/skeleton/commit/f06198ce0b7584b8b7294cb42662a73b9fe9b7c0)) - Ambroise Maupate
+
+### Features
+
+- Config updates for api-platform 3.3 - ([3baf2d0](https://github.com/roadiz/skeleton/commit/3baf2d0308dd4d6de461267c8a86ec61d3225163)) - Ambroise Maupate
 
 ## [2.3.8](https://github.com/roadiz/skeleton/compare/v2.3.7...v2.3.8) - 2024-06-26
 
