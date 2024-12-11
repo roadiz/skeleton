@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.2](https://github.com/roadiz/skeleton/compare/v2.4.1...v2.4.2) - 2024-12-11
+
+### Bug Fixes
+
+- Make develop jobs interruptible - ([6c1f555](https://github.com/roadiz/skeleton/commit/6c1f55569e46017038fa252f60e874c5af914621)) - Ambroise Maupate
+
 ## [2.4.1](https://github.com/roadiz/skeleton/compare/v2.4.0...v2.4.1) - 2024-12-11
 
 ### Documentation
