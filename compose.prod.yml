@@ -67,7 +67,15 @@ services:
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls=true"
             # Always use higher priority for your API app with PathRegexp rule
             - "traefik.http.routers.${APP_NAMESPACE}_secure.priority=11"
+            #
+            # Be careful, HostRegexp router rule does not trigger Let's Encrypt certificate generation:
+            # The certificate resolver uses the router's rule, by checking the Host() matchers
+            # https://doc.traefik.io/traefik/https/acme/#configuration-examples
+            #
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].main=example.com"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].sans[0]=www.example.com"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].sans[1]=api.example.com"
             # Combine Host and PathRegexp to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=HostRegexp(${HOSTNAME}) && PathRegexp(${PATH_PREFIX})"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
