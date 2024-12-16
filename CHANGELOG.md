@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.3](https://github.com/roadiz/skeleton/compare/v2.4.2...v2.4.3) - 2024-12-16
+
+### Bug Fixes
+
+- Use `HostRegexp` and `PathRegexp` for Traefik v3 compatibility - ([b924d22](https://github.com/roadiz/skeleton/commit/b924d22ccc1b95412972a6c1ba58d056eedfa04f)) - Ambroise Maupate
+
 ## [2.4.2](https://github.com/roadiz/skeleton/compare/v2.4.1...v2.4.2) - 2024-12-11
 
 ### Bug Fixes
