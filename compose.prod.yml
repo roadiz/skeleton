@@ -74,8 +74,7 @@ services:
             #
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.certresolver=letsencrypt"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].main=example.com"
-            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].sans[0]=www.example.com"
-            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].sans[1]=api.example.com"
+            - "traefik.http.routers.${APP_NAMESPACE}_secure.tls.domains[0].sans=www.example.com, api.example.com"
             # Combine Host and PathRegexp to allow API and Frontend to share same domain name
             - "traefik.http.routers.${APP_NAMESPACE}_secure.rule=HostRegexp(${HOSTNAME}) && PathRegexp(${PATH_PREFIX})"
             - "traefik.http.routers.${APP_NAMESPACE}_secure.service=${APP_NAMESPACE}"
