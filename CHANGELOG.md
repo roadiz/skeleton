@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.5](https://github.com/roadiz/skeleton/compare/v2.4.4...v2.4.5) - 2025-01-06
+
+### Bug Fixes
+
+- Prevent `phpstan/phpdoc-parser` to bump to v2 (composer.json) - ([d0b8484](https://github.com/roadiz/skeleton/commit/d0b84840975dc0b67decab07e5dcf435776d2a40)) - Ambroise Maupate
+
 ## [2.4.4](https://github.com/roadiz/skeleton/compare/v2.4.3...v2.4.4) - 2025-01-06
 
 ### Bug Fixes
