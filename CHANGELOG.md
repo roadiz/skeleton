@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.6](https://github.com/roadiz/skeleton/compare/v2.4.5...v2.4.6) - 2025-01-10
+
+### Bug Fixes
+
+- Use MariaDB 11.4.4 - ([072771e](https://github.com/roadiz/skeleton/commit/072771ef2f75127a65ab786e4e2f61fa0231e44e)) - Ambroise Maupate
+
 ## [2.4.5](https://github.com/roadiz/skeleton/compare/v2.4.4...v2.4.5) - 2025-01-06
 
 ### Bug Fixes
