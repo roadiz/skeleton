@@ -2,6 +2,17 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.7](https://github.com/roadiz/skeleton/compare/v2.4.6...v2.4.7) - 2025-01-13
+
+### Bug Fixes
+
+- Cleanup dotenv file to split between docker/env vars and Symfony - ([61916a1](https://github.com/roadiz/skeleton/commit/61916a1c96c5b5e4a422ed275fe44d88c6a612c1)) - Ambroise Maupate
+- Use regular file name for phpstan flex recipe - ([2291f97](https://github.com/roadiz/skeleton/commit/2291f97c613582d077af8897def4a7c44be15df7)) - Ambroise Maupate
+
+### Documentation
+
+- Better `users:create` command example - ([98b13d2](https://github.com/roadiz/skeleton/commit/98b13d288e5fa9abf4968040cc7d65d81448bb58)) - Ambroise Maupate
+
 ## [2.4.6](https://github.com/roadiz/skeleton/compare/v2.4.5...v2.4.6) - 2025-01-10
 
 ### Bug Fixes
