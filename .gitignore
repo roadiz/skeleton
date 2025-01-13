@@ -47,7 +47,7 @@ openapi.json
 
 # We need to track main .env and phpstan.neon files
 !/.env
-!/phpstan.neon
+!/phpstan.dist.neon
 
 !/public/assets/.gitkeep
 !/public/files/.gitkeep
@@ -60,3 +60,7 @@ supervisord.pid
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
