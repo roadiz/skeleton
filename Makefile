@@ -5,18 +5,19 @@ cache:
 	docker compose exec app php bin/console messenger:stop-workers
 
 test:
-	docker compose exec app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
-	docker compose exec app php -d "memory_limit=-1" vendor/bin/phpstan analyse -c phpstan.neon
+	docker compose run --rm app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
+	docker compose run --rm app php -d "memory_limit=-1" vendor/bin/phpstan analyse
 	XDEBUG_MODE=coverage php -d "memory_limit=-1" vendor/bin/phpunit
 
 update:
+	docker compose run --rm app composer install -o
 	docker compose exec app php bin/console doctrine:migrations:migrate -n
 	# Do not perform files changes just apply existing migrations and import data
 	docker compose exec app php bin/console app:install -n
 	make cache;
 
 update_deps:
-	docker compose run --rm --entrypoint= app composer update -o
+	docker compose run --rm app composer update -o
 
 migrate:
 	docker compose exec app php bin/console doctrine:migrations:migrate -n
@@ -26,6 +27,8 @@ migrate:
 	docker compose exec app php bin/console messenger:stop-workers
 
 install:
+	docker compose run --rm app composer install -o
+	docker compose up -d
 	docker compose exec app php bin/console doctrine:migrations:migrate -n
 	# Do not perform files changes on the database
 	docker compose exec app php bin/console app:install -n
@@ -33,7 +36,7 @@ install:
 	make cache;
 
 changelog:
-	git-cliff -o CHANGELOG.md
+	git cliff -o CHANGELOG.md
 
 bump:
-	git-cliff --bump -o CHANGELOG.md
+	git cliff --bump -o CHANGELOG.md
