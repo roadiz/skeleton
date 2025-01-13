@@ -50,7 +50,7 @@ test:
         #
         - composer install
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
-        - php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon
+        - php -d memory_limit=-1 vendor/bin/phpstan analyse
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
 
 build_develop:

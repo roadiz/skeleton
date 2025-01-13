@@ -137,7 +137,8 @@ docker compose exec app bin/console cache:clear
 Before accessing the application, you need to create an admin user. Use the following command to create a user account:
 ```shell
 # Create your admin account with the specified username and email
-docker compose exec app bin/console users:create -m username@roadiz.io -b -s username
+export EMAIL="username@roadiz.io"
+docker compose exec app bin/console users:create -m $EMAIL -b -s $EMAIL
 # By default, a random password will be generated for the new user.
 # If you want to set a custom password, you can add the -p option followed by your desired password
 ```
