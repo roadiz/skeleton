@@ -21,14 +21,16 @@ roadiz_core:
     inheritance:
         type: single_table
 
+###> roadiz/solr ###
     solr:
         timeout: 3
-        endpoints: {}
-#            docker:
-#                host: '%env(string:SOLR_HOST)%'
-#                core: '%env(string:SOLR_CORE_NAME)%'
-#                port: '%env(string:SOLR_PORT)%'
-#                path: /
+        endpoints:
+            docker:
+                host: '%env(string:SOLR_HOST)%'
+                core: '%env(string:SOLR_CORE_NAME)%'
+                port: '%env(string:SOLR_PORT)%'
+                path: /
+###< roadiz/solr ###
 
 
 when@prod:

@@ -135,7 +135,7 @@ sub vcl_recv {
         if (client.ip ~ local) {
             if (req.http.ApiPlatform-Ban-Regex) {
                 ban("obj.http.Cache-Tags ~ " + req.http.ApiPlatform-Ban-Regex);
-                return (synth(200, "Ban added"));
+                return (synth(200, "Ban using cache-tags"));
             }
             elseif (req.http.X-Cache-Tags) {
                 ban("obj.http.X-Cache-Tags ~ " + req.http.X-Cache-Tags);
