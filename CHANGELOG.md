@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.8](https://github.com/roadiz/skeleton/compare/v2.4.7...v2.4.8) - 2025-01-14
+
+### Bug Fixes
+
+- Enable solr by default and added "roadiz/solr" tags to easily find configuration locations - ([0b8c3f1](https://github.com/roadiz/skeleton/commit/0b8c3f162f9cad45ee9a07e4de4588b966ed04fa)) - Ambroise Maupate
+
 ## [2.4.7](https://github.com/roadiz/skeleton/compare/v2.4.6...v2.4.7) - 2025-01-13
 
 ### Bug Fixes

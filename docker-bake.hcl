@@ -31,10 +31,10 @@ target "api" {
                 name = "varnish"
                 target = "varnish"
             },
-            # {
-            #     name = "solr"
-            #     target = "solr"
-            # },
+            {
+                name = "solr"
+                target = "solr"
+            },
         ]
     }
     context = "."
