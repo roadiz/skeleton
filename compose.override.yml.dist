@@ -15,6 +15,9 @@ services:
     pma:
         ports:
             - ${PUBLIC_PMA_PORT}:80/tcp
+    solr:
+        ports:
+            - "${PUBLIC_SOLR_PORT}:8983/tcp"
 
     # If you depend on private Gitlab repositories, you must use a deploy token and username
     #app:
@@ -24,6 +27,3 @@ services:
     #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
     #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
 
-    #solr:
-    #    ports:
-    #        - "${PUBLIC_SOLR_PORT}:8983/tcp"

@@ -142,16 +142,16 @@ services:
         entrypoint: 'docker-cron-entrypoint'
         user: root
 
-    #solr:
-    #    image: my-registry/roadiz_skeleton/solr:latest
-    #    volumes:
-    #        - "solr_data:/var/solr"
-    #    command:
-    #        - solr-precreate
-    #        - ${SOLR_CORE_NAME}
-    #    restart: always
-    #    networks:
-    #        - default
+    solr:
+        image: my-registry/roadiz_skeleton/solr:latest
+        volumes:
+            - "solr_data:/var/solr"
+        command:
+            - solr-precreate
+            - ${SOLR_CORE_NAME}
+        restart: always
+        networks:
+            - default
 
     # RESTIC incremental backup services
     restic:
