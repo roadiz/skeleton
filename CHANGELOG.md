@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.9](https://github.com/roadiz/skeleton/compare/v2.4.8...v2.4.9) - 2025-01-21
+
+### Bug Fixes
+
+- Fixed solr:reindex issues on crontab by clearing cache at startup - ([1d5b368](https://github.com/roadiz/skeleton/commit/1d5b368168deec50193a2f910275aa09e192b4b0)) - Ambroise Maupate
+
 ## [2.4.8](https://github.com/roadiz/skeleton/compare/v2.4.7...v2.4.8) - 2025-01-14
 
 ### Bug Fixes
