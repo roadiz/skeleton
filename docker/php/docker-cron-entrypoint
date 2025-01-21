@@ -26,6 +26,10 @@ echo "APP_DEBUG=${APP_DEBUG}";
 # To improve performance (i.e. avoid decrypting secrets at runtime),
 # you can decrypt your secrets during deployment to the "local" vault:
 /usr/bin/sudo -E -u php -- bash -c "APP_RUNTIME_ENV=prod /app/bin/console secrets:decrypt-to-local --force"
+# Must clear cache before launching cron to avoid issues with Solr reindexing
+/usr/bin/sudo -E -u php -- bash -c "APP_RUNTIME_ENV=prod /app/bin/console cache:clear -n"
+# Clear all cache pool on Symfony
+/usr/bin/sudo -E -u php -- bash -c "APP_RUNTIME_ENV=prod /app/bin/console cache:pool:clear cache.global_clearer -n"
 
 # Let cron take the wheel
 echo "Starting cron in foreground."
