@@ -34,7 +34,7 @@ echo "APP_DEBUG=${APP_DEBUG}";
 
 # Clear caches after migrations
 /app/bin/console cache:clear -n
-# Clear all cache pool on Symfony 5.4 https://symfony.com/doc/5.4/cache.html#clearing-the-cache
+# Clear all cache pool on Symfony
 /app/bin/console cache:pool:clear cache.global_clearer -n
 
 # first arg is `-f` or `--some-option`
