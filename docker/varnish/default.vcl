@@ -199,5 +199,13 @@ sub vcl_deliver {
     # Make sure to allow CORS on Cache-Tags header if you want to use it on Nuxt.
     unset resp.http.X-Cache-Tags;
     unset resp.http.Cache-Tags;
+
+    # We want to expose API cache-tags to the client, especially Nuxt to be able to purge frontend cache
+    # But we don't want to expose cache-tags to the client on Nuxt pages
+    #if (req.url !~ "^/api") {
+    #    # Remove cache-tags, unless you want Cloudflare or other to see them
+    #    unset resp.http.X-Cache-Tags;
+    #    unset resp.http.Cache-Tags;
+    #}
 }
 
