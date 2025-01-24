@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...2.4.10) - 2025-01-24
+
+### Features
+
+- Added new docker-migrate-entrypoint to only migrate database and app fixture, added DEPLOY_TAG for docker images - ([e634b07](https://github.com/roadiz/skeleton/commit/e634b0798add87fbc15caece2e5a4f32618998b8)) - Ambroise Maupate
+
 ## [2.4.9](https://github.com/roadiz/skeleton/compare/v2.4.8...v2.4.9) - 2025-01-21
 
 ### Bug Fixes

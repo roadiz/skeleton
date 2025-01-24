@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+# Print env infos
+echo "APP_ENV=${APP_ENV}";
+echo "APP_RUNTIME_ENV=${APP_RUNTIME_ENV}";
+echo "APP_DEBUG=${APP_DEBUG}";
+
+#
+# Wait for database to be ready for next commands and migrations
+#
+/wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
+
+## Perform migrations directly as database should be ready thanks to wait-for-it.sh
+/app/bin/console doctrine:migrations:migrate -n --allow-no-migration
+/app/bin/console app:install -n
