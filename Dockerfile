@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.3.14
+ARG PHP_VERSION=8.3.16
 ARG MYSQL_VERSION=8.0.40
 ARG NGINX_VERSION=1.27.2
 ARG MARIADB_VERSION=11.4.4
@@ -143,6 +143,7 @@ RUN ln -sf ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
 COPY --link docker/php/conf.d/php.prod.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
 COPY --link --chmod=755 docker/php/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY --link --chmod=755 docker/php/docker-cron-entrypoint /usr/local/bin/docker-cron-entrypoint
+COPY --link --chmod=755 docker/php/docker-migrate-entrypoint /usr/local/bin/docker-migrate-entrypoint
 
 USER php
 
