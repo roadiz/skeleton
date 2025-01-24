@@ -25,13 +25,6 @@ echo "APP_DEBUG=${APP_DEBUG}";
 #
 /wait-for-it.sh -t 0 -s ${MYSQL_HOST}:${MYSQL_PORT}
 
-##
-## Uncomment following lines to enable automatic migration for your theme at each docker start
-##
-## Perform migrations directly as database should be ready thanks to wait-for-it.sh
-# /app/bin/console doctrine:migrations:migrate -n --allow-no-migration
-# /app/bin/console app:install -n
-
 # Clear caches after migrations
 /app/bin/console cache:clear -n
 # Clear all cache pool on Symfony
