@@ -39,3 +39,5 @@ jobs:
               run: vendor/bin/php-cs-fixer check --ansi -vvv
             - name: Run PHPStan
               run: vendor/bin/phpstan analyse --no-progress -c phpstan.neon
+            - name: Run NodeType validate files
+              run: bin/console nodetypes:validate-files

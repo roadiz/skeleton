@@ -52,6 +52,7 @@ test:
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
+        - php bin/console nodetypes:validate-files
 
 build_develop:
     stage: build
