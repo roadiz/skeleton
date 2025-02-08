@@ -1,6 +1,6 @@
 color: '#6369c2'
 name: MenuLink
-displayName: 'Lien du menu'
+displayName: 'Menu link'
 visible: false
 publishable: false
 attributable: false
@@ -8,21 +8,17 @@ sortingAttributesByWeight: false
 reachable: false
 hidingNodes: false
 hidingNonReachableNodes: false
+defaultTtl: 0
+searchable: true
 fields:
     -
         name: link_external_url
-        universal: false
         excludeFromSearch: true
-        excludedFromSerialization: false
-        indexed: false
-        visible: true
         label: 'External URL'
-        expanded: false
         type: string
     -
         name: link_internal_reference
         universal: true
-        excludeFromSearch: false
         normalizationContext:
             groups:
                 - urls
@@ -31,13 +27,7 @@ fields:
                 - nodes_sources_default
                 - tag_base
                 - document_display
-        excludedFromSerialization: false
-        indexed: false
-        visible: true
         label: 'Node reference (internal link)'
-        expanded: false
         defaultValues:
             - Page
         type: nodes
-defaultTtl: 0
-searchable: true

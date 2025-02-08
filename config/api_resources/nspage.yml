@@ -1,0 +1,35 @@
+resources:
+    App\GeneratedEntity\NSPage:
+        shortName: Page
+        types:
+            - Page
+        operations:
+            page_get_collection:
+                method: GET
+                class: ApiPlatform\Metadata\GetCollection
+                shortName: Page
+                normalizationContext:
+                    enable_max_depth: true
+                    groups:
+                        - nodes_sources_base
+                        - nodes_sources_default
+                        - urls
+                        - tag_base
+                        - translation_base
+                        - document_display
+                        - document_thumbnails
+                        - document_display_sources
+            page_get:
+                method: GET
+                class: ApiPlatform\Metadata\Get
+                shortName: Page
+                normalizationContext:
+                    groups:
+                        - nodes_sources
+                        - node_listing
+                        - urls
+                        - tag_base
+                        - translation_base
+                        - document_display
+                        - document_thumbnails
+                        - document_display_sources
