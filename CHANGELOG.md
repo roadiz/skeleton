@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.11](https://github.com/roadiz/skeleton/compare/v2.4.10...v2.4.11) - 2025-02-08
+
+### Bug Fixes
+
+- Upgraded Varnish version and add optimization on query-string (sorting) - ([f0aa8b1](https://github.com/roadiz/skeleton/commit/f0aa8b19ff3063503f002ed655ac747e08c6bf04)) - Ambroise Maupate
+
 ## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...2.4.10) - 2025-01-24
 
 ### Features
