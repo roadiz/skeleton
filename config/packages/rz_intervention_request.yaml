@@ -1,6 +1,6 @@
 parameters:
     env(IR_DEFAULT_QUALITY): '90'
-    env(IR_MAX_PIXEL_SIZE): '2500'
+    env(IR_MAX_PIXEL_SIZE): '2560'
     env(IR_DRIVER): 'gd'
 
 rz_intervention_request:
