@@ -1,7 +1,7 @@
 ARG PHP_VERSION=8.3.16
 ARG MYSQL_VERSION=8.0.40
 ARG NGINX_VERSION=1.27.2
-ARG MARIADB_VERSION=11.4.4
+ARG MARIADB_VERSION=11.4.5
 ARG SOLR_VERSION=9
 ARG VARNISH_VERSION=7.6.1
 
@@ -274,7 +274,10 @@ LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 ARG UID
 ARG GID
 
-COPY --link docker/mariadb/performances.cnf /etc/mariadb/conf.d/performances.cnf
+# https://hub.docker.com/_/mariadb
+# Using a custom MariaDB configuration file
+# Custom configuration files should end in .cnf and be mounted read only at the directory /etc/mysql/conf.d
+COPY --link docker/mariadb/performances.cnf /etc/mysql/conf.d/performances.cnf
 
 RUN <<EOF
 usermod -u ${UID} mysql
