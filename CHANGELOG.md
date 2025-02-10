@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.13](https://github.com/roadiz/skeleton/compare/v2.4.12...v2.4.13) - 2025-02-10
+
+### Bug Fixes
+
+- Fixed MariaDb configuration header name - ([b65edc9](https://github.com/roadiz/skeleton/commit/b65edc968f95c951f028a50ce2ff82f44ca70eb1)) - Ambroise Maupate
+
 ## [2.4.12](https://github.com/roadiz/skeleton/compare/v2.4.11...v2.4.12) - 2025-02-10
 
 ### Bug Fixes
