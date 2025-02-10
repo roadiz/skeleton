@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.12](https://github.com/roadiz/skeleton/compare/v2.4.11...v2.4.12) - 2025-02-10
+
+### Bug Fixes
+
+- Fixed MariaDB configuration location - ([8d145d8](https://github.com/roadiz/skeleton/commit/8d145d8347c1570048583484f694b31a67c653d8)) - Ambroise Maupate
+
 ## [2.4.11](https://github.com/roadiz/skeleton/compare/v2.4.10...v2.4.11) - 2025-02-08
 
 ### Bug Fixes
