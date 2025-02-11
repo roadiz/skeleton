@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...2.4.14) - 2025-02-11
+
+### Bug Fixes
+
+- Fixed Wrong Varnish size unit - ([e2b5985](https://github.com/roadiz/skeleton/commit/e2b5985b7e2f0e6ddf6cbc24eb1ff8c408b77ebf)) - Ambroise Maupate
+
 ## [2.4.13](https://github.com/roadiz/skeleton/compare/v2.4.12...v2.4.13) - 2025-02-10
 
 ### Bug Fixes
