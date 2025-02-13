@@ -32,6 +32,10 @@ services:
         tmpfs: /var/lib/varnish/varnishd:exec
         # https://github.com/varnish/docker-varnish/issues/53
         user: root
+        # Prevent cache-tags to overflow headers max size by doubling default values
+        # https://github.com/api-platform/core/issues/3168
+        # https://www.varnish-software.com/developers/tutorials/troubleshooting-varnish/
+        command: "-p http_resp_hdr_len=16384 -p http_resp_size=65536"
         depends_on:
             - nginx
         links:
