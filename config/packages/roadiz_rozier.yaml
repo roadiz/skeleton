@@ -5,6 +5,11 @@ parameters:
     env(OPEN_ID_CLIENT_ID): ''
     env(OPEN_ID_CLIENT_SECRET): ''
 roadiz_rozier:
+    # https://symfony.com/doc/6.4/serializer/encoders.html#the-csvencoder
+    csv_encoder_options:
+        # Use semicolon as CSV delimiter for european Excel compatibility
+        csv_delimiter: ';'
+
     open_id:
         # Verify User info in JWT at each login
         verify_user_info: false
