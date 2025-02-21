@@ -7,13 +7,15 @@ namespace App\Controller;
 use App\Api\Model\CommonContent;
 use App\TreeWalker\MenuNodeSourceWalker;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Cache\CacheItemPoolInterface;
 use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactoryInterface;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
-use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\TranslationRepository;
+use RZ\TreeWalker\WalkerContextInterface;
+use RZ\TreeWalker\WalkerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,6 +28,8 @@ final class GetCommonContentController extends AbstractController
         private readonly NodesSourcesHeadFactoryInterface $nodesSourcesHeadFactory,
         private readonly PreviewResolverInterface $previewResolver,
         private readonly TreeWalkerGenerator $treeWalkerGenerator,
+        private readonly WalkerContextInterface $walkerContext,
+        private readonly CacheItemPoolInterface $cacheItemPool,
     ) {
     }
 
@@ -59,18 +63,27 @@ final class GetCommonContentController extends AbstractController
         }
     }
 
-    private function getErrorPage(TranslationInterface $translation): ?NodesSources
+    private function getErrorPage(TranslationInterface $translation): ?WalkerInterface
     {
         if (!class_exists('\App\GeneratedEntity\NSErrorPage')) {
             return null;
         }
 
-        // @phpstan-ignore-next-line
-        return $this->managerRegistry->getRepository('\App\GeneratedEntity\NSErrorPage')
-            ->findOneBy([
-                'translation' => $translation,
-                'node.nodeName' => 'error-page',
-            ]);
+        $errorPage = $this->managerRegistry->getRepository('\App\GeneratedEntity\NSErrorPage')->findOneBy([
+            'translation' => $translation,
+        ]);
+
+        if (null === $errorPage) {
+            return null;
+        }
+
+        return $this->treeWalkerGenerator->buildForRoot(
+            $errorPage,
+            AutoChildrenNodeSourceWalker::class,
+            $this->walkerContext,
+            3,
+            $this->cacheItemPool
+        );
     }
 
     private function getTranslationFromRequest(?Request $request): TranslationInterface
