@@ -73,7 +73,7 @@ services:
             # https://doc.traefik.io/traefik/https/acme/#configuration-examples
             #
             - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].main=project-name.fr"
-            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].sans[0]=www.project-name.fr"
+            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].sans=www.project-name.fr,www2.project-name.fr"
             # Apply middlewares
             - "traefik.http.routers.${APP_NAMESPACE}.middlewares=${APP_NAMESPACE}Redirectregex,${APP_NAMESPACE}Sts"
             # Add domain redirection (${APP_NAMESPACE} non-www to www redir)
