@@ -2,6 +2,16 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.0](https://github.com/roadiz/skeleton/compare/v2.4.14...v2.5.0) - 2025-03-11
+
+### CI/CD
+
+- Use new `roadiz/php-runner:8.4.4-bookworm` test image - ([5cbe853](https://github.com/roadiz/skeleton/commit/5cbe853efe20537a0d394337d6c58717b8290b1b)) - Ambroise Maupate
+
+### Features
+
+- Added NSErrorPage tree-walker into CommonContent - ([b05ac1b](https://github.com/roadiz/skeleton/commit/b05ac1bf441c3ae74fd63350d50c21246a6d5be9)) - Ambroise Maupate
+
 ## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...2.4.14) - 2025-02-11
 
 ### Bug Fixes
