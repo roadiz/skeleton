@@ -1,0 +1,13 @@
+color: '#000000'
+name: Page
+displayName: Page
+visible: true
+publishable: false
+attributable: false
+sortingAttributesByWeight: false
+reachable: true
+hidingNodes: false
+hidingNonReachableNodes: true
+defaultTtl: 60
+searchable: true
+fields: {}

@@ -51,6 +51,12 @@ sub vcl_recv {
         return(pass);
     }
 
+    # Override Accept-Encoding header to unify the cache when browser
+    # accepts gzip or deflate at least.
+    if (req.http.Accept-Encoding ~ "gzip, deflate") {
+        set req.http.Accept-Encoding = "gzip, deflate";
+    }
+
     # https://info.varnish-software.com/blog/varnish-cache-brotli-compression
     if (req.http.Accept-Encoding ~ "br" && req.url !~
         "\.(jpg|png|gif|zip|gz|mp3|mov|avi|mpg|mp4|swf|woff|woff2|wmf)$") {

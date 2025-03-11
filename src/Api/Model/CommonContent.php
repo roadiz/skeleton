@@ -7,6 +7,7 @@ namespace App\Api\Model;
 use ApiPlatform\Metadata\ApiProperty;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadInterface;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
+use RZ\TreeWalker\WalkerInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 final class CommonContent
@@ -18,7 +19,11 @@ final class CommonContent
     public ?NodesSources $home = null;
 
     #[Groups(['common_content'])]
-    public ?NodesSources $errorPage = null;
+    #[ApiProperty(
+        identifier: false,
+        genId: false,
+    )]
+    public ?WalkerInterface $errorPage = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(

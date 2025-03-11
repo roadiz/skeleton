@@ -98,10 +98,6 @@ services:
     worker:
         <<: *app_template
         hostname: worker
-        deploy:
-            # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
-            # from your workers. Varnish ACL hostnames won't be resolved correctly.
-            replicas: 1
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
         entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
@@ -178,6 +174,12 @@ services:
     varnish:
         build:
             target: varnish
+        # https://github.com/varnish/docker-varnish/issues/53
+        user: root
+        # Prevent cache-tags to overflow headers max size by doubling default values
+        # https://github.com/api-platform/core/issues/3168
+        # https://www.varnish-software.com/developers/tutorials/troubleshooting-varnish/
+        command: "-p http_resp_hdr_len=16384 -p http_resp_size=65536"
         tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - nginx

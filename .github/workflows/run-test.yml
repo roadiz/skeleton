@@ -38,4 +38,6 @@ jobs:
             - name: Run PHP Code Sniffer
               run: vendor/bin/php-cs-fixer check --ansi -vvv
             - name: Run PHPStan
-              run: vendor/bin/phpstan analyse --no-progress -c phpstan.neon
+              run: vendor/bin/phpstan analyse --no-progress
+            - name: Run NodeType validate files
+              run: bin/console nodetypes:validate-files

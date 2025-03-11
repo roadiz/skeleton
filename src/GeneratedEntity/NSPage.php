@@ -24,13 +24,13 @@ use RZ\Roadiz\CoreBundle\Entity\UserLogEntry;
 use Symfony\Component\Serializer\Attribute as Serializer;
 
 /**
- * Menu node-source entity.
+ * Page node-source entity.
  */
 #[Gedmo\Loggable(logEntryClass: UserLogEntry::class)]
-#[ORM\Entity(repositoryClass: Repository\NSMenuRepository::class)]
-#[ORM\Table(name: 'ns_menu')]
+#[ORM\Entity(repositoryClass: Repository\NSPageRepository::class)]
+#[ORM\Table(name: 'ns_page')]
 #[ApiFilter(PropertyFilter::class)]
-class NSMenu extends NodesSources
+class NSPage extends NodesSources
 {
     #[JMS\VirtualProperty]
     #[JMS\Groups(['nodes_sources', 'nodes_sources_default'])]
@@ -39,7 +39,7 @@ class NSMenu extends NodesSources
     #[Serializer\SerializedName(serializedName: '@type')]
     public function getNodeTypeName(): string
     {
-        return 'Menu';
+        return 'Page';
     }
 
     #[JMS\VirtualProperty]
@@ -49,7 +49,7 @@ class NSMenu extends NodesSources
     #[Serializer\SerializedName(serializedName: 'nodeTypeColor')]
     public function getNodeTypeColor(): string
     {
-        return '#947ccf';
+        return '#000000';
     }
 
     /**
@@ -59,7 +59,7 @@ class NSMenu extends NodesSources
     #[JMS\VirtualProperty]
     public function isReachable(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -74,6 +74,6 @@ class NSMenu extends NodesSources
 
     public function __toString(): string
     {
-        return '[NSMenu] ' . parent::__toString();
+        return '[NSPage] ' . parent::__toString();
     }
 }

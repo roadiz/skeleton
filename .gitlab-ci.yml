@@ -18,7 +18,7 @@ variables:
     DOCKER_CONTAINERS: "varnish nginx app cron worker migrate"
 
 test:
-    image: roadiz/php83-runner
+    image: roadiz/php-runner:8.4.4-bookworm
     stage: test
     interruptible: true
     only:
@@ -31,6 +31,8 @@ test:
             - vendor/
     variables:
         XDEBUG_MODE: "coverage"
+        # Trigger composer config --global gitlab-token
+        #GITLAB_DOMAIN: gitlab.com
     artifacts:
         expire_in: 1 day
         paths:
@@ -40,9 +42,6 @@ test:
             coverage_report:
                 coverage_format: cobertura
                 path: coverage/cobertura.xml
-# If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
-#    before_script:
-#        - composer config gitlab-token.gitlab.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
     script:
         #
         # If you are using private repositories, you need to provide a COMPOSER_DEPLOY_TOKEN variable
@@ -52,6 +51,7 @@ test:
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
+        - php bin/console nodetypes:validate-files
 
 build_develop:
     stage: build

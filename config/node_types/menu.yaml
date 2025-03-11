@@ -1,0 +1,21 @@
+color: '#947ccf'
+name: Menu
+displayName: Menu
+visible: true
+publishable: false
+attributable: false
+sortingAttributesByWeight: false
+reachable: false
+hidingNodes: false
+hidingNonReachableNodes: false
+defaultTtl: 0
+searchable: true
+fields:
+    -
+        name: menu_items
+        label: 'Menu items'
+        defaultValues:
+            - Page
+            - Menu
+            - MenuLink
+        type: children-nodes

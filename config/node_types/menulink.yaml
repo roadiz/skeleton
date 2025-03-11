@@ -1,0 +1,33 @@
+color: '#6369c2'
+name: MenuLink
+displayName: 'Menu link'
+visible: false
+publishable: false
+attributable: false
+sortingAttributesByWeight: false
+reachable: false
+hidingNodes: false
+hidingNonReachableNodes: false
+defaultTtl: 0
+searchable: true
+fields:
+    -
+        name: link_external_url
+        excludeFromSearch: true
+        label: 'External URL'
+        type: string
+    -
+        name: link_internal_reference
+        universal: true
+        normalizationContext:
+            groups:
+                - urls
+                - get
+                - nodes_sources_base
+                - nodes_sources_default
+                - tag_base
+                - document_display
+        label: 'Node reference (internal link)'
+        defaultValues:
+            - Page
+        type: nodes
