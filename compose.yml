@@ -98,10 +98,6 @@ services:
     worker:
         <<: *app_template
         hostname: worker
-        deploy:
-            # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
-            # from your workers. Varnish ACL hostnames won't be resolved correctly.
-            replicas: 1
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
         entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
