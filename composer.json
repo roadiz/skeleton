@@ -3,7 +3,6 @@
     "type": "project",
     "license": "mit",
     "prefer-stable": true,
-    "minimum-stability": "dev",
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
@@ -11,7 +10,7 @@
         "ext-json": "*",
         "liip/monitor-bundle": "^2.22",
         "nelmio/cors-bundle": "^2.4",
-        "roadiz/cms-pack": "dev-develop",
+        "roadiz/cms-pack": "^2.0.2",
         "sentry/sentry-symfony": "^5.1",
         "symfony/redis-messenger": "6.4.*",
         "symfony/flex": "*",
