@@ -1,3 +1,32 @@
 resources:
     RZ\Roadiz\CoreBundle\Api\Model\WebResponse:
-        operations: {}
+        operations:
+            page_get_by_path:
+                method: GET
+                class: ApiPlatform\Metadata\Get
+                uriTemplate: /web_response_by_path
+                read: false
+                controller: RZ\Roadiz\CoreBundle\Api\Controller\GetWebResponseByPathController
+                normalizationContext:
+                    pagination_enabled: false
+                    enable_max_depth: true
+                    groups:
+                        - page_get_by_path
+                        - nodes_sources
+                        - node_listing
+                        - urls
+                        - tag_base
+                        - translation_base
+                        - document_display
+                        - document_thumbnails
+                        - document_display_sources
+                        - web_response
+                        - walker
+                        - children
+                openapiContext:
+                    tags:
+                        - WebResponse
+                    summary: 'Get a Page by its path wrapped in a WebResponse object'
+                    description: 'Get a Page by its path wrapped in a WebResponse'
+                    parameters:
+                        - { type: string, name: path, in: query, required: true, description: 'Resource path, or `/` for home page', schema: { type: string } }

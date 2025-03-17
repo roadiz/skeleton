@@ -32,6 +32,10 @@ services:
         tmpfs: /var/lib/varnish/varnishd:exec
         # https://github.com/varnish/docker-varnish/issues/53
         user: root
+        # Prevent cache-tags to overflow headers max size by doubling default values
+        # https://github.com/api-platform/core/issues/3168
+        # https://www.varnish-software.com/developers/tutorials/troubleshooting-varnish/
+        command: "-p http_resp_hdr_len=16384 -p http_resp_size=65536"
         depends_on:
             - nginx
         links:
@@ -69,7 +73,7 @@ services:
             # https://doc.traefik.io/traefik/https/acme/#configuration-examples
             #
             - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].main=project-name.fr"
-            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].sans[0]=www.project-name.fr"
+            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].sans=www.project-name.fr,www2.project-name.fr"
             # Apply middlewares
             - "traefik.http.routers.${APP_NAMESPACE}.middlewares=${APP_NAMESPACE}Redirectregex,${APP_NAMESPACE}Sts"
             # Add domain redirection (${APP_NAMESPACE} non-www to www redir)
@@ -131,10 +135,8 @@ services:
 
     worker:
         <<: *app_template
-        deploy:
-            # Do not use more than 1 replica if you're using Varnish and need to purge/ban cache
-            # from your workers. Varnish ACL hostnames won't be resolved correctly.
-            replicas: 1
+        # official php-fpm image uses SIGQUIT
+        stop_signal: SIGTERM
         entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
 
     cron:

@@ -2,6 +2,40 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.0](https://github.com/roadiz/skeleton/compare/v2.4.14...v2.5.0) - 2025-03-11
+
+### CI/CD
+
+- Use new `roadiz/php-runner:8.4.4-bookworm` test image - ([5cbe853](https://github.com/roadiz/skeleton/commit/5cbe853efe20537a0d394337d6c58717b8290b1b)) - Ambroise Maupate
+
+### Features
+
+- Added NSErrorPage tree-walker into CommonContent - ([b05ac1b](https://github.com/roadiz/skeleton/commit/b05ac1bf441c3ae74fd63350d50c21246a6d5be9)) - Ambroise Maupate
+
+## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...2.4.14) - 2025-02-11
+
+### Bug Fixes
+
+- Fixed Wrong Varnish size unit - ([e2b5985](https://github.com/roadiz/skeleton/commit/e2b5985b7e2f0e6ddf6cbc24eb1ff8c408b77ebf)) - Ambroise Maupate
+
+## [2.4.13](https://github.com/roadiz/skeleton/compare/v2.4.12...v2.4.13) - 2025-02-10
+
+### Bug Fixes
+
+- Fixed MariaDb configuration header name - ([b65edc9](https://github.com/roadiz/skeleton/commit/b65edc968f95c951f028a50ce2ff82f44ca70eb1)) - Ambroise Maupate
+
+## [2.4.12](https://github.com/roadiz/skeleton/compare/v2.4.11...v2.4.12) - 2025-02-10
+
+### Bug Fixes
+
+- Fixed MariaDB configuration location - ([8d145d8](https://github.com/roadiz/skeleton/commit/8d145d8347c1570048583484f694b31a67c653d8)) - Ambroise Maupate
+
+## [2.4.11](https://github.com/roadiz/skeleton/compare/v2.4.10...v2.4.11) - 2025-02-08
+
+### Bug Fixes
+
+- Upgraded Varnish version and add optimization on query-string (sorting) - ([f0aa8b1](https://github.com/roadiz/skeleton/commit/f0aa8b19ff3063503f002ed655ac747e08c6bf04)) - Ambroise Maupate
+
 ## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...2.4.10) - 2025-01-24
 
 ### Features
