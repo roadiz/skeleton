@@ -69,6 +69,7 @@ final class GetCommonContentController extends AbstractController
             return null;
         }
 
+        /* @phpstan-ignore-next-line */
         $errorPage = $this->managerRegistry->getRepository('\App\GeneratedEntity\NSErrorPage')->findOneBy([
             'translation' => $translation,
         ]);

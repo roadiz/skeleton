@@ -3,7 +3,7 @@
 name: ${APP_NAMESPACE}
 services:
     db:
-        image: my-registry/roadiz_skeleton/mariadb:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-mariadb:${DEPLOY_TAG}
         restart: always
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
@@ -27,7 +27,7 @@ services:
             - default
 
     varnish:
-        image: my-registry/roadiz_skeleton/varnish:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-varnish:${DEPLOY_TAG}
         restart: always
         tmpfs: /var/lib/varnish/varnishd:exec
         # https://github.com/varnish/docker-varnish/issues/53
@@ -88,7 +88,7 @@ services:
 
 
     nginx:
-        image: my-registry/roadiz_skeleton/nginx:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-nginx:${DEPLOY_TAG}
         restart: always
         depends_on:
             - app
@@ -103,7 +103,7 @@ services:
             - app_assets_data:/app/public/assets:ro
 
     app: &app_template
-        image: my-registry/roadiz_skeleton:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-php:${DEPLOY_TAG}
         restart: always
         depends_on:
             - db
@@ -145,7 +145,7 @@ services:
         user: root
 
     solr:
-        image: my-registry/roadiz_skeleton/solr:latest
+        image: my-registry/roadiz_skeleton/api-solr:latest
         volumes:
             - "solr_data:/var/solr"
         command:
