@@ -31,6 +31,7 @@ test:
             - vendor/
     variables:
         XDEBUG_MODE: "coverage"
+        PHP_CS_FIXER_IGNORE_ENV: 1
         # Trigger composer config --global gitlab-token
         #GITLAB_DOMAIN: gitlab.com
     artifacts:
@@ -48,10 +49,10 @@ test:
         # in your Gitlab / GitHub CI/CD settings. This deploy-token must have read access to your private repositories.
         #
         - composer install
+        - php -d memory_limit=-1 bin/console nodetypes:validate-files
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never
-        - php bin/console nodetypes:validate-files
 
 build_develop:
     stage: build
