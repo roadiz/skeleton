@@ -5,9 +5,10 @@ cache:
 	docker compose exec app php bin/console messenger:stop-workers
 
 test:
-	docker compose run --rm app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
-	docker compose run --rm app php -d "memory_limit=-1" vendor/bin/phpstan analyse
-	XDEBUG_MODE=coverage php -d "memory_limit=-1" vendor/bin/phpunit
+	docker compose run --rm --no-deps app php -d "memory_limit=-1" bin/console nodetypes:validate-files
+	docker compose run --rm --no-deps -e PHP_CS_FIXER_IGNORE_ENV=1 app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
+	docker compose run --rm --no-deps app php -d "memory_limit=-1" vendor/bin/phpstan analyse
+	docker compose run --rm --no-deps -e XDEBUG_MODE=coverage app php -d "memory_limit=-1" vendor/bin/phpunit
 
 update:
 	docker compose run --rm app composer install -o

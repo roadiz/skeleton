@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.1](https://github.com/roadiz/skeleton/compare/v2.5.0...v2.5.1) - 2025-04-08
+
+### Bug Fixes
+
+- Missing `PHP_CS_FIXER_IGNORE_ENV` and `nodetypes:validate-files` command - ([2a42940](https://github.com/roadiz/skeleton/commit/2a4294027e388a4dc6afa19c0c1a85eaaf92e789)) - Ambroise Maupate
+
 ## [2.5.0](https://github.com/roadiz/skeleton/compare/v2.4.14...v2.5.0) - 2025-03-11
 
 ### CI/CD
@@ -12,7 +18,7 @@ All notable changes to project will be documented in this file.
 
 - Added NSErrorPage tree-walker into CommonContent - ([b05ac1b](https://github.com/roadiz/skeleton/commit/b05ac1bf441c3ae74fd63350d50c21246a6d5be9)) - Ambroise Maupate
 
-## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...2.4.14) - 2025-02-11
+## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...v2.4.14) - 2025-02-11
 
 ### Bug Fixes
 
@@ -30,13 +36,23 @@ All notable changes to project will be documented in this file.
 
 - Fixed MariaDB configuration location - ([8d145d8](https://github.com/roadiz/skeleton/commit/8d145d8347c1570048583484f694b31a67c653d8)) - Ambroise Maupate
 
+### Features
+
+- Added new starter Page node-type and re-generated node-source classes - ([bda3342](https://github.com/roadiz/skeleton/commit/bda33424a57a64c406db1b7471a46f87f396f24d)) - Ambroise Maupate
+- Upgraded to PHP 8.4 - ([2c74725](https://github.com/roadiz/skeleton/commit/2c74725507af570918c38f4734fb74fdfaf7b231)) - Ambroise Maupate
+
 ## [2.4.11](https://github.com/roadiz/skeleton/compare/v2.4.10...v2.4.11) - 2025-02-08
 
 ### Bug Fixes
 
 - Upgraded Varnish version and add optimization on query-string (sorting) - ([f0aa8b1](https://github.com/roadiz/skeleton/commit/f0aa8b19ff3063503f002ed655ac747e08c6bf04)) - Ambroise Maupate
 
-## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...2.4.10) - 2025-01-24
+### Features
+
+- Migrated node-type JSON to YAML - ([1ac2fd7](https://github.com/roadiz/skeleton/commit/1ac2fd781578a3d74880318a6b8befdc3b40e2ee)) - Ambroise Maupate
+- Add test node type files in pipeline and github action - ([41950b4](https://github.com/roadiz/skeleton/commit/41950b41d8e13cedc81a7cfba3b37d16e231e474)) - eliot lauger
+
+## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...v2.4.10) - 2025-01-24
 
 ### Features
 
