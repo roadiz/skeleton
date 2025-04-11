@@ -100,7 +100,7 @@ services:
         hostname: worker
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
-        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
         restart: unless-stopped
 
     cron:
