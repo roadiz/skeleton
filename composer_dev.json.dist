@@ -24,7 +24,7 @@
         "phpstan/phpstan-doctrine": "<2",
         "phpstan/phpstan-symfony": "<2",
         "phpunit/phpunit": "^9.5",
-        "rezozero/intervention-request-bundle": "~4.1.0",
+        "rezozero/intervention-request-bundle": "~4.0",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/debug-bundle": "6.4.*",
