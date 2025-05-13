@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.2](https://github.com/roadiz/skeleton/compare/v2.5.1...v2.5.2) - 2025-05-13
+
+### Bug Fixes
+
+- Upgraded rezozero/intervention-request-bundle to 4.1 - ([2b58b74](https://github.com/roadiz/skeleton/commit/2b58b7450d1970e56843028f8412dcf4076a1a6d)) - Ambroise Maupate
+
 ## [2.5.1](https://github.com/roadiz/skeleton/compare/v2.5.0...v2.5.1) - 2025-04-08
 
 ### Bug Fixes
