@@ -2,6 +2,20 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.4](https://github.com/roadiz/skeleton/compare/v2.5.3...v2.5.4) - 2025-06-05
+
+### Bug Fixes
+
+- Update cache configuration and clean up unused API operations - ([f2ef8ce](https://github.com/roadiz/skeleton/commit/f2ef8ceff0ffc27353d8116a7f8518a05b77b8d5)) - Ambroise Maupate
+
+### Documentation
+
+- Enhance OpenAPI context for menus, footers, URLs, and colors in CommonContent - ([a41a57a](https://github.com/roadiz/skeleton/commit/a41a57ad643eb682c37d721c4a826e78bbdb88bf)) - Ambroise Maupate
+
+### Features
+
+- Add URLs and colors settings to common content resource - ([e85e808](https://github.com/roadiz/skeleton/commit/e85e8084731e1ea2f161131b93a23c54b17ead8e)) - Ambroise Maupate
+
 ## [2.5.3](https://github.com/roadiz/skeleton/compare/v2.5.2...v2.5.3) - 2025-05-13
 
 ### Bug Fixes
