@@ -59,8 +59,3 @@ resources:
                             description: Search pattern
                             schema:
                                 type: string
-
-            ApiPlatform\Metadata\Get:
-                method: 'GET'
-                normalizationContext:
-                    groups: ["nodes_sources", "urls", "tag_base", "translation_base", "document_display"]

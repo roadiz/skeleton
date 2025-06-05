@@ -1,15 +1,4 @@
 resources:
     RZ\Roadiz\CoreBundle\Entity\Document:
-        operations:
-    #        ApiPlatform\Metadata\GetCollection:
-    #            method: "GET"
-    #            normalizationContext:
-    #                groups: ["urls", "document_display", "document_folders", "document_folders_all", "document_display_sources"]
-    #                enable_max_depth: true
-
-            ApiPlatform\Metadata\Get:
-                method: 'GET'
-                normalizationContext:
-                    groups: ["urls", "document", "document_display", "document_folders", "document_folders_all", "document_display_sources"]
-                    enable_max_depth: true
+        operations: []
 
