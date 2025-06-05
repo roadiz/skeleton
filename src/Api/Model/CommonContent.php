@@ -45,4 +45,32 @@ final class CommonContent
         genId: false,
     )]
     public ?array $footers = null;
+
+    #[Groups(['common_content_urls'])]
+    #[ApiProperty(
+        identifier: false,
+        openapiContext: [
+            'description' => 'List of global external URLs for the website (*_url settings).',
+            'example' => [
+                'first_url' => 'https://example.com',
+                'second_url' => 'https://another-example.com',
+            ],
+        ],
+        genId: false,
+    )]
+    public ?array $urls = null;
+
+    #[Groups(['common_content_colors'])]
+    #[ApiProperty(
+        identifier: false,
+        openapiContext: [
+            'description' => 'List of global colors for the website (*_color settings).',
+            'example' => [
+                'first_color' => '#00ff00',
+                'second_color' => '#ff0000',
+            ],
+        ],
+        genId: false,
+    )]
+    public ?array $colors = null;
 }

@@ -12,6 +12,7 @@ use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactoryInterface;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
+use RZ\Roadiz\CoreBundle\Bag\Settings;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\TranslationRepository;
 use RZ\TreeWalker\WalkerContextInterface;
@@ -30,6 +31,7 @@ final class GetCommonContentController extends AbstractController
         private readonly TreeWalkerGenerator $treeWalkerGenerator,
         private readonly WalkerContextInterface $walkerContext,
         private readonly CacheItemPoolInterface $cacheItemPool,
+        private readonly Settings $settingsBag,
     ) {
     }
 
@@ -56,6 +58,27 @@ final class GetCommonContentController extends AbstractController
                 $translation,
                 4
             );
+
+            /*
+             * Provide all *_url and *_color settings. Make sure to not create private settings using these keys.
+             */
+            $urlKeys = array_filter(
+                $this->settingsBag->keys(),
+                fn (string $key) => str_ends_with($key, '_url') && !empty($this->settingsBag->get($key)),
+            );
+            $resource->urls = [];
+            foreach ($urlKeys as $urlKey) {
+                $resource->urls[$urlKey] = $this->settingsBag->get($urlKey);
+            }
+
+            $colorKeys = array_filter(
+                $this->settingsBag->keys(),
+                fn (string $key) => str_ends_with($key, '_color') && !empty($this->settingsBag->get($key)),
+            );
+            $resource->colors = [];
+            foreach ($colorKeys as $colorKey) {
+                $resource->colors[$colorKey] = $this->settingsBag->get($colorKey);
+            }
 
             return $resource;
         } catch (ResourceNotFoundException $exception) {
