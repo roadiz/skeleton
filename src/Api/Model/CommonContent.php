@@ -21,28 +21,52 @@ final class CommonContent
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
     )]
     public ?WalkerInterface $errorPage = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
     )]
     public ?NodesSourcesHeadInterface $head = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
+        openapiContext: [
+            'description' => 'List of the website menus.',
+            'example' => [
+                'mainMenuWalker' => [
+                    '@type' => 'MenuNodeSourceWalker',
+                    'children' => [],
+                    'item' => [
+                        '@id' => '/api/menus/1',
+                        '@type' => 'Menu',
+                        'title' => 'Main Menu',
+                    ],
+                ],
+            ],
+        ],
     )]
     public ?array $menus = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
+        openapiContext: [
+            'description' => 'List of the website footers.',
+            'example' => [
+                'footerFooterWalker' => [
+                    '@type' => 'AutoChildrenNodeSourceWalker',
+                    'children' => [],
+                    'item' => [
+                        '@id' => '/api/footers/1',
+                        '@type' => 'Footer',
+                        'title' => 'Footer',
+                    ],
+                ],
+            ],
+        ],
     )]
     public ?array $footers = null;
 
@@ -56,7 +80,6 @@ final class CommonContent
                 'second_url' => 'https://another-example.com',
             ],
         ],
-        genId: false,
     )]
     public ?array $urls = null;
 
@@ -70,7 +93,6 @@ final class CommonContent
                 'second_color' => '#ff0000',
             ],
         ],
-        genId: false,
     )]
     public ?array $colors = null;
 }
