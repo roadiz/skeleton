@@ -1,7 +1,7 @@
 resources:
     App\Api\Model\CommonContent:
         operations:
-            getCommonContent:
+            get_common_content:
                 class: ApiPlatform\Metadata\Get
                 method: 'GET'
                 uriTemplate: '/common_content'
@@ -14,6 +14,8 @@ resources:
                     groups:
                         - get
                         - common_content
+                        - common_content_urls
+                        - common_content_colors
                         - web_response
                         - walker
                         - walker_level

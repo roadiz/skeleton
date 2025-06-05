@@ -21,28 +21,78 @@ final class CommonContent
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
     )]
     public ?WalkerInterface $errorPage = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
     )]
     public ?NodesSourcesHeadInterface $head = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
+        openapiContext: [
+            'description' => 'List of the website menus.',
+            'example' => [
+                'mainMenuWalker' => [
+                    '@type' => 'MenuNodeSourceWalker',
+                    'children' => [],
+                    'item' => [
+                        '@id' => '/api/menus/1',
+                        '@type' => 'Menu',
+                        'title' => 'Main Menu',
+                    ],
+                ],
+            ],
+        ],
     )]
     public ?array $menus = null;
 
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
-        genId: false,
+        openapiContext: [
+            'description' => 'List of the website footers.',
+            'example' => [
+                'footerFooterWalker' => [
+                    '@type' => 'AutoChildrenNodeSourceWalker',
+                    'children' => [],
+                    'item' => [
+                        '@id' => '/api/footers/1',
+                        '@type' => 'Footer',
+                        'title' => 'Footer',
+                    ],
+                ],
+            ],
+        ],
     )]
     public ?array $footers = null;
+
+    #[Groups(['common_content_urls'])]
+    #[ApiProperty(
+        identifier: false,
+        openapiContext: [
+            'description' => 'List of global external URLs for the website (*_url settings).',
+            'example' => [
+                'first_url' => 'https://example.com',
+                'second_url' => 'https://another-example.com',
+            ],
+        ],
+    )]
+    public ?array $urls = null;
+
+    #[Groups(['common_content_colors'])]
+    #[ApiProperty(
+        identifier: false,
+        openapiContext: [
+            'description' => 'List of global colors for the website (*_color settings).',
+            'example' => [
+                'first_color' => '#00ff00',
+                'second_color' => '#ff0000',
+            ],
+        ],
+    )]
+    public ?array $colors = null;
 }

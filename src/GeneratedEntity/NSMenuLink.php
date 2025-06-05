@@ -102,7 +102,8 @@ class NSMenuLink extends NodesSources
                     ->getRepository(\App\GeneratedEntity\NSPage::class)
                     ->findByNodesSourcesAndFieldNameAndTranslation(
                         $this,
-                        'link_internal_reference'
+                        'link_internal_reference',
+                        []
                     );
             } else {
                 $this->linkInternalReferenceSources = [];
