@@ -1,13 +1,3 @@
 resources:
     RZ\Roadiz\CoreBundle\Entity\Node:
-        operations:
-            ApiPlatform\Metadata\Get:
-                method: 'GET'
-                normalizationContext:
-                    groups:
-                        - node
-                        - tag_base
-                        - translation_base
-                        - document_display
-                        - document_display_sources
-                    enable_max_depth: true
+        operations: []

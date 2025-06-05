@@ -1,16 +1,6 @@
 resources:
     RZ\Roadiz\CoreBundle\Entity\CustomForm:
         operations:
-            ApiPlatform\Metadata\GetCollection:
-                method: "GET"
-                normalizationContext:
-                    enable_max_depth: true
-
-            ApiPlatform\Metadata\Get:
-                method: 'GET'
-                normalizationContext:
-                    enable_max_depth: true
-
             api_custom_forms_item_post:
                 method: 'POST'
                 class: ApiPlatform\Metadata\Post
