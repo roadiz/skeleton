@@ -20,6 +20,8 @@ echo "APP_DEBUG=${APP_DEBUG}";
 # you can decrypt your secrets during deployment to the "local" vault:
 #APP_RUNTIME_ENV=prod /app/bin/console secrets:decrypt-to-local --force
 
+/app/bin/console lexik:jwt:generate-keypair --skip-if-exists
+
 #
 # Wait for database to be ready for next commands and migrations
 #
