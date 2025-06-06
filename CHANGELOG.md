@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.5](https://github.com/roadiz/skeleton/compare/v2.5.4...2.5.5) - 2025-06-06
+
+### Bug Fixes
+
+- Add JWT keypair generation to Docker entrypoints - ([44705da](https://github.com/roadiz/skeleton/commit/44705dad3373f1d9d56adb3b7ce28f53b65eb99d)) - eliot lauger
+
 ## [2.5.4](https://github.com/roadiz/skeleton/compare/v2.5.3...v2.5.4) - 2025-06-05
 
 ### Bug Fixes
@@ -529,7 +535,7 @@ All notable changes to project will be documented in this file.
 
 - Non existent Varnish docker image tag - ([5217af9](https://github.com/roadiz/skeleton/commit/5217af94c5f16f25db0d3b8fcc333edfd8cdb72f)) - Ambroise Maupate
 
-## [2.0.0] - 2022-07-04
+## [2.0.0](https://github.com/roadiz/skeleton/compare/v2.5.4...2.0.0) - 2022-07-04
 
 ### Bug Fixes
 
