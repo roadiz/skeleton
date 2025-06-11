@@ -112,32 +112,6 @@ services:
         restart: unless-stopped
         user: root
 
-    solr:
-        build:
-            # Custom image for file permissions
-            target: solr
-            args:
-                UID: ${UID}
-        volumes:
-            - "solr:/var/solr"
-        command:
-            - solr-precreate
-            - ${SOLR_CORE_NAME}
-        networks:
-            frontproxynet:
-                aliases:
-                    - ${APP_NAMESPACE}_solr
-            default:
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.scheme=http"
-            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.server.port=8983"
-            - "traefik.http.services.${APP_NAMESPACE}_solr.loadbalancer.passhostheader=true"
-            - "traefik.http.routers.${APP_NAMESPACE}_solr.entrypoints=http,https"
-            - "traefik.http.routers.${APP_NAMESPACE}_solr.rule=HostRegexp(${HOSTNAME_SOLR})"
-            - "traefik.http.routers.${APP_NAMESPACE}_solr.service=${APP_NAMESPACE}_solr"
-            - "traefik.http.routers.${APP_NAMESPACE}_solr.tls=true"
-
     mailer:
         hostname: mailer
         image: axllent/mailpit

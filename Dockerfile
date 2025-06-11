@@ -284,37 +284,6 @@ usermod -u ${UID} mysql
 groupmod -g ${GID} mysql
 EOF
 
-
-########
-# Solr #
-########
-
-FROM solr:${SOLR_VERSION}-slim AS solr
-
-LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
-
-ARG UID
-
-SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
-
-USER root
-
-RUN <<EOF
-set -ex
-echo "UID: ${UID}\n"
-usermod -u ${UID} "$SOLR_USER"
-groupmod -g ${UID} "$SOLR_GROUP"
-chown -R ${UID}:${UID} /var/solr
-EOF
-
-COPY --link docker/solr/managed-schema.xml /opt/solr/server/solr/configsets/_default/conf/managed-schema
-
-USER $SOLR_USER
-
-# Redeclare VOLUME to change permissions
-VOLUME /var/solr
-
-
 ###########
 # Varnish #
 ###########

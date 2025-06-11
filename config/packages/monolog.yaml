@@ -27,6 +27,13 @@ when@dev:
                 id: RZ\Roadiz\CoreBundle\Logger\DoctrineHandler
                 level: info
                 channels: [ "app" ]
+            ###> roadiz/solr ###
+#            solr:
+#                type: stream
+#                path: "%kernel.logs_dir%/solr.%kernel.environment%.log"
+#                level: debug
+#                channels: [ "searchEngine" ]
+            ###< roadiz/solr ###
 
 when@test:
     monolog:
@@ -41,6 +48,13 @@ when@test:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
+            ###> roadiz/solr ###
+#            solr:
+#                type: stream
+#                path: "%kernel.logs_dir%/solr.%kernel.environment%.log"
+#                level: debug
+#                channels: [ "searchEngine" ]
+            ###< roadiz/solr ###
 
 
 when@prod:

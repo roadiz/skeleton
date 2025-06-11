@@ -31,31 +31,32 @@ resources:
                     parameters: ~
                     description: |
                         Get available NodesSources archives (years and months) based on their `publishedAt` field
-
-            api_nodes_sources_search:
-                class: ApiPlatform\Metadata\GetCollection
-                method: 'GET'
-                uriTemplate: '/nodes_sources/search'
-                controller: RZ\Roadiz\CoreBundle\Api\Controller\NodesSourcesSearchController
-                read: false
-                normalizationContext:
-                    groups:
-                        - get
-                        - nodes_sources_base
-                        - nodes_sources_default
-                        - urls
-                        - tag_base
-                        - translation_base
-                        - document_display
-                openapiContext:
-                    summary: Search NodesSources resources
-                    description: |
-                        Search all website NodesSources resources using **Solr** full-text search engine
-                    parameters:
-                        -   type: string
-                            name: search
-                            in: query
-                            required: true
-                            description: Search pattern
-                            schema:
-                                type: string
+            ###> roadiz/solr ###
+#            api_nodes_sources_search:
+#                class: ApiPlatform\Metadata\GetCollection
+#                method: 'GET'
+#                uriTemplate: '/nodes_sources/search'
+#                controller: RZ\Roadiz\SolrBundle\Controller\NodesSourcesSearchController
+#                read: false
+#                normalizationContext:
+#                    groups:
+#                        - get
+#                        - nodes_sources_base
+#                        - nodes_sources_default
+#                        - urls
+#                        - tag_base
+#                        - translation_base
+#                        - document_display
+#                openapiContext:
+#                    summary: Search NodesSources resources
+#                    description: |
+#                        Search all website NodesSources resources using **Solr** full-text search engine
+#                    parameters:
+#                        -   type: string
+#                            name: search
+#                            in: query
+#                            required: true
+#                            description: Search pattern
+#                            schema:
+#                                type: string
+            ###< roadiz/solr ###
