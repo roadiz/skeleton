@@ -2,7 +2,7 @@
 
 All notable changes to project will be documented in this file.
 
-## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...2.5.6) - 2025-06-12
+## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...v2.5.6) - 2025-06-12
 
 ### Bug Fixes
 
