@@ -2,7 +2,13 @@
 
 All notable changes to project will be documented in this file.
 
-## [2.5.5](https://github.com/roadiz/skeleton/compare/v2.5.4...2.5.5) - 2025-06-06
+## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...v2.5.6) - 2025-06-12
+
+### Bug Fixes
+
+- Upgrade to PHP 8.4.8 - MYSQL 8.0.42 - NGINX 1.27.5 - MariaDB 11.4.7 - Varnish 7.6.3 - Composer 2.8.9 - ([7007ee4](https://github.com/roadiz/skeleton/commit/7007ee45d6333be293c8bf94a3ce0df7d522ad69)) - eliot lauger
+
+## [2.5.5](https://github.com/roadiz/skeleton/compare/v2.5.4...v2.5.5) - 2025-06-06
 
 ### Bug Fixes
 
@@ -535,7 +541,7 @@ All notable changes to project will be documented in this file.
 
 - Non existent Varnish docker image tag - ([5217af9](https://github.com/roadiz/skeleton/commit/5217af94c5f16f25db0d3b8fcc333edfd8cdb72f)) - Ambroise Maupate
 
-## [2.0.0](https://github.com/roadiz/skeleton/compare/v2.5.4...2.0.0) - 2022-07-04
+## [2.0.0](https://github.com/roadiz/skeleton/compare/v2.5.5...2.0.0) - 2022-07-04
 
 ### Bug Fixes
 
