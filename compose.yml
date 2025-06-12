@@ -53,7 +53,6 @@ services:
                 UID: ${UID}
         depends_on:
             - db
-            - solr
             - redis
         volumes:
             - ./:/app
@@ -195,4 +194,3 @@ networks:
 
 volumes:
     redis:
-    solr:

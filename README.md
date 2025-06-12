@@ -85,10 +85,6 @@ services:
     #            UID: ${UID}
     #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
     #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
-
-    #solr:
-    #    ports:
-    #        - "${PUBLIC_SOLR_PORT}:8983/tcp"
 ```
 
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)

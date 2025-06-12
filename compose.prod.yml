@@ -108,7 +108,6 @@ services:
         depends_on:
             - db
             - redis
-            #- solr
         volumes:
             - app_file_data:/app/public/files
             - app_assets_data:/app/public/assets
@@ -143,17 +142,6 @@ services:
         <<: *app_template
         entrypoint: 'docker-cron-entrypoint'
         user: root
-
-    solr:
-        image: my-registry/roadiz_skeleton/api-solr:latest
-        volumes:
-            - "solr_data:/var/solr"
-        command:
-            - solr-precreate
-            - ${SOLR_CORE_NAME}
-        restart: always
-        networks:
-            - default
 
     # RESTIC incremental backup services
     restic:
@@ -216,7 +204,6 @@ volumes:
     redis:
     restic_cache:
     db_data:
-    #solr_data:
 
 networks:
     frontproxynet:

@@ -1,8 +1,5 @@
 # Roadiz maintenance tasks
 
-### Update Solr index
-0 0 * * *    /usr/local/bin/php -d memory_limit=-1 /app/bin/console solr:reindex --no-debug -n -q
-
 ### Maintenance tasks: erase +6 months logs and keeps only 20 node-source versions
 0 8 * * 1    /usr/local/bin/php -d memory_limit=-1 /app/bin/console documents:file:size -q
 0 1 * * *    /usr/local/bin/php -d memory_limit=-1 /app/bin/console logs:cleanup --erase -n -q
