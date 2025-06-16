@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.7](https://github.com/roadiz/skeleton/compare/v2.5.6...v2.5.7) - 2025-06-16
+
+### Bug Fixes
+
+- Missing `TRUSTED_PROXIES` env variable in `symfony/framework-bundle` section - ([3e93e7b](https://github.com/roadiz/skeleton/commit/3e93e7ba169bab8efb07aee23303164af43355f5)) - Ambroise Maupate
+
 ## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...v2.5.6) - 2025-06-12
 
 ### Bug Fixes
@@ -541,7 +547,7 @@ All notable changes to project will be documented in this file.
 
 - Non existent Varnish docker image tag - ([5217af9](https://github.com/roadiz/skeleton/commit/5217af94c5f16f25db0d3b8fcc333edfd8cdb72f)) - Ambroise Maupate
 
-## [2.0.0](https://github.com/roadiz/skeleton/compare/v2.5.5...2.0.0) - 2022-07-04
+## [2.0.0] - 2022-07-04
 
 ### Bug Fixes
 
