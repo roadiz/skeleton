@@ -19,7 +19,6 @@ LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 ARG UID
 
 ARG COMPOSER_VERSION=2.8.9
-ARG PHP_EXTENSION_INSTALLER_VERSION=2.6.0
 ARG PHP_EXTENSION_REDIS_VERSION=6.1.0
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
