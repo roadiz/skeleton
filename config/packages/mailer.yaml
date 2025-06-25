@@ -1,3 +1,6 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        # Mailer Envelope configuration
+        envelope:
+            sender: '%env(string:MAILER_ENVELOP_SENDER)%'

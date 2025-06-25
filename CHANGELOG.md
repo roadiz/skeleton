@@ -2,6 +2,18 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.9](https://github.com/roadiz/skeleton/compare/v2.5.8...2.5.9) - 2025-06-24
+
+### Bug Fixes
+
+- Add return before Symfony String import - ([6f2cd6c](https://github.com/roadiz/skeleton/commit/6f2cd6c4c88ee8dc082eb86fb02a658ebc2d9e1c)) - eliot lauger
+
+## [2.5.8](https://github.com/roadiz/skeleton/compare/v2.5.7...v2.5.8) - 2025-06-24
+
+### Refactor
+
+- Use camel case for URL keys in GetCommonContentController - ([686bf08](https://github.com/roadiz/skeleton/commit/686bf0898ccebaa118b5fb771dedab6dee187288)) - eliot lauger
+
 ## [2.5.7](https://github.com/roadiz/skeleton/compare/v2.5.6...v2.5.7) - 2025-06-16
 
 ### Bug Fixes

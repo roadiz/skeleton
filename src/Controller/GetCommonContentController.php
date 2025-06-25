@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
+use function Symfony\Component\String\u;
+
 final class GetCommonContentController extends AbstractController
 {
     public function __construct(
@@ -68,7 +70,7 @@ final class GetCommonContentController extends AbstractController
             );
             $resource->urls = [];
             foreach ($urlKeys as $urlKey) {
-                $resource->urls[$urlKey] = $this->settingsBag->get($urlKey);
+                $resource->urls[u($urlKey)->camel()->toString()] = $this->settingsBag->get($urlKey);
             }
 
             $colorKeys = array_filter(
