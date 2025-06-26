@@ -35,7 +35,7 @@ final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
             return $data;
         }
         $aliasedBlock = $block->getBlockSources()[0];
-        if (!$block->getNode()->isPublished() && !$this->previewResolver->isPreview()) {
+        if (!$aliasedBlock->getNode()->isPublished() && !$this->previewResolver->isPreview()) {
             return $data;
         }
 
