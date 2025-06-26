@@ -6,21 +6,22 @@ namespace App\Serializer\Normalizer;
 
 use App\GeneratedEntity\NSAliasBlock;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
 {
     public function __construct(
-        #[Autowire(service: 'api_platform.jsonld.normalizer.object')]
-        private NormalizerInterface $normalizer,
+        private NormalizerInterface $decorated,
+        private NormalizerInterface $itemNormalizer,
+        private PreviewResolverInterface $previewResolver,
     ) {
     }
 
     #[\Override]
     public function normalize($object, ?string $format = null, array $context = []): mixed
     {
-        $data = $this->normalizer->normalize($object, $format, $context);
+        $data = $this->decorated->normalize($object, $format, $context);
 
         if (!is_array($data)) {
             return $data;
@@ -28,29 +29,29 @@ final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
         if (!$object instanceof AutoChildrenNodeSourceWalker) {
             return $data;
         }
+
         $block = $object->getItem();
         if (!$block instanceof NSAliasBlock || 0 === count($block->getBlockSources())) {
             return $data;
         }
+        $aliasedBlock = $block->getBlockSources()[0];
+        if (!$block->getNode()->isPublished() && !$this->previewResolver->isPreview()) {
+            return $data;
+        }
 
-        // Magic happens here, we replace TreeWalker item (Alias) with its referenced block
-        // We need to use `api_platform.jsonld.normalizer.object` normalizer to get LD-JSON formatting
-        $data['item'] = $this->normalizer->normalize($block->getBlockSources()[0], $format, $context);
+        $data['item'] = $this->itemNormalizer->normalize($aliasedBlock, $format, $context);
 
         return $data;
     }
 
     #[\Override]
-    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        return $data instanceof AutoChildrenNodeSourceWalker;
+        return $this->decorated->supportsNormalization($data, $format/* , $context */);
     }
 
     public function getSupportedTypes(?string $format): array
     {
-        return [
-            // Do not cache this normalizer as it is used for dynamic content
-            AutoChildrenNodeSourceWalker::class => false,
-        ];
+        return $this->decorated->getSupportedTypes($format);
     }
 }
