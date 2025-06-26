@@ -16,12 +16,12 @@ use ApiPlatform\Serializer\Filter\PropertyFilter;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation as JMS;
 use RZ\Roadiz\CoreBundle\Entity\Node;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\Roadiz\CoreBundle\Entity\Translation;
 use RZ\Roadiz\CoreBundle\Entity\UserLogEntry;
 use Symfony\Component\Serializer\Attribute as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AliasBlock node-source entity.
@@ -37,17 +37,12 @@ class NSAliasBlock extends NodesSources
      * @var \RZ\Roadiz\CoreBundle\Entity\NodesSources[]|null
      * Reference to a block.
      */
-    #[JMS\Exclude]
     private ?array $blockSources = null;
 
     /**
      * @return \RZ\Roadiz\CoreBundle\Entity\NodesSources[]
      */
-    #[JMS\Exclude]
     #[Serializer\Ignore]
-    #[JMS\VirtualProperty]
-    #[JMS\SerializedName('block')]
-    #[JMS\Type('array<RZ\Roadiz\CoreBundle\Entity\NodesSources>')]
     public function getBlockSources(): array
     {
         if (null === $this->blockSources) {
@@ -76,9 +71,6 @@ class NSAliasBlock extends NodesSources
         return $this;
     }
 
-    #[JMS\VirtualProperty]
-    #[JMS\Groups(['nodes_sources', 'nodes_sources_default'])]
-    #[JMS\SerializedName('@type')]
     #[Serializer\Groups(['nodes_sources', 'nodes_sources_default'])]
     #[Serializer\SerializedName(serializedName: '@type')]
     #[\Override]
@@ -87,9 +79,6 @@ class NSAliasBlock extends NodesSources
         return 'AliasBlock';
     }
 
-    #[JMS\VirtualProperty]
-    #[JMS\Groups(['node_type'])]
-    #[JMS\SerializedName('nodeTypeColor')]
     #[Serializer\Groups(['node_type'])]
     #[Serializer\SerializedName(serializedName: 'nodeTypeColor')]
     #[\Override]
@@ -102,7 +91,6 @@ class NSAliasBlock extends NodesSources
      * $this->nodeType->isReachable() proxy.
      * @return bool Does this nodeSource is reachable over network?
      */
-    #[JMS\VirtualProperty]
     #[\Override]
     public function isReachable(): bool
     {
@@ -113,7 +101,6 @@ class NSAliasBlock extends NodesSources
      * $this->nodeType->isPublishable() proxy.
      * @return bool Does this nodeSource is publishable with date and time?
      */
-    #[JMS\VirtualProperty]
     #[\Override]
     public function isPublishable(): bool
     {

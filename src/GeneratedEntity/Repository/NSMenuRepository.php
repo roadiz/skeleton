@@ -11,18 +11,24 @@ namespace App\GeneratedEntity\Repository;
 
 use App\GeneratedEntity\NSMenu;
 use Doctrine\Persistence\ManagerRegistry;
+use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
+use RZ\Roadiz\CoreBundle\Entity\Node;
+use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\Roadiz\CoreBundle\Repository\NodesSourcesRepository;
-use RZ\Roadiz\CoreBundle\SearchEngine\NodeSourceSearchHandlerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @extends NodesSourcesRepository<NSMenu>
- * @method NSMenu|null find($id, $lockMode = null, $lockVersion = null)
- * @method NSMenu|null findOneBy(array $criteria, array $orderBy = null)
- * @method NSMenu[]    findAll()
- * @method NSMenu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method NSMenu|null   find($id, $lockMode = null, $lockVersion = null)
+ * @method NSMenu|null   findOneBy(array $criteria, array $orderBy = null)
+ * @method NSMenu[]      findAll()
+ * @method NSMenu[]      findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method NSMenu|null   findOneByIdentifierAndTranslation(string $identifier, ?TranslationInterface $translation, bool $availableTranslation = false)
+ * @method NSMenu|null   findOneByNodeAndTranslation(Node $node, ?TranslationInterface $translation)
+ * @method NSMenu[]|null findByNodesSourcesAndFieldNameAndTranslation(NodesSources $nodesSources, string $fieldName, array $nodeSourceClasses = [])
+ * @method int countBy(mixed $criteria)
  */
 final class NSMenuRepository extends NodesSourcesRepository
 {
@@ -31,8 +37,7 @@ final class NSMenuRepository extends NodesSourcesRepository
         PreviewResolverInterface $previewResolver,
         EventDispatcherInterface $dispatcher,
         Security $security,
-        ?NodeSourceSearchHandlerInterface $nodeSourceSearchHandler,
     ) {
-        parent::__construct($registry, $previewResolver, $dispatcher, $security, $nodeSourceSearchHandler, NSMenu::class);
+        parent::__construct($registry, $previewResolver, $dispatcher, $security, NSMenu::class);
     }
 }

@@ -5,7 +5,7 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -24,7 +24,8 @@
         "phpstan/phpstan-doctrine": "<2",
         "phpstan/phpstan-symfony": "<2",
         "phpunit/phpunit": "^9.5",
-        "rezozero/intervention-request-bundle": "~4.0",
+        "rector/rector": "^1.2",
+        "rezozero/intervention-request-bundle": "~5.0",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/debug-bundle": "6.4.*",
@@ -68,7 +69,6 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd",
             "requirements-checker": "script"
         },
         "post-install-cmd": [

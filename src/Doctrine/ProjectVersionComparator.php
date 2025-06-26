@@ -16,6 +16,7 @@ class ProjectVersionComparator implements Comparator
         return $tokens[count($tokens) - 1];
     }
 
+    #[\Override]
     public function compare(Version $a, Version $b): int
     {
         $classA = $this->getClassname($a);

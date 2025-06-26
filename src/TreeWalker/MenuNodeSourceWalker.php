@@ -12,6 +12,7 @@ use RZ\TreeWalker\Definition\ZeroChildrenDefinition;
 
 final class MenuNodeSourceWalker extends AbstractCycleAwareWalker
 {
+    #[\Override]
     protected function initializeDefinitions(): void
     {
         if ($this->isRoot()) {
