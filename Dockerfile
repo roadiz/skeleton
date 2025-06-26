@@ -160,7 +160,6 @@ RUN <<EOF
 composer dump-autoload --classmap-authoritative --no-dev
 bin/console cache:warmup --no-optional-warmers
 bin/console assets:install
-bin/console themes:assets:install Rozier
 EOF
 
 HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q

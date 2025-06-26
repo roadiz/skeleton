@@ -14,7 +14,6 @@ echo "APP_DEBUG=${APP_DEBUG}";
 # Print local env vars to .env.xxx.php file for performances and crontab jobs
 /usr/local/bin/composer dump-env prod
 /app/bin/console assets:install -n
-/app/bin/console themes:assets:install -n Rozier
 
 # To improve performance (i.e. avoid decrypting secrets at runtime),
 # you can decrypt your secrets during deployment to the "local" vault:
