@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.11](https://github.com/roadiz/skeleton/compare/v2.5.10...v2.5.11) - 2025-06-26
+
+### Bug Fixes
+
+- Refactor AliasBlockWalkerNormalizer to use decorated normalizers and add preview support - ([90c805b](https://github.com/roadiz/skeleton/commit/90c805b65e9431305bc33941635390740b618f35)) - Ambroise Maupate
+
 ## [2.5.10](https://github.com/roadiz/skeleton/compare/v2.5.9...v2.5.10) - 2025-06-26
 
 ### Features
