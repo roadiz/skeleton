@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.5.12](https://github.com/roadiz/skeleton/compare/v2.5.11...v2.5.12) - 2025-06-26
+
+### Bug Fixes
+
+- Correct condition to check publication status of aliased block in AliasBlockWalkerNormalizer - ([5072ca6](https://github.com/roadiz/skeleton/commit/5072ca6202c5a31669a7b5b71b2f2e7e9d970e1f)) - Ambroise Maupate
+
 ## [2.5.11](https://github.com/roadiz/skeleton/compare/v2.5.10...v2.5.11) - 2025-06-26
 
 ### Bug Fixes
