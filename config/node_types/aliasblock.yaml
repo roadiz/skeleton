@@ -1,0 +1,26 @@
+color: '#a66503'
+name: AliasBlock
+displayName: Alias
+visible: false
+publishable: false
+attributable: false
+sortingAttributesByWeight: false
+reachable: false
+hidingNodes: false
+hidingNonReachableNodes: true
+fields:
+    -   name: block
+        universal: true
+        # Do not serialize automatically, tree-walker and custom normalizer will do
+        excludedFromSerialization: true
+        excludeFromSearch: true
+        maxLength: 1
+        label: 'Reference to a block'
+        type: nodes
+        # Set here the same block list as in Page node type except for itself
+        #defaultValues:
+        #    - ContentBlock
+        #    - CarouselBlock
+        #    - MediaBlock
+defaultTtl: 0
+searchable: true

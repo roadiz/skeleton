@@ -22,6 +22,7 @@ resources:
                         - document_display_sources
                         - web_response
                         - walker
+                        - walker_metadata
                         - children
                 openapiContext:
                     tags:
