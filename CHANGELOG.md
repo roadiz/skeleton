@@ -2,7 +2,13 @@
 
 All notable changes to project will be documented in this file.
 
-## [2.5.9](https://github.com/roadiz/skeleton/compare/v2.5.8...2.5.9) - 2025-06-24
+## [2.5.10](https://github.com/roadiz/skeleton/compare/v2.5.9...v2.5.10) - 2025-06-26
+
+### Features
+
+- Add AliasBlock entity and related definitions for tree walker and custom normalizer - ([b6a2276](https://github.com/roadiz/skeleton/commit/b6a2276c862e97d00ce0947be6289684bf71c7ca)) - Ambroise Maupate
+
+## [2.5.9](https://github.com/roadiz/skeleton/compare/v2.5.8...v2.5.9) - 2025-06-24
 
 ### Bug Fixes
 

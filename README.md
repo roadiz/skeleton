@@ -176,7 +176,7 @@ This is the same script that is executed when you run `make install` and in your
 - Solr and Varnish services right out-the-box
 - Gitlab CI ready
 - Use *phpcs* and *phpstan* to ensure code-smell and static analysis
-- Packed with 2 *node-types*: `Menu` and `MenuLink` in order to create automatic menus in your `/api/common_content` response
+- Packed with 4 *node-types*: `Menu`, `MenuLink` in order to create automatic menus in your `/api/common_content` response and `Page` and `AliasBlock` as a basic page and alias management system.
 
 #### Common content endpoint
 

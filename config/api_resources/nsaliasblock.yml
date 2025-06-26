@@ -1,0 +1,6 @@
+resources:
+    App\GeneratedEntity\NSAliasBlock:
+        shortName: AliasBlock
+        types:
+            - AliasBlock
+        operations: []
