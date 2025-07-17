@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.4.8
+ARG PHP_VERSION=8.4.10
 ARG MYSQL_VERSION=8.0.42
 ARG NGINX_VERSION=1.27.5
 ARG MARIADB_VERSION=11.4.7
@@ -246,19 +246,21 @@ COPY --link --from=php-prod --chown=${USER_UID}:${USER_UID} /app/public /app/pub
 
 FROM mysql:${MYSQL_VERSION} AS mysql
 
-LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com eliot@rezo-zero.com"
 
 ARG UID
+ARG GID
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 RUN <<EOF
 usermod -u ${UID} mysql
-groupmod -g ${UID} mysql
-echo "UID: ${UID}\n"
+groupmod -g ${GID} mysql
 EOF
 
-COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
+COPY --link api/docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
+
+VOLUME /var/lib/mysql
 
 
 #############
@@ -267,7 +269,7 @@ COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
 
 FROM mariadb:${MARIADB_VERSION} AS mariadb
 
-LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com eliot@rezo-zero.com"
 
 ARG UID
 ARG GID
@@ -275,20 +277,25 @@ ARG GID
 # https://hub.docker.com/_/mariadb
 # Using a custom MariaDB configuration file
 # Custom configuration files should end in .cnf and be mounted read only at the directory /etc/mysql/conf.d
-COPY --link docker/mariadb/performances.cnf /etc/mysql/conf.d/performances.cnf
+COPY --link --chmod=644 api/docker/mariadb/performances.cnf /etc/mysql/conf.d/performances.cnf
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 RUN <<EOF
 usermod -u ${UID} mysql
 groupmod -g ${GID} mysql
 EOF
 
-###########
-# Varnish #
-###########
+VOLUME /var/lib/mysql
+
+
+################
+# Varnish      #
+################
 
 FROM varnish:${VARNISH_VERSION}-alpine AS varnish
 
-LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com eliot@rezo-zero.com"
 
 ENV VARNISH_SIZE 256M
 

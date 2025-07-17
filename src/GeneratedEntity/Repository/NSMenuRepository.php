@@ -30,7 +30,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @method NSMenu[]|null findByNodesSourcesAndFieldNameAndTranslation(NodesSources $nodesSources, string $fieldName, array $nodeSourceClasses = [])
  * @method int countBy(mixed $criteria)
  */
-final class NSMenuRepository extends NodesSourcesRepository
+class NSMenuRepository extends NodesSourcesRepository
 {
     public function __construct(
         ManagerRegistry $registry,

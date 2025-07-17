@@ -15,7 +15,6 @@ return [
     Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle::class => ['all' => true],
     League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
     RZ\InterventionRequestBundle\RZInterventionRequestBundle::class => ['all' => true],
-    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     RZ\Roadiz\CoreBundle\RoadizCoreBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     RZ\Roadiz\CompatBundle\RoadizCompatBundle::class => ['all' => true],
