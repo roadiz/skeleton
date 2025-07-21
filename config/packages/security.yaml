@@ -119,6 +119,7 @@ security:
     role_hierarchy:
         ROLE_BACKEND_USER:
             - ROLE_USER
+            - ROLE_ACCESS_USERS_DETAIL
         ROLE_SUPERADMIN:
             - ROLE_ACCESS_ATTRIBUTES
             - ROLE_ACCESS_ATTRIBUTES_DELETE
@@ -149,6 +150,7 @@ security:
             - ROLE_ACCESS_TRANSLATIONS
             - ROLE_ACCESS_USERS
             - ROLE_ACCESS_USERS_DELETE
+            - ROLE_ACCESS_USERS_DETAIL
             - ROLE_ACCESS_VERSIONS
             - ROLE_ACCESS_WEBHOOKS
             - ROLE_ALLOWED_TO_SWITCH
