@@ -24,7 +24,7 @@ resources:
                         - walker
                         - walker_metadata
                         - children
-                openapiContext:
+                openapi:
                     tags:
                         - WebResponse
                     summary: 'Get a Page by its path wrapped in a WebResponse object'
