@@ -20,7 +20,7 @@ roadiz_core:
     captcha:
         private_key: '%env(string:APP_CAPTCHA_PRIVATE_KEY)%'
         public_key: '%env(string:APP_CAPTCHA_PUBLIC_KEY)%'
-        verify_url: '%env(string:APP_CAPTCHA_VERIFY_URL)%'
+        #verify_url: '%env(string:APP_CAPTCHA_VERIFY_URL)%'
     inheritance:
         type: single_table
     # Force displaying translation locale in every generated node-source paths.
