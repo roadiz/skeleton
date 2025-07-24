@@ -10,28 +10,23 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 final class MenuLinkPathNormalizer extends AbstractPathNormalizer
 {
-    /**
-     * @return array|\ArrayObject|bool|float|int|mixed|string|null
-     *
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     */
     #[\Override]
-    public function normalize(mixed $object, ?string $format = null, array $context = []): mixed
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
-        $data = $this->decorated->normalize($object, $format, $context);
-        if (($object instanceof NSMenuLink) && is_array($data)) {
-            $actualUrl = $object->getLinkExternalUrl() ?? null;
-            if (isset($object->getLinkInternalReferenceSources()[0])) {
+        $normalized = $this->decorated->normalize($data, $format, $context);
+        if (($data instanceof NSMenuLink) && is_array($normalized)) {
+            $actualUrl = $data->getLinkExternalUrl() ?? null;
+            if (isset($data->getLinkInternalReferenceSources()[0])) {
                 $actualUrl = $this->urlGenerator->generate(
                     RouteObjectInterface::OBJECT_BASED_ROUTE_NAME,
                     [
-                        RouteObjectInterface::ROUTE_OBJECT => $object->getLinkInternalReferenceSources()[0],
+                        RouteObjectInterface::ROUTE_OBJECT => $data->getLinkInternalReferenceSources()[0],
                     ]
                 );
             }
-            $data['url'] = $actualUrl;
+            $normalized['url'] = $actualUrl;
         }
 
-        return $data;
+        return $normalized;
     }
 }
