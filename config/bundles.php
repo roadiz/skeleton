@@ -19,7 +19,7 @@ return [
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     RZ\Roadiz\CompatBundle\RoadizCompatBundle::class => ['all' => true],
     RZ\Roadiz\RozierBundle\RoadizRozierBundle::class => ['all' => true],
-    Sentry\SentryBundle\SentryBundle::class => ['all' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
