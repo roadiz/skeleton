@@ -1,9 +1,12 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        profiling_collect_backtrace: '%kernel.debug%'
+        use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
         default_entity_manager: default
+        enable_lazy_ghost_objects: true
         entity_managers:
             # Put `logger` entity manager first to select it as default for Log entity
             logger:
