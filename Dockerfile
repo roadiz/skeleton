@@ -8,6 +8,147 @@ ARG VARNISH_VERSION=7.6.3
 ARG UID=1000
 ARG GID=${UID}
 
+####################
+# PHP - FRANKENPHP #
+####################
+
+FROM dunglas/frankenphp:php${PHP_VERSION}-bookworm AS php-franken
+
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com, eliot@rezo-zero.com"
+
+ARG UID
+ARG GID
+ARG COMPOSER_VERSION
+ARG PHP_EXTENSION_REDIS_VERSION
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+ENV SERVER_NAME=":80"
+ENV SERVER_ROOT="/app/public"
+ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
+
+RUN <<EOF
+apt-get --quiet update
+apt-get --quiet --yes --purge --autoremove upgrade
+# Packages - System
+apt-get --quiet --yes --no-install-recommends --verbose-versions install \
+    acl \
+    less \
+    sudo \
+    git \
+    ffmpeg
+rm -rf /var/lib/apt/lists/*
+
+# User
+addgroup --gid ${UID} php
+adduser --home /home/php --shell /bin/bash --uid ${UID} --gecos php --ingroup php --disabled-password php
+echo "php ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/php
+
+# App
+install --verbose --owner php --group php --mode 0755 --directory /app
+
+chown -R php:php /app
+
+# Php extensions
+install-php-extensions \
+    @composer-${COMPOSER_VERSION} \
+    bcmath \
+    exif \
+    fileinfo \
+    gd \
+    gmp \
+    iconv \
+    intl \
+    json \
+    mbstring \
+    opcache \
+    openssl \
+    pcntl \
+    pdo_mysql \
+    simplexml \
+    xsl \
+    zip \
+    redis-${PHP_EXTENSION_REDIS_VERSION}
+
+setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp
+
+chown --recursive ${UID}:${GID} /data/caddy /config/caddy
+
+EOF
+
+ENTRYPOINT ["docker-php-entrypoint"]
+
+WORKDIR /app
+
+#######################
+# Php - franken - Dev #
+#######################
+
+FROM php-franken AS php-dev-franken
+
+ENV XDEBUG_MODE=off
+
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+COPY --link --chmod=755 docker/frankenphp/docker-php-entrypoint-dev /usr/local/bin/docker-php-entrypoint
+COPY --link docker/frankenphp/conf.d/app.dev.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
+COPY --link docker/frankenphp/Caddyfile.dev /etc/frankenphp/Caddyfile
+
+CMD ["--config", "/etc/frankenphp/Caddyfile", "--adapter", "caddyfile"]
+
+USER php
+
+VOLUME /app
+
+########################
+# Php - franken - Prod #
+########################
+
+FROM php-franken AS php-prod-franken
+
+ENV XDEBUG_MODE=off
+ENV APP_ENV=prod
+ENV APP_RUNTIME_ENV=prod
+ENV APP_DEBUG=0
+# Only enable Worker mode in production
+ENV APP_RUNTIME=Runtime\\FrankenPhpSymfony\\Runtime
+ENV FRANKENPHP_CONFIG="worker /app/public/index.php"
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY --link --chmod=755 docker/frankenphp/docker-php-entrypoint-prod /usr/local/bin/docker-php-entrypoint
+COPY --link docker/frankenphp/conf.d/app.prod.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
+COPY --link docker/frankenphp/Caddyfile /etc/frankenphp/Caddyfile
+
+CMD ["--config", "/etc/frankenphp/Caddyfile", "--adapter", "caddyfile"]
+
+USER php
+
+# Composer
+COPY --link --chown=php:php composer.* symfony.* ./
+RUN <<EOF
+# If you depend on private Gitlab repositories, you must use a deploy token and username
+#composer config gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
+composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+EOF
+
+COPY --link --chown=php:php ./api .
+COPY --link --chown=php:php --from=encore-build /app/public/static ./public/static
+
+RUN <<EOF
+composer dump-autoload --classmap-authoritative --no-dev
+bin/console cache:warmup --no-optional-warmers
+bin/console assets:install
+EOF
+
+HEALTHCHECK --start-period=30s --interval=1m --timeout=6s CMD bin/console monitor:health -q
+
+VOLUME /app/config/jwt \
+       /app/config/secrets \
+       /app/public/files \
+       /app/public/assets \
+       /app/var/files
+
 #######
 # PHP #
 #######
@@ -258,7 +399,7 @@ usermod -u ${UID} mysql
 groupmod -g ${GID} mysql
 EOF
 
-COPY --link api/docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
+COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
 
 VOLUME /var/lib/mysql
 
@@ -277,7 +418,7 @@ ARG GID
 # https://hub.docker.com/_/mariadb
 # Using a custom MariaDB configuration file
 # Custom configuration files should end in .cnf and be mounted read only at the directory /etc/mysql/conf.d
-COPY --link --chmod=644 api/docker/mariadb/performances.cnf /etc/mysql/conf.d/performances.cnf
+COPY --link --chmod=644 docker/mariadb/performances.cnf /etc/mysql/conf.d/performances.cnf
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
