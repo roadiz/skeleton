@@ -440,4 +440,4 @@ LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com eliot@rezo-zero.c
 
 ENV VARNISH_SIZE 256M
 
-COPY --link docker/varnish/default.vcl /etc/varnish/
+COPY --link --chmod=644 docker/varnish/default.vcl /etc/varnish/
