@@ -51,7 +51,7 @@ doctrine:
                         alias: RoadizCoreBundle
                     RZ\Roadiz\Core:
                         is_bundle: false
-                        type: annotation
+                        type: attribute
                         dir: '%kernel.project_dir%/vendor/roadiz/models/src/Core/AbstractEntities'
                         prefix: 'RZ\Roadiz\Core\AbstractEntities'
                         alias: AbstractEntities
