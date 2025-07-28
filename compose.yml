@@ -45,8 +45,6 @@ services:
     app: &app_template
         # Nginx does not resolve `app` hostname correctly
         hostname: app
-        # Need to pass all vars to docker env for Crontab and supervisor scripts
-        #env_file: "./.env.local"
         build:
             target: php-dev
             args:
@@ -102,14 +100,13 @@ services:
         entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
         restart: unless-stopped
 
-    cron:
+    scheduler:
         <<: *app_template
-        hostname: cron
+        hostname: scheduler
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
-        entrypoint: 'docker-cron-entrypoint'
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "scheduler_default", "--time-limit=600" ]
         restart: unless-stopped
-        user: root
 
     mailer:
         hostname: mailer
@@ -158,9 +155,6 @@ services:
             - nginx
         links:
             - nginx:nginx
-            - app:app
-            - cron:cron
-            - worker:worker
         networks:
             - frontproxynet
             - default

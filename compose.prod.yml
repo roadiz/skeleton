@@ -40,9 +40,6 @@ services:
             - nginx
         links:
             - nginx:nginx
-            - app:app
-            - cron:cron
-            - worker:worker
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         networks:
@@ -136,12 +133,13 @@ services:
         <<: *app_template
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
-        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
 
-    cron:
+    scheduler:
         <<: *app_template
-        entrypoint: 'docker-cron-entrypoint'
-        user: root
+        # official php-fpm image uses SIGQUIT
+        stop_signal: SIGTERM
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "scheduler_default", "--time-limit=1800" ]
 
     # RESTIC incremental backup services
     restic:

@@ -168,7 +168,6 @@ ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
 ENV MYSQL_HOST=db
 ENV MYSQL_PORT=3306
 
-COPY --link docker/php/crontab.txt /crontab.txt
 COPY --link docker/php/wait-for-it.sh /wait-for-it.sh
 COPY --link docker/php/fpm.d/www.conf   ${PHP_INI_DIR}-fpm.d/zz-www.conf
 
@@ -180,7 +179,6 @@ apt-get --quiet --yes --no-install-recommends --verbose-versions install \
     less \
     sudo \
     git \
-    cron \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
 
@@ -192,7 +190,6 @@ echo "php ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/php
 # App
 install --verbose --owner php --group php --mode 0755 --directory /app
 
-/usr/bin/crontab -u php /crontab.txt
 chmod +x /wait-for-it.sh
 chown -R php:php /app
 
@@ -242,7 +239,6 @@ ENV APP_DEBUG=1
 RUN ln -sf ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini
 COPY --link docker/php/conf.d/php.dev.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
 COPY --link --chmod=755 docker/php/docker-php-entrypoint-dev /usr/local/bin/docker-php-entrypoint
-COPY --link --chmod=755 docker/php/docker-cron-entrypoint-dev /usr/local/bin/docker-cron-entrypoint
 
 RUN <<EOF
 apt-get --quiet update
@@ -282,7 +278,6 @@ ENV APP_DEBUG=0
 RUN ln -sf ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
 COPY --link docker/php/conf.d/php.prod.ini ${PHP_INI_DIR}/conf.d/zz-app.ini
 COPY --link --chmod=755 docker/php/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
-COPY --link --chmod=755 docker/php/docker-cron-entrypoint /usr/local/bin/docker-cron-entrypoint
 COPY --link --chmod=755 docker/php/docker-migrate-entrypoint /usr/local/bin/docker-migrate-entrypoint
 
 USER php

@@ -15,7 +15,7 @@ variables:
     TIMEZONE: "Europe/Paris"
     SENTRY_URL: ""
     # List of Docker containers to restart on deploy
-    DOCKER_CONTAINERS: "varnish nginx app cron worker migrate"
+    DOCKER_CONTAINERS: "varnish nginx app scheduler worker migrate"
 
 test:
     image: roadiz/php-runner:8.4.10-bookworm

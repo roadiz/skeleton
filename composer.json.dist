@@ -23,6 +23,7 @@
         "phpstan/phpstan-doctrine": "*",
         "phpstan/phpstan-symfony": "*",
         "phpunit/phpunit": "^9.5",
+        "rector/rector": "^1.2",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
         "symfony/debug-bundle": "7.3.*",
