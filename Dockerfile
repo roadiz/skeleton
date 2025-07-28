@@ -399,7 +399,7 @@ usermod -u ${UID} mysql
 groupmod -g ${GID} mysql
 EOF
 
-COPY --link docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
+COPY --link --chmod=644 docker/mysql/performances.cnf /etc/mysql/conf.d/performances.cnf
 
 VOLUME /var/lib/mysql
 
