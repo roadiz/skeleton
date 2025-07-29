@@ -66,7 +66,7 @@ security:
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            switch_user: { role: ROLE_SUPERADMIN, parameter: _su }
+            switch_user: { role: ROLE_ALLOWED_TO_SWITCH, parameter: _su }
             entry_point: RZ\Roadiz\RozierBundle\Security\RozierAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
@@ -129,13 +129,11 @@ security:
             - ROLE_ACCESS_DOCUMENTS_LIMITATIONS
             - ROLE_ACCESS_GROUPS
             - ROLE_ACCESS_LOGS
-            - ROLE_ACCESS_NODEFIELDS_DELETE
             - ROLE_ACCESS_NODES
             - ROLE_ACCESS_NODES_DELETE
             - ROLE_ACCESS_NODES_SETTING
             - ROLE_ACCESS_NODES_STATUS
             - ROLE_ACCESS_NODETYPES
-            - ROLE_ACCESS_NODETYPES_DELETE
             - ROLE_ACCESS_NODE_ATTRIBUTES
             - ROLE_ACCESS_REALMS
             - ROLE_ACCESS_REALM_NODES
