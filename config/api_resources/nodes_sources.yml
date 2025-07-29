@@ -12,6 +12,8 @@ resources:
                         - tag_base
                         - translation_base
                         - document_display
+                        # Required for sitemap lastmod
+                        - timestamps
 
             api_nodes_sources_archives:
                 class: ApiPlatform\Metadata\GetCollection

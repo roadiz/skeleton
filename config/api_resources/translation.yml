@@ -1,6 +1,7 @@
 resources:
     RZ\Roadiz\CoreBundle\Entity\Translation:
         operations:
+            # Required for sitemap generation
             ApiPlatform\Metadata\GetCollection:
                 method: "GET"
                 normalizationContext:
