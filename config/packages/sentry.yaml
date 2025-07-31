@@ -6,15 +6,15 @@ when@prod:
         # https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
         register_error_listener: false
         register_error_handler: false
-        ignore_exceptions:
-            - 'Symfony\Component\ErrorHandler\Error\FatalError'
-            - 'Symfony\Component\Debug\Exception\FatalErrorException'
-            # Do not bloat Sentry with NotFoundHttpException
-            - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
 
         options:
             release: '%env(APP_VERSION)%'
             environment: '%env(SENTRY_ENVIRONMENT)%'
+            ignore_exceptions:
+                - 'Symfony\Component\ErrorHandler\Error\FatalError'
+                - 'Symfony\Component\Debug\Exception\FatalErrorException'
+                # Do not bloat Sentry with NotFoundHttpException
+                - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
 
     monolog:
         handlers:
