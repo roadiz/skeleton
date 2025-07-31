@@ -9,6 +9,8 @@ when@prod:
         ignore_exceptions:
             - 'Symfony\Component\ErrorHandler\Error\FatalError'
             - 'Symfony\Component\Debug\Exception\FatalErrorException'
+            # Do not bloat Sentry with NotFoundHttpException
+            - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
 
         options:
             release: '%env(APP_VERSION)%'
