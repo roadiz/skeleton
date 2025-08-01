@@ -50,6 +50,7 @@ final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
         return $this->decorated->supportsNormalization($data, $format/* , $context */);
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return $this->decorated->getSupportedTypes($format);
