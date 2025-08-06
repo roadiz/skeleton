@@ -1,6 +1,3 @@
-parameters:
-    env(SENTRY_ENVIRONMENT): 'preproduction'
-
 when@prod:
     sentry:
         dsn: '%env(SENTRY_DSN)%'
@@ -13,6 +10,11 @@ when@prod:
         options:
             release: '%env(APP_VERSION)%'
             environment: '%env(SENTRY_ENVIRONMENT)%'
+            ignore_exceptions:
+                - 'Symfony\Component\ErrorHandler\Error\FatalError'
+                - 'Symfony\Component\Debug\Exception\FatalErrorException'
+                # Do not bloat Sentry with NotFoundHttpException
+                - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
 
     monolog:
         handlers:

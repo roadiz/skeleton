@@ -1,13 +1,18 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
+        profiling_collect_backtrace: '%kernel.debug%'
+        use_savepoints: true
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
+        auto_generate_proxy_classes: true
         default_entity_manager: default
+        enable_lazy_ghost_objects: true
         entity_managers:
             # Put `logger` entity manager first to select it as default for Log entity
             logger:
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                report_fields_where_declared: true
+                validate_xml_mapping: true
                 mappings:
                     ## Just sharding EM to avoid having Logs in default EM
                     ## and flushing bad entities when storing log entries.
@@ -22,6 +27,8 @@ doctrine:
                     string_functions:
                         JSON_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                report_fields_where_declared: true
+                validate_xml_mapping: true
                 auto_mapping: true
                 mappings:
                     ## Keep RoadizCoreLogger to avoid creating different migrations since we are using
@@ -47,7 +54,7 @@ doctrine:
                         alias: RoadizCoreBundle
                     RZ\Roadiz\Core:
                         is_bundle: false
-                        type: annotation
+                        type: attribute
                         dir: '%kernel.project_dir%/vendor/roadiz/models/src/Core/AbstractEntities'
                         prefix: 'RZ\Roadiz\Core\AbstractEntities'
                         alias: AbstractEntities
@@ -78,3 +85,15 @@ doctrine:
             RZ\Roadiz\CoreBundle\Model\AttributeValueInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValue
             RZ\Roadiz\CoreBundle\Model\AttributeValueTranslationInterface: RZ\Roadiz\CoreBundle\Entity\AttributeValueTranslation
             RZ\Roadiz\Core\AbstractEntities\TranslationInterface: RZ\Roadiz\CoreBundle\Entity\Translation
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool

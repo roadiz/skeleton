@@ -2,35 +2,35 @@
     "name": "roadiz/skeleton",
     "type": "project",
     "license": "mit",
-    "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "liip/monitor-bundle": "^2.22",
-        "nelmio/cors-bundle": "^2.4",
-        "roadiz/cms-pack": "^2.0.2",
-        "sentry/sentry-symfony": "^5.1",
-        "symfony/redis-messenger": "6.4.*",
+        "liip/monitor-bundle": "^2.24",
+        "nelmio/cors-bundle": "^2.5",
+        "roadiz/cms-pack": "^3.0",
+        "sentry/sentry-symfony": "^5.3",
+        "symfony/redis-messenger": "7.3.*",
         "symfony/flex": "*",
         "symfony/requirements-checker": "^2.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.64",
-        "phpstan/phpstan": "<2",
+        "friendsofphp/php-cs-fixer": "^3.85",
         "phpstan/phpdoc-parser": "<2",
-        "phpstan/phpstan-doctrine": "<2",
-        "phpstan/phpstan-symfony": "<2",
+        "phpstan/phpstan": "*",
+        "phpstan/phpstan-doctrine": "*",
+        "phpstan/phpstan-symfony": "*",
         "phpunit/phpunit": "^9.5",
-        "rezozero/intervention-request-bundle": "~4.0",
-        "symfony/browser-kit": "6.4.*",
-        "symfony/css-selector": "6.4.*",
-        "symfony/debug-bundle": "6.4.*",
-        "symfony/maker-bundle": "^1.0",
-        "symfony/phpunit-bridge": "6.4.*",
-        "symfony/stopwatch": "6.4.*",
-        "symfony/web-profiler-bundle": "6.4.*"
+        "rector/rector": "^2.1",
+        "symfony/browser-kit": "7.3.*",
+        "symfony/css-selector": "7.3.*",
+        "symfony/debug-bundle": "7.3.*",
+        "symfony/filesystem": ">=7.1",
+        "symfony/maker-bundle": "^1.64",
+        "symfony/phpunit-bridge": "7.3.*",
+        "symfony/stopwatch": "7.3.*",
+        "symfony/web-profiler-bundle": "7.3.*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -62,12 +62,11 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "mkdir -p var/cache var/files var/log var/export var/secret"
+            "mkdir -p var/cache var/files var/log var/secret"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "themes:assets:install Rozier": "symfony-cmd",
             "requirements-checker": "script"
         },
         "post-install-cmd": [
@@ -91,12 +90,13 @@
     "suggest": {
         "roadiz/two-factor-bundle": "Provides a two-factor authentication system for Roadiz CMS",
         "roadiz/user-bundle": "Public user management bundle for Roadiz CMS",
+        "roadiz/solr-bundle": "Solr search-engine integration for Roadiz CMS",
         "roadiz/font-bundle": "Manage and expose web fonts with Roadiz CMS"
     },
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.4.*",
+            "require": "7.3.*",
             "docker": false
         }
     }

@@ -15,10 +15,10 @@ variables:
     TIMEZONE: "Europe/Paris"
     SENTRY_URL: ""
     # List of Docker containers to restart on deploy
-    DOCKER_CONTAINERS: "varnish nginx app cron worker migrate"
+    DOCKER_CONTAINERS: "varnish nginx app scheduler worker migrate"
 
 test:
-    image: roadiz/php-runner:8.4.8-bookworm
+    image: roadiz/php-runner:8.4.10-bookworm
     stage: test
     interruptible: true
     only:
@@ -50,6 +50,7 @@ test:
         #
         - composer install
         - php -d memory_limit=-1 bin/console nodetypes:validate-files
+        - php -d memory_limit=-1 vendor/bin/rector process --dry-run
         - php -d memory_limit=-1 vendor/bin/php-cs-fixer check --ansi -vvv
         - php -d memory_limit=-1 vendor/bin/phpstan analyse
         - php -d memory_limit=-1 vendor/bin/phpunit --colors=never

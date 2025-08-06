@@ -6,9 +6,18 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            scheduler_default: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: '%env(MESSENGER_FAILED_TRANSPORT_DSN)%'
             sync: 'sync://'
 
         routing:
             # Route your messages to the transports
             'RZ\Roadiz\CoreBundle\Message\AsyncMessage': async
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+                async: 'in-memory://'

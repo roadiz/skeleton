@@ -2,6 +2,41 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.0](https://github.com/roadiz/skeleton/compare/v2.5.12...v2.6.0) - 2025-08-06
+
+### Features
+
+- Add Docker configuration for FrankenPHP with development and production setups - ([6d8fb6b](https://github.com/roadiz/skeleton/commit/6d8fb6bdd5fdbf3923b2f7722431759be1d5bb14)) - Ambroise Maupate
+- Update Symfony dependencies and configuration for version 7.3 - ([1435d46](https://github.com/roadiz/skeleton/commit/1435d461a718af3dd01daaf5ae2ef04b9c37e890)) - Ambroise Maupate
+- Update configuration for Doctrine and Messenger components - ([bdc4913](https://github.com/roadiz/skeleton/commit/bdc49132cff86732df0d7f1ce3a84aef1cea32ed)) - Ambroise Maupate
+- update Docker configuration to replace cron with scheduler and adjust entrypoints - ([a1e8b40](https://github.com/roadiz/skeleton/commit/a1e8b40468c23efc6fd389e437df9781ac5145b7)) - Ambroise Maupate
+- add timestamps for sitemap lastmod and update translation resource for sitemap generation - ([7d4ad3b](https://github.com/roadiz/skeleton/commit/7d4ad3b2264d56ea029e638d907caa3e4ecc4254)) - Ambroise Maupate
+- enhance security headers in nginx configuration - ([186bbda](https://github.com/roadiz/skeleton/commit/186bbda8e0c3c12cb995ac514aa2354dfd721da5)) - Ambroise Maupate
+- update PHP version requirement to 8.3 and adjust roadiz/cms-pack version to ^3.0 in composer files - ([bc20361](https://github.com/roadiz/skeleton/commit/bc20361f0d234e38d860e1745772ebb71d06e544)) - Ambroise Maupate
+- Update PHP version requirement to 8.3 and add Rector configuration - ([aff893e](https://github.com/roadiz/skeleton/commit/aff893e3ba79410d196c1a01a9a87792fd807549)) - Ambroise Maupate
+- Add MAILER_ENVELOP_SENDER and update DEFAULT_ADMIN_NOTIFIER_RECIPIENT - ([4e4058e](https://github.com/roadiz/skeleton/commit/4e4058e80a160ff2410eef8b9503cea91978f1bf)) - Ambroise Maupate
+- Add AliasBlock entity and related definitions for tree walker and custom normalizer - ([b6a2276](https://github.com/roadiz/skeleton/commit/b6a2276c862e97d00ce0947be6289684bf71c7ca)) - Ambroise Maupate
+
+### Refactor
+
+- Clean up role definitions and remove unused roles in configuration files - ([a629798](https://github.com/roadiz/skeleton/commit/a629798471b6a4c067a7d2a40734f4338843babd)) - Ambroise Maupate
+- Simplify translation retrieval and enhance home page logic in GetCommonContentController - ([577a92f](https://github.com/roadiz/skeleton/commit/577a92fd184667a9ca157c2edfac4bf84627e955)) - Ambroise Maupate
+- Update PHP version requirements, clean up Dockerfile, and migrate configuration settings - ([af469db](https://github.com/roadiz/skeleton/commit/af469dbe2818aa25998087e958650a5db09e73d5)) - Ambroise Maupate
+- Rename reCAPTCHA keys to generic captcha keys and update configuration - ([ed92baa](https://github.com/roadiz/skeleton/commit/ed92baa6b8f9c0de81ab2f099f23cfe2fb0cf2cf)) - Ambroise Maupate
+- Rename openapiContext to openapi in API configuration files - ([52927b1](https://github.com/roadiz/skeleton/commit/52927b192f0d5f264b8d5daaaf1abd4eb1389527)) - Ambroise Maupate
+- Update normalize methods to align on symfony 7.3 signatures - ([baa5dd9](https://github.com/roadiz/skeleton/commit/baa5dd912b19b344717623b5e6e7cf1262065f5c)) - Ambroise Maupate
+- update switch_user role (to default `ROLE_ALLOWED_TO_SWITCH`) and remove unnecessary access roles in security configuration - ([fc87609](https://github.com/roadiz/skeleton/commit/fc876099ac917c7733c575ac8716393267f7233d)) - Ambroise Maupate
+- add Solr bundle suggestion in composer.json and remove SOLR_VERSION from Dockerfile - ([f486834](https://github.com/roadiz/skeleton/commit/f4868340af3c78ae28b06a5e9adc5f8f16a54c1d)) - Ambroise Maupate
+- Improve prod and dev docker compose stacks - ([dc363ff](https://github.com/roadiz/skeleton/commit/dc363ff95ae09198f1c610bc3446a736a6ff26cc)) - Ambroise Maupate
+- Remove Solr configuration and related dependencies ([#9](https://github.com/roadiz/skeleton/issues/9)) - ([0d0694d](https://github.com/roadiz/skeleton/commit/0d0694d0f9a9935457919b4f57b7f257a46681f3)) - Eliot
+
+### Bug Fixes
+
+- Correct condition to check publication status of aliased block in AliasBlockWalkerNormalizer - ([5072ca6](https://github.com/roadiz/skeleton/commit/5072ca6202c5a31669a7b5b71b2f2e7e9d970e1f)) - Ambroise Maupate
+- Refactor AliasBlockWalkerNormalizer to use decorated normalizers and add preview support - ([90c805b](https://github.com/roadiz/skeleton/commit/90c805b65e9431305bc33941635390740b618f35)) - Ambroise Maupate
+- Update of compose.prod.yml to be in line with docker-bake.hcl ([#7](https://github.com/roadiz/skeleton/issues/7)) - ([e35847c](https://github.com/roadiz/skeleton/commit/e35847c092f34681dd660fcda2bb2b840d400ba9)) - Eliot
+- Add memory limit -1 in worker service ([#8](https://github.com/roadiz/skeleton/issues/8)) - ([c835335](https://github.com/roadiz/skeleton/commit/c8353354aefca90482624e6a4305a620a6516bc2)) - Eliot
+
 ## [2.5.12](https://github.com/roadiz/skeleton/compare/v2.5.11...v2.5.12) - 2025-06-26
 
 ### Bug Fixes

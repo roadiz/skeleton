@@ -19,29 +19,29 @@ final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
     }
 
     #[\Override]
-    public function normalize($object, ?string $format = null, array $context = []): mixed
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
-        $data = $this->decorated->normalize($object, $format, $context);
+        $normalized = $this->decorated->normalize($data, $format, $context);
 
-        if (!is_array($data)) {
-            return $data;
+        if (!is_array($normalized)) {
+            return $normalized;
         }
-        if (!$object instanceof AutoChildrenNodeSourceWalker) {
-            return $data;
+        if (!$data instanceof AutoChildrenNodeSourceWalker) {
+            return $normalized;
         }
 
-        $block = $object->getItem();
+        $block = $data->getItem();
         if (!$block instanceof NSAliasBlock || 0 === count($block->getBlockSources())) {
-            return $data;
+            return $normalized;
         }
         $aliasedBlock = $block->getBlockSources()[0];
         if (!$aliasedBlock->getNode()->isPublished() && !$this->previewResolver->isPreview()) {
-            return $data;
+            return $normalized;
         }
 
-        $data['item'] = $this->itemNormalizer->normalize($aliasedBlock, $format, $context);
+        $normalized['item'] = $this->itemNormalizer->normalize($aliasedBlock, $format, $context);
 
-        return $data;
+        return $normalized;
     }
 
     #[\Override]
@@ -50,6 +50,7 @@ final readonly class AliasBlockWalkerNormalizer implements NormalizerInterface
         return $this->decorated->supportsNormalization($data, $format/* , $context */);
     }
 
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return $this->decorated->getSupportedTypes($format);

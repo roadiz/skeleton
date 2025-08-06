@@ -3,7 +3,7 @@
 name: ${APP_NAMESPACE}
 services:
     db:
-        image: my-registry/roadiz_skeleton/mariadb:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-mariadb:${DEPLOY_TAG}
         restart: always
         cap_add:
             - SYS_NICE  # CAP_SYS_NICE
@@ -20,6 +20,7 @@ services:
     # Use Redis for Cache, Messaging and Sessions
     redis:
         image: redis:7-alpine
+        mem_limit: 256m
         restart: always
         volumes:
             - redis:/data
@@ -27,68 +28,63 @@ services:
             - default
 
     varnish:
-        image: my-registry/roadiz_skeleton/varnish:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-varnish:${DEPLOY_TAG}
         restart: always
-        tmpfs: /var/lib/varnish/varnishd:exec
         # https://github.com/varnish/docker-varnish/issues/53
         user: root
-        # Prevent cache-tags to overflow headers max size by doubling default values
+        # Prevent cache-tags to overflow headers max size
         # https://github.com/api-platform/core/issues/3168
         # https://www.varnish-software.com/developers/tutorials/troubleshooting-varnish/
         command: "-p http_resp_hdr_len=16384 -p http_resp_size=65536"
+        tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - nginx
         links:
             - nginx:nginx
-            - app:app
-            - cron:cron
-            - worker:worker
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
         networks:
             - frontproxynet
             - default
         labels:
-            - "traefik.enable=true"
             # Traefik v3 -----------------------------------------------------
+            - "traefik.enable=true"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.port=80"
             - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.passhostheader=true"
-            # Enable healthcheck to prevent routing traffic to not-ready service
-            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.path=/health-check"
-            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.interval=10s"
-            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.timeout=3s"
-            # - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
-            - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=http,https"
-            # Always use higher priority for your API app with PathRegexp rule
-            - "traefik.http.routers.${APP_NAMESPACE}.priority=11"
-            # Combine Host and PathRegexp to allow API and Frontend to share same domain name
-            - "traefik.http.routers.${APP_NAMESPACE}.rule=HostRegexp(${HOSTNAME}) && PathRegexp(${PATH_PREFIX})"
-            - "traefik.http.routers.${APP_NAMESPACE}.service=${APP_NAMESPACE}"
-            - "traefik.http.routers.${APP_NAMESPACE}.tls=true"
-            - "traefik.http.routers.${APP_NAMESPACE}.tls.certresolver=letsencrypt"
-            #
-            # Be careful, HostRegexp router rule does not trigger Let's Encrypt certificate generation:
-            # The certificate resolver uses the router's rule, by checking the Host() matchers
-            # https://doc.traefik.io/traefik/https/acme/#configuration-examples
-            #
-            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].main=project-name.fr"
-            - "traefik.http.routers.${APP_NAMESPACE}.tls.domains[0].sans=www.project-name.fr,www2.project-name.fr"
-            # Apply middlewares
-            - "traefik.http.routers.${APP_NAMESPACE}.middlewares=${APP_NAMESPACE}Redirectregex,${APP_NAMESPACE}Sts"
+            # HTTP Router for API documentation only (htpasswd)
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.rule=HostRegexp(${HOSTNAME}) && PathPrefix(`/api/docs`)"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.priority=13"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.tls=true"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.tls.domains[0].main=project-name.fr"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.tls.domains[0].sans=www.project-name.fr,project-name.com,www.project-name.com"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.service=${APP_NAMESPACE}"
+            - "traefik.http.routers.${APP_NAMESPACE}-api-docs.middlewares=${APP_NAMESPACE}-redirectregex,${APP_NAMESPACE}-sts,${APP_NAMESPACE}-docs-auth"
+            # HTTP Router for Backend only (no htpasswd)
+            - "traefik.http.routers.${APP_NAMESPACE}-api.rule=HostRegexp(${HOSTNAME}) && PathRegexp(${PATH_PREFIX})"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.priority=12"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.tls=true"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.tls.domains[0].main=project-name.fr"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.tls.domains[0].sans=www.project-name.fr,project-name.com,www.project-name.com"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.service=${APP_NAMESPACE}"
+            - "traefik.http.routers.${APP_NAMESPACE}-api.middlewares=${APP_NAMESPACE}-redirectregex,${APP_NAMESPACE}-sts"
+            ## Middlewares
+            # Added htpasswd protection on docs router: use htpasswd -n to create a password
+            - "traefik.http.middlewares.${APP_NAMESPACE}-docs-auth.basicauth.users=${API_DOCS_BASIC_AUTH}"
             # Add domain redirection (${APP_NAMESPACE} non-www to www redir)
-            - "traefik.http.middlewares.${APP_NAMESPACE}Redirectregex.redirectregex.regex=${REDIRECT_REGEX}"
-            - "traefik.http.middlewares.${APP_NAMESPACE}Redirectregex.redirectregex.replacement=${REDIRECT_REPLACEMENT}"
-            - "traefik.http.middlewares.${APP_NAMESPACE}Redirectregex.redirectregex.permanent=true"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-redirectregex.redirectregex.regex=${REDIRECT_REGEX}"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-redirectregex.redirectregex.replacement=${REDIRECT_REPLACEMENT}"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-redirectregex.redirectregex.permanent=true"
             # HSTS headers
-            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stsincludesubdomains=false"
-            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stspreload=true"
-            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.stsseconds=31536000"
-            - "traefik.http.middlewares.${APP_NAMESPACE}Sts.headers.isdevelopment=false"
-
+            - "traefik.http.middlewares.${APP_NAMESPACE}-sts.headers.stsincludesubdomains=false"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-sts.headers.stspreload=true"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-sts.headers.stsseconds=31536000"
+            - "traefik.http.middlewares.${APP_NAMESPACE}-sts.headers.isdevelopment=false"
 
     nginx:
-        image: my-registry/roadiz_skeleton/nginx:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-nginx:${DEPLOY_TAG}
         restart: always
         depends_on:
             - app
@@ -103,12 +99,11 @@ services:
             - app_assets_data:/app/public/assets:ro
 
     app: &app_template
-        image: my-registry/roadiz_skeleton:${DEPLOY_TAG}
+        image: my-registry/roadiz_skeleton/api-php:${DEPLOY_TAG}
         restart: always
         depends_on:
             - db
             - redis
-            #- solr
         volumes:
             - app_file_data:/app/public/files
             - app_assets_data:/app/public/assets
@@ -116,7 +111,7 @@ services:
             - app_secret_data:/app/config/secrets
             - app_jwt_data:/app/config/jwt
             ## Use docker-compose env file as .env.local in container or use env vars
-            - ./.env:/app/.env.local:ro
+            - ./.env:/app/.env.prod.local:ro
         networks:
             - default
         environment:
@@ -128,32 +123,32 @@ services:
 
     migrate:
         <<: *app_template
+        mem_limit: 1g
         networks:
             - default
+        depends_on:
+            - db
+            - redis
         entrypoint: 'docker-migrate-entrypoint'
         restart: no
 
     worker:
         <<: *app_template
-        # official php-fpm image uses SIGQUIT
+        mem_limit: 1g
         stop_signal: SIGTERM
-        entrypoint: [ "php", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
-
-    cron:
-        <<: *app_template
-        entrypoint: 'docker-cron-entrypoint'
-        user: root
-
-    solr:
-        image: my-registry/roadiz_skeleton/solr:latest
-        volumes:
-            - "solr_data:/var/solr"
-        command:
-            - solr-precreate
-            - ${SOLR_CORE_NAME}
-        restart: always
         networks:
             - default
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
+        restart: always
+
+    scheduler:
+        <<: *app_template
+        mem_limit: 512m
+        stop_signal: SIGTERM
+        networks:
+            - default
+        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "scheduler_default", "--time-limit=1800" ]
+        restart: always
 
     # RESTIC incremental backup services
     restic:
@@ -216,7 +211,6 @@ volumes:
     redis:
     restic_cache:
     db_data:
-    #solr_data:
 
 networks:
     frontproxynet:

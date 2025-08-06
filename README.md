@@ -85,10 +85,6 @@ services:
     #            UID: ${UID}
     #            COMPOSER_DEPLOY_TOKEN: xxxxxxxxxxxxx
     #            COMPOSER_DEPLOY_TOKEN_USER: "gitlab+deploy-token-1"
-
-    #solr:
-    #    ports:
-    #        - "${PUBLIC_SOLR_PORT}:8983/tcp"
 ```
 
 ### Generate [Symfony secrets](https://symfony.com/doc/current/configuration/secrets.html)
@@ -262,18 +258,18 @@ A `cliff.toml` configuration file is already provided in this skeleton.
 
 #### Generate a CHANGELOG file
 ```bash
-git-cliff -o CHANGELOG.md
+git cliff -o CHANGELOG.md
 ```
 
 #### Before releasing
 
 - With a known tag
     ```bash
-    git-cliff -o CHANGELOG.md --tag 1.0.0
+    git cliff -o CHANGELOG.md --tag 1.0.0
     ```
-- Without knowing tag, let `git-cliff` find the right version
+- Without knowing tag, let `git cliff` find the right version
     ```bash
-    git-cliff -o CHANGELOG.md --bump
+    git cliff -o CHANGELOG.md --bump
     ```
 
 ### Credits

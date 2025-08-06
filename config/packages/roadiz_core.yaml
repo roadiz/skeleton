@@ -5,6 +5,7 @@ roadiz_core:
     staticDomainName: ~
     defaultNodeSourceController: App\Controller\NullController
     useNativeJsonColumnType: true
+    useDocumentDto: true
     hideRoadizVersion: false
     # When no information to find locale is found and "force_locale" setting is ON,
     # Roadiz can find root path translation based on Accept-Language header.
@@ -15,23 +16,18 @@ roadiz_core:
         unsplash_client_id: '%env(string:APP_UNSPLASH_CLIENT_ID)%'
         soundcloud_client_id: '%env(string:APP_SOUNDCLOUD_CLIENT_ID)%'
         google_server_id: '%env(string:APP_GOOGLE_SERVER_ID)%'
-        recaptcha_private_key: '%env(string:APP_RECAPTCHA_PRIVATE_KEY)%'
-        recaptcha_public_key: '%env(string:APP_RECAPTCHA_PUBLIC_KEY)%'
         ffmpeg_path: '%env(string:APP_FFMPEG_PATH)%'
+    captcha:
+        private_key: '%env(string:APP_CAPTCHA_PRIVATE_KEY)%'
+        public_key: '%env(string:APP_CAPTCHA_PUBLIC_KEY)%'
+        #verify_url: '%env(string:APP_CAPTCHA_VERIFY_URL)%'
     inheritance:
         type: single_table
-
-###> roadiz/solr ###
-    solr:
-        timeout: 3
-        endpoints:
-            docker:
-                host: '%env(string:SOLR_HOST)%'
-                core: '%env(string:SOLR_CORE_NAME)%'
-                port: '%env(string:SOLR_PORT)%'
-                path: /
-###< roadiz/solr ###
-
+    # Force displaying translation locale in every generated node-source paths.
+    # This should be enabled if you redirect users based on their language on homepage.
+    forceLocale: false
+    # Force displaying translation locale in generated node-source paths even if there is an url-alias in it.
+    forceLocaleWithUrlAliases: true
 
 when@prod:
     roadiz_core:

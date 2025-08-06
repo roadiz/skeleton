@@ -15,6 +15,8 @@ api_platform:
     enable_re_doc: true
     graphql:
         enabled: false
+    serializer:
+        hydra_prefix: true
     show_webby: false
     swagger:
         versions: [3]
