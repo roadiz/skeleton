@@ -51,7 +51,7 @@ final class GetCommonContentController extends AbstractController
         return $this->previewResolver;
     }
 
-    public function __invoke(Request $request): ?CommonContent
+    public function __invoke(Request $request): CommonContent
     {
         try {
             $translation = $this->getTranslation($request);
@@ -75,11 +75,15 @@ final class GetCommonContentController extends AbstractController
                 4
             );
 
-            /*
+            /**
+             * @var string[] $keys
+             */
+            $keys = $this->settingsBag->keys();
+            /**
              * Provide all *_url and *_color settings. Make sure to not create private settings using these keys.
              */
             $urlKeys = array_filter(
-                $this->settingsBag->keys(),
+                $keys,
                 fn (string $key) => str_ends_with($key, '_url') && !empty($this->settingsBag->get($key)),
             );
             $resource->urls = [];
@@ -88,7 +92,7 @@ final class GetCommonContentController extends AbstractController
             }
 
             $colorKeys = array_filter(
-                $this->settingsBag->keys(),
+                $keys,
                 fn (string $key) => str_ends_with($key, '_color') && !empty($this->settingsBag->get($key)),
             );
             $resource->colors = [];
