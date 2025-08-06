@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.1](https://github.com/roadiz/skeleton/compare/v2.6.0...v2.6.1) - 2025-08-06
+
+### Bug Fixes
+
+- Missing `--entrypoint=` for run commands - ([798a931](https://github.com/roadiz/skeleton/commit/798a931d57f24c7ac731d61c4ef9b3d663a22165)) - Ambroise Maupate
+
 ## [2.6.0](https://github.com/roadiz/skeleton/compare/v2.5.12...v2.6.0) - 2025-08-06
 
 ### Features
