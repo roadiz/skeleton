@@ -28,19 +28,6 @@ services:
             PMA_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
         depends_on:
             - db
-        networks:
-            - frontproxynet
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.services.${APP_NAMESPACE}_pma.loadbalancer.server.scheme=http"
-            - "traefik.http.services.${APP_NAMESPACE}_pma.loadbalancer.server.port=80"
-            - "traefik.http.services.${APP_NAMESPACE}_pma.loadbalancer.passhostheader=true"
-            - "traefik.http.routers.${APP_NAMESPACE}_pma.entrypoints=http,https"
-            - "traefik.http.routers.${APP_NAMESPACE}_pma.entrypoints=https"
-            - "traefik.http.routers.${APP_NAMESPACE}_pma.tls=true"
-            - "traefik.http.routers.${APP_NAMESPACE}_pma.rule=HostRegexp(${HOSTNAME_PMA})"
-            - "traefik.http.routers.${APP_NAMESPACE}_pma.service=${APP_NAMESPACE}_pma"
 
     app: &app_template
         # Nginx does not resolve `app` hostname correctly
@@ -70,27 +57,6 @@ services:
             - app
         volumes:
             - ./:/app
-        networks:
-            default:
-#            frontproxynet:
-#                aliases:
-#                    - ${APP_NAMESPACE}_nginx
-#        labels:
-#            - "traefik.enable=true"
-#            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.scheme=http"
-#            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.server.port=80"
-#            - "traefik.http.services.${APP_NAMESPACE}.loadbalancer.passhostheader=true"
-#            # Enable healthcheck to prevent routing traffic to not-ready service
-#            #- "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.path=/health-check"
-#            #- "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.interval=10s"
-#            #- "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.timeout=3s"
-#            #- "traefik.http.services.${APP_NAMESPACE}.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
-#            - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=http,https"
-#            - "traefik.http.routers.${APP_NAMESPACE}.entrypoints=https"
-#            - "traefik.http.routers.${APP_NAMESPACE}.tls=true"
-#            # Combine Host and PathRegexp to allow API and Frontend to share same domain name
-#            - "traefik.http.routers.${APP_NAMESPACE}.rule=HostRegexp(${HOSTNAME}) && PathRegexp(${PATH_PREFIX})"
-#            - "traefik.http.routers.${APP_NAMESPACE}.service=${APP_NAMESPACE}"
 
     worker:
         <<: *app_template
@@ -111,19 +77,6 @@ services:
     mailer:
         hostname: mailer
         image: axllent/mailpit
-        networks:
-            - frontproxynet
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.services.${APP_NAMESPACE}_mailer.loadbalancer.server.scheme=http"
-            - "traefik.http.services.${APP_NAMESPACE}_mailer.loadbalancer.server.port=8025"
-            - "traefik.http.services.${APP_NAMESPACE}_mailer.loadbalancer.passhostheader=true"
-            - "traefik.http.routers.${APP_NAMESPACE}_mailer.entrypoints=http,https"
-            - "traefik.http.routers.${APP_NAMESPACE}_mailer.rule=HostRegexp(${HOSTNAME_MAILER})"
-            - "traefik.http.routers.${APP_NAMESPACE}_mailer.service=${APP_NAMESPACE}_mailer"
-            - "traefik.http.routers.${APP_NAMESPACE}_mailer.entrypoints=https"
-            - "traefik.http.routers.${APP_NAMESPACE}_mailer.tls=true"
 
     # Use Redis for Cache, Messaging and Sessions
     redis:
@@ -131,8 +84,6 @@ services:
         image: redis:7-alpine
         volumes:
             - redis:/data
-        networks:
-            - default
 
     redis-commander:
         image: ghcr.io/joeferner/redis-commander:0.9.0
@@ -155,29 +106,10 @@ services:
             - nginx
         links:
             - nginx:nginx
-        networks:
-            - frontproxynet
-            - default
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.server.scheme=http"
-            - "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.server.port=80"
-            - "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.passhostheader=true"
-            # Enable healthcheck to prevent routing traffic to not-ready service
-            #- "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.healthcheck.path=/health-check"
-            #- "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.healthcheck.interval=10s"
-            #- "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.healthcheck.timeout=3s"
-            #- "traefik.http.services.${APP_NAMESPACE}_varnish.loadbalancer.healthcheck.headers.x-health-check=${APP_HEALTH_CHECK_TOKEN}"
-            - "traefik.http.routers.${APP_NAMESPACE}_varnish.entrypoints=http,https"
-            - "traefik.http.routers.${APP_NAMESPACE}_varnish.rule=HostRegexp(${HOSTNAME_VARNISH}) && PathRegexp(${PATH_PREFIX})"
-            - "traefik.http.routers.${APP_NAMESPACE}_varnish.service=${APP_NAMESPACE}_varnish"
-            - "traefik.http.routers.${APP_NAMESPACE}_varnish.tls=true"
 
 networks:
-    frontproxynet:
-        external: true
     # If you need to use port forwarding, fixing default gateway can be useful
     # to keep same host IP address between service restarts
     default:

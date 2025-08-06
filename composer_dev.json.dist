@@ -9,27 +9,27 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "liip/monitor-bundle": "^2.22",
-        "nelmio/cors-bundle": "^2.4",
+        "liip/monitor-bundle": "^2.24",
+        "nelmio/cors-bundle": "^2.5",
         "roadiz/cms-pack": "dev-develop",
-        "sentry/sentry-symfony": "^5.1",
+        "sentry/sentry-symfony": "^5.3",
         "symfony/redis-messenger": "7.3.*",
         "symfony/flex": "*",
         "symfony/requirements-checker": "^2.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.64",
+        "friendsofphp/php-cs-fixer": "^3.85",
         "phpstan/phpdoc-parser": "<2",
         "phpstan/phpstan": "*",
         "phpstan/phpstan-doctrine": "*",
         "phpstan/phpstan-symfony": "*",
         "phpunit/phpunit": "^9.5",
-        "rector/rector": "^1.2",
+        "rector/rector": "^2.1",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
         "symfony/debug-bundle": "7.3.*",
         "symfony/filesystem": ">=7.1",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.64",
         "symfony/phpunit-bridge": "7.3.*",
         "symfony/stopwatch": "7.3.*",
         "symfony/web-profiler-bundle": "7.3.*"
@@ -64,7 +64,7 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "mkdir -p var/cache var/files var/log var/export var/secret"
+            "mkdir -p var/cache var/files var/log var/secret"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
