@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.2](https://github.com/roadiz/skeleton/compare/v2.6.1...v2.6.2) - 2025-08-07
+
+### Bug Fixes
+
+- do not declare a messenger transport for scheduler_default - ([164ff13](https://github.com/roadiz/skeleton/commit/164ff137139e0b12da9f37cbc9d0545fa95ca33e)) - Ambroise Maupate
+
 ## [2.6.1](https://github.com/roadiz/skeleton/compare/v2.6.0...v2.6.1) - 2025-08-06
 
 ### Bug Fixes
