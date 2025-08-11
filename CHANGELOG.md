@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.3](https://github.com/roadiz/skeleton/compare/v2.6.2...v2.6.3) - 2025-08-11
+
+### Bug Fixes
+
+- update Docker Compose restarting procedure in CI configuration - ([9ecc100](https://github.com/roadiz/skeleton/commit/9ecc100f393b6d82ea776d06a123dbd9424a2f40)) - Ambroise Maupate
+
 ## [2.6.2](https://github.com/roadiz/skeleton/compare/v2.6.1...v2.6.2) - 2025-08-07
 
 ### Bug Fixes
@@ -121,12 +127,14 @@ All notable changes to project will be documented in this file.
 
 ### Bug Fixes
 
+- Add memory limit -1 in worker service ([#8](https://github.com/roadiz/skeleton/issues/8)) - ([c835335](https://github.com/roadiz/skeleton/commit/c8353354aefca90482624e6a4305a620a6516bc2)) - Eliot
 - Upgraded rezozero/intervention-request-bundle to 4.1 - ([2b58b74](https://github.com/roadiz/skeleton/commit/2b58b7450d1970e56843028f8412dcf4076a1a6d)) - Ambroise Maupate
 
 ## [2.5.1](https://github.com/roadiz/skeleton/compare/v2.5.0...v2.5.1) - 2025-04-08
 
 ### Bug Fixes
 
+- Update of compose.prod.yml to be in line with docker-bake.hcl ([#7](https://github.com/roadiz/skeleton/issues/7)) - ([e35847c](https://github.com/roadiz/skeleton/commit/e35847c092f34681dd660fcda2bb2b840d400ba9)) - Eliot
 - Missing `PHP_CS_FIXER_IGNORE_ENV` and `nodetypes:validate-files` command - ([2a42940](https://github.com/roadiz/skeleton/commit/2a4294027e388a4dc6afa19c0c1a85eaaf92e789)) - Ambroise Maupate
 
 ## [2.5.0](https://github.com/roadiz/skeleton/compare/v2.4.14...v2.5.0) - 2025-03-11
