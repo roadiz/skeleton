@@ -15,7 +15,7 @@ variables:
     TIMEZONE: "Europe/Paris"
     SENTRY_URL: ""
     # List of Docker containers to restart on deploy
-    DOCKER_CONTAINERS: "varnish nginx app scheduler worker migrate"
+    DOCKER_CONTAINERS: "app scheduler worker db"
 
 test:
     image: roadiz/php-runner:8.4.10-bookworm
@@ -122,7 +122,7 @@ deploy_develop:
         - echo "${PREPROD_SSH_PRIVATE_KEY}" | base64 -d > ~/.ssh/id_ed25519
         - ssh-keyscan -p ${PREPROD_SSH_PORT} -H "${PREPROD_SSH_HOST}" > ~/.ssh/known_hosts
     script:
-        - ssh -p ${PREPROD_SSH_PORT} ${PREPROD_SSH_USER}@${PREPROD_SSH_HOST} "cd ${PREPROD_WORKDIR} && docker compose pull && docker compose up -d ${DOCKER_CONTAINERS} && exit"
+        - ssh -p ${PREPROD_SSH_PORT} ${PREPROD_SSH_USER}@${PREPROD_SSH_HOST} "cd ${PREPROD_WORKDIR} && docker compose pull -q && docker compose run --rm migrate && docker compose up -d ${DOCKER_CONTAINERS} && docker compose up -d --force-recreate --no-deps varnish nginx && exit"
 
 deploy_production:
     stage: deploy
@@ -141,7 +141,7 @@ deploy_production:
         - echo "${PROD_SSH_PRIVATE_KEY}" | base64 -d > ~/.ssh/id_ed25519
         - ssh-keyscan -p ${PROD_SSH_PORT} -H "${PROD_SSH_HOST}" > ~/.ssh/known_hosts
     script:
-        - ssh -p ${PROD_SSH_PORT} ${PROD_SSH_USER}@${PROD_SSH_HOST} "cd ${PROD_WORKDIR} && docker compose pull && docker compose up -d ${DOCKER_CONTAINERS} && exit"
+        - ssh -p ${PROD_SSH_PORT} ${PROD_SSH_USER}@${PROD_SSH_HOST} "cd ${PROD_WORKDIR} && docker compose pull -q && docker compose run --rm migrate && docker compose up -d ${DOCKER_CONTAINERS} && docker compose up -d --force-recreate --no-deps varnish nginx && exit"
 
 create_gitlab_release:
     stage: release
