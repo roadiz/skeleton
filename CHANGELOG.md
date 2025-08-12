@@ -2,6 +2,13 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.4](https://github.com/roadiz/skeleton/compare/v2.6.3...v2.6.4) - 2025-08-12
+
+### Bug Fixes
+
+- Improved .env configuration for Traefik reverse-proxy - ([8bf61d9](https://github.com/roadiz/skeleton/commit/8bf61d904a79c8725075edabc1570426f965acb2)) - Ambroise Maupate
+- update PHP version to 8.4.11 - ([2d02e55](https://github.com/roadiz/skeleton/commit/2d02e55dbe189ed30022b466b4f2d4aee304a852)) - Ambroise Maupate
+
 ## [2.6.3](https://github.com/roadiz/skeleton/compare/v2.6.2...v2.6.3) - 2025-08-11
 
 ### Bug Fixes
