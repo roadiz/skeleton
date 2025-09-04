@@ -36,6 +36,8 @@ services:
         # https://github.com/api-platform/core/issues/3168
         # https://www.varnish-software.com/developers/tutorials/troubleshooting-varnish/
         command: "-p http_resp_hdr_len=16384 -p http_resp_size=65536"
+        ulimits:
+            memlock: -1
         tmpfs: /var/lib/varnish/varnishd:exec
         depends_on:
             - nginx
