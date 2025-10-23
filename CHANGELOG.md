@@ -2,6 +2,13 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.6.5](https://github.com/roadiz/skeleton/compare/v2.6.4...2.6.5) - 2025-10-23
+
+### Bug Fixes
+
+- **(doctrine)** add controller resolver auto mapping - ([9316320](https://github.com/roadiz/skeleton/commit/9316320b2339039efa1fdbb9bfca7e10997334a0)) - Ambroise Maupate
+- update PHP, MySQL, Nginx, Varnish and MariaDB versions in configuration - ([5162ff3](https://github.com/roadiz/skeleton/commit/5162ff3785fb83af77adca0144743e7a0b18b332)) - Ambroise Maupate
+
 ## [2.6.4](https://github.com/roadiz/skeleton/compare/v2.6.3...v2.6.4) - 2025-08-12
 
 ### Bug Fixes
@@ -38,9 +45,6 @@ All notable changes to project will be documented in this file.
 - add timestamps for sitemap lastmod and update translation resource for sitemap generation - ([7d4ad3b](https://github.com/roadiz/skeleton/commit/7d4ad3b2264d56ea029e638d907caa3e4ecc4254)) - Ambroise Maupate
 - enhance security headers in nginx configuration - ([186bbda](https://github.com/roadiz/skeleton/commit/186bbda8e0c3c12cb995ac514aa2354dfd721da5)) - Ambroise Maupate
 - update PHP version requirement to 8.3 and adjust roadiz/cms-pack version to ^3.0 in composer files - ([bc20361](https://github.com/roadiz/skeleton/commit/bc20361f0d234e38d860e1745772ebb71d06e544)) - Ambroise Maupate
-- Update PHP version requirement to 8.3 and add Rector configuration - ([aff893e](https://github.com/roadiz/skeleton/commit/aff893e3ba79410d196c1a01a9a87792fd807549)) - Ambroise Maupate
-- Add MAILER_ENVELOP_SENDER and update DEFAULT_ADMIN_NOTIFIER_RECIPIENT - ([4e4058e](https://github.com/roadiz/skeleton/commit/4e4058e80a160ff2410eef8b9503cea91978f1bf)) - Ambroise Maupate
-- Add AliasBlock entity and related definitions for tree walker and custom normalizer - ([b6a2276](https://github.com/roadiz/skeleton/commit/b6a2276c862e97d00ce0947be6289684bf71c7ca)) - Ambroise Maupate
 
 ### Refactor
 
@@ -53,14 +57,6 @@ All notable changes to project will be documented in this file.
 - update switch_user role (to default `ROLE_ALLOWED_TO_SWITCH`) and remove unnecessary access roles in security configuration - ([fc87609](https://github.com/roadiz/skeleton/commit/fc876099ac917c7733c575ac8716393267f7233d)) - Ambroise Maupate
 - add Solr bundle suggestion in composer.json and remove SOLR_VERSION from Dockerfile - ([f486834](https://github.com/roadiz/skeleton/commit/f4868340af3c78ae28b06a5e9adc5f8f16a54c1d)) - Ambroise Maupate
 - Improve prod and dev docker compose stacks - ([dc363ff](https://github.com/roadiz/skeleton/commit/dc363ff95ae09198f1c610bc3446a736a6ff26cc)) - Ambroise Maupate
-- Remove Solr configuration and related dependencies ([#9](https://github.com/roadiz/skeleton/issues/9)) - ([0d0694d](https://github.com/roadiz/skeleton/commit/0d0694d0f9a9935457919b4f57b7f257a46681f3)) - Eliot
-
-### Bug Fixes
-
-- Correct condition to check publication status of aliased block in AliasBlockWalkerNormalizer - ([5072ca6](https://github.com/roadiz/skeleton/commit/5072ca6202c5a31669a7b5b71b2f2e7e9d970e1f)) - Ambroise Maupate
-- Refactor AliasBlockWalkerNormalizer to use decorated normalizers and add preview support - ([90c805b](https://github.com/roadiz/skeleton/commit/90c805b65e9431305bc33941635390740b618f35)) - Ambroise Maupate
-- Update of compose.prod.yml to be in line with docker-bake.hcl ([#7](https://github.com/roadiz/skeleton/issues/7)) - ([e35847c](https://github.com/roadiz/skeleton/commit/e35847c092f34681dd660fcda2bb2b840d400ba9)) - Eliot
-- Add memory limit -1 in worker service ([#8](https://github.com/roadiz/skeleton/issues/8)) - ([c835335](https://github.com/roadiz/skeleton/commit/c8353354aefca90482624e6a4305a620a6516bc2)) - Eliot
 
 ## [2.5.12](https://github.com/roadiz/skeleton/compare/v2.5.11...v2.5.12) - 2025-06-26
 
@@ -73,6 +69,10 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - Refactor AliasBlockWalkerNormalizer to use decorated normalizers and add preview support - ([90c805b](https://github.com/roadiz/skeleton/commit/90c805b65e9431305bc33941635390740b618f35)) - Ambroise Maupate
+
+### Features
+
+- Update PHP version requirement to 8.3 and add Rector configuration - ([aff893e](https://github.com/roadiz/skeleton/commit/aff893e3ba79410d196c1a01a9a87792fd807549)) - Ambroise Maupate
 
 ## [2.5.10](https://github.com/roadiz/skeleton/compare/v2.5.9...v2.5.10) - 2025-06-26
 
@@ -88,6 +88,10 @@ All notable changes to project will be documented in this file.
 
 ## [2.5.8](https://github.com/roadiz/skeleton/compare/v2.5.7...v2.5.8) - 2025-06-24
 
+### Features
+
+- Add MAILER_ENVELOP_SENDER and update DEFAULT_ADMIN_NOTIFIER_RECIPIENT - ([4e4058e](https://github.com/roadiz/skeleton/commit/4e4058e80a160ff2410eef8b9503cea91978f1bf)) - Ambroise Maupate
+
 ### Refactor
 
 - Use camel case for URL keys in GetCommonContentController - ([686bf08](https://github.com/roadiz/skeleton/commit/686bf0898ccebaa118b5fb771dedab6dee187288)) - eliot lauger
@@ -97,6 +101,10 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - Missing `TRUSTED_PROXIES` env variable in `symfony/framework-bundle` section - ([3e93e7b](https://github.com/roadiz/skeleton/commit/3e93e7ba169bab8efb07aee23303164af43355f5)) - Ambroise Maupate
+
+### Refactor
+
+- Remove Solr configuration and related dependencies ([#9](https://github.com/roadiz/skeleton/issues/9)) - ([0d0694d](https://github.com/roadiz/skeleton/commit/0d0694d0f9a9935457919b4f57b7f257a46681f3)) - Eliot
 
 ## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...v2.5.6) - 2025-06-12
 
