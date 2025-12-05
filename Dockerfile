@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.4.13
+ARG PHP_VERSION=8.4.15
 ARG MYSQL_VERSION=8.4.7
 ARG NGINX_VERSION=1.28.0
 ARG MARIADB_VERSION=11.8.3
@@ -33,15 +33,13 @@ apt-get --quiet --yes --purge --autoremove upgrade
 apt-get --quiet --yes --no-install-recommends --verbose-versions install \
     acl \
     less \
-    sudo \
     git \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
 
 # User
-addgroup --gid ${UID} php
+addgroup --gid ${GID} php
 adduser --home /home/php --shell /bin/bash --uid ${UID} --gecos php --ingroup php --disabled-password php
-echo "php ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/php
 
 # App
 install --verbose --owner php --group php --mode 0755 --directory /app
@@ -105,6 +103,9 @@ VOLUME /app
 
 FROM php-franken AS php-prod-franken
 
+ARG UID
+ARG GID
+
 ENV XDEBUG_MODE=off
 ENV APP_ENV=prod
 ENV APP_RUNTIME_ENV=prod
@@ -124,15 +125,15 @@ CMD ["--config", "/etc/frankenphp/Caddyfile", "--adapter", "caddyfile"]
 USER php
 
 # Composer
-COPY --link --chown=php:php composer.* symfony.* ./
+COPY --link --chown=${UID}:${GID} composer.json composer.lock symfony.lock ./
 RUN <<EOF
 # If you depend on private Gitlab repositories, you must use a deploy token and username
 #composer config gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
 composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 EOF
 
-COPY --link --chown=php:php ./api .
-COPY --link --chown=php:php --from=encore-build /app/public/static ./public/static
+COPY --link --chown=${UID}:${GID} ./api .
+COPY --link --chown=${UID}:${GID} --from=encore-build /app/public/static ./public/static
 
 RUN <<EOF
 composer dump-autoload --classmap-authoritative --no-dev
@@ -157,6 +158,7 @@ FROM php:${PHP_VERSION}-fpm-bookworm AS php
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG UID
+ARG GID
 
 ARG COMPOSER_VERSION=2.8.9
 ARG PHP_EXTENSION_REDIS_VERSION=6.1.0
@@ -176,15 +178,13 @@ apt-get --quiet --yes --purge --autoremove upgrade
 # Packages - System
 apt-get --quiet --yes --no-install-recommends --verbose-versions install \
     less \
-    sudo \
     git \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
 
 # User
-addgroup --gid ${UID} php
+addgroup --gid ${GID} php
 adduser --home /home/php --shell /bin/bash --uid ${UID} --gecos php --ingroup php --disabled-password php
-echo "php ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/php
 
 # App
 install --verbose --owner php --group php --mode 0755 --directory /app
@@ -263,6 +263,9 @@ USER php
 
 FROM php AS php-prod
 
+ARG UID
+ARG GID
+
 # If you depend on private Gitlab repositories, you must use a deploy token and username
 #ARG COMPOSER_DEPLOY_TOKEN
 #ARG COMPOSER_DEPLOY_TOKEN_USER="gitlab+deploy-token-1"
@@ -282,14 +285,14 @@ COPY --link --chmod=755 docker/php/docker-migrate-entrypoint /usr/local/bin/dock
 USER php
 
 # Composer
-COPY --link --chown=php:php composer.* symfony.* ./
+COPY --link --chown=${UID}:${GID} composer.json composer.lock symfony.lock ./
 RUN <<EOF
 # If you depend on private Gitlab repositories, you must use a deploy token and username
 #composer config gitlab-token.gitlab.rezo-zero.com ${COMPOSER_DEPLOY_TOKEN_USER} ${COMPOSER_DEPLOY_TOKEN}
 composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 EOF
 
-COPY --link --chown=php:php . .
+COPY --link --chown=${UID}:${GID} . .
 
 RUN <<EOF
 composer dump-autoload --classmap-authoritative --no-dev
@@ -316,6 +319,7 @@ FROM nginx:${NGINX_VERSION}-bookworm AS nginx
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG UID
+ARG GID
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
@@ -323,15 +327,12 @@ RUN <<EOF
 # Packages
 apt-get --quiet update
 apt-get --quiet --yes --purge --autoremove upgrade
-apt-get --quiet --yes --no-install-recommends --verbose-versions install \
-    less \
-    sudo
+apt-get --quiet --yes --no-install-recommends --verbose-versions install less
 rm -rf /var/lib/apt/lists/*
 
 # User
-groupmod --gid ${UID} nginx
+groupmod --gid ${GID} nginx
 usermod --uid ${UID} nginx
-echo "nginx ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nginx
 
 # App
 install --verbose --owner nginx --group nginx --mode 0755 --directory /app
@@ -362,14 +363,16 @@ FROM nginx AS nginx-dev
 VOLUME /app
 
 
-
 ##############
 # Nginx PROD #
 ##############
 
+ARG UID
+ARG GID
+
 FROM nginx AS nginx-prod
 # Copy public files from API
-COPY --link --from=php-prod --chown=${USER_UID}:${USER_UID} /app/public /app/public
+COPY --link --from=php-prod --chown=${UID}:${GID} /app/public /app/public
 
 # Only enable healthcheck in production when the app is ready to serve requests on root path
 # This could prevent Traefik or an ingress controller to route traffic to the app
