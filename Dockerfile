@@ -1,6 +1,6 @@
-ARG PHP_VERSION=8.4.15
+ARG PHP_VERSION=8.5.1
 ARG MYSQL_VERSION=8.4.7
-ARG NGINX_VERSION=1.28.0
+ARG NGINX_VERSION=1.28.1
 ARG MARIADB_VERSION=11.8.3
 ARG VARNISH_VERSION=7.7.3
 
@@ -11,7 +11,7 @@ ARG GID=${UID}
 # PHP - FRANKENPHP #
 ####################
 
-FROM dunglas/frankenphp:php${PHP_VERSION}-bookworm AS php-franken
+FROM dunglas/frankenphp:php${PHP_VERSION}-trixie AS php-franken
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com, eliot@rezo-zero.com"
 
@@ -153,7 +153,7 @@ VOLUME /app/config/jwt \
 # PHP #
 #######
 
-FROM php:${PHP_VERSION}-fpm-bookworm AS php
+FROM php:${PHP_VERSION}-fpm-trixie AS php
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
@@ -314,7 +314,7 @@ VOLUME /app/config/jwt \
 # Nginx #
 #########
 
-FROM nginx:${NGINX_VERSION}-bookworm AS nginx
+FROM nginx:${NGINX_VERSION}-trixie AS nginx
 
 LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
