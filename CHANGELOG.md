@@ -2,6 +2,18 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.0](https://github.com/roadiz/skeleton/compare/v2.6.5...2.7.0) - 2026-01-23
+
+### Bug Fixes
+
+- update PHP version, adjust user/group handling in Dockerfiles, remove sudo on Docker images and remove cache-clear in production entrypoint - ([057e43f](https://github.com/roadiz/skeleton/commit/057e43f974ac36c3abab8bf1c4a6d9b36c0a8748)) - Ambroise Maupate
+- add cache warmup for production environment in entrypoint scripts - ([29601d4](https://github.com/roadiz/skeleton/commit/29601d447a75add0bd38444cb9207bce91da5db8)) - Ambroise Maupate
+
+### CI/CD
+
+- update CI rules for branch and tag handling - ([ea8b5a8](https://github.com/roadiz/skeleton/commit/ea8b5a85e3dc8912cee35691ee5766e87c037bde)) - Ambroise Maupate
+- update release-cli image in CI configuration - ([edc3962](https://github.com/roadiz/skeleton/commit/edc396209529309dce01f396561eea96e8f01f26)) - Ambroise Maupate
+
 ## [2.6.5](https://github.com/roadiz/skeleton/compare/v2.6.4...2.6.5) - 2025-10-23
 
 ### Bug Fixes

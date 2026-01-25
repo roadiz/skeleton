@@ -21,10 +21,10 @@ test:
     image: roadiz/php-runner:8.4.13-bookworm
     stage: test
     interruptible: true
-    only:
-        - develop
-        - tags
-        - merge_requests
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "develop"'
+        - if: '$CI_COMMIT_TAG'
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     cache:
         key: ${CI_COMMIT_REF_SLUG}
         paths:
@@ -59,8 +59,8 @@ build_develop:
     stage: build
     image: docker:git
     interruptible: true
-    only:
-        - develop
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "develop"'
     services:
         - docker:dind
     variables:
@@ -79,8 +79,8 @@ build_develop:
 build_tag:
     stage: build
     image: docker:git
-    only:
-        - tags
+    rules:
+        - if: '$CI_COMMIT_TAG'
     services:
         - docker:dind
     variables:
@@ -107,8 +107,8 @@ build_tag:
 deploy_develop:
     stage: deploy
     image: alpine:3.21
-    only:
-        - develop
+    rules:
+        - if: '$CI_COMMIT_BRANCH == "develop"'
     needs:
         - build_develop
     interruptible: true
@@ -145,7 +145,7 @@ deploy_production:
 
 create_gitlab_release:
     stage: release
-    image: registry.gitlab.com/gitlab-org/release-cli:latest
+    image: registry.gitlab.com/gitlab-org/cli:latest
     rules:
         - if: $CI_COMMIT_TAG
     script:
