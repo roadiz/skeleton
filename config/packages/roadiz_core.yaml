@@ -23,6 +23,7 @@ roadiz_core:
         #verify_url: '%env(string:APP_CAPTCHA_VERIFY_URL)%'
     inheritance:
         type: single_table
+    projectLogoUrl: '%env(string:APP_PROJECT_LOGO_URL)%'
     # Force displaying translation locale in every generated node-source paths.
     # This should be enabled if you redirect users based on their language on homepage.
     forceLocale: false
