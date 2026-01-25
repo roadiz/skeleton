@@ -5,6 +5,8 @@ parameters:
     env(OPEN_ID_CLIENT_ID): ''
     env(OPEN_ID_CLIENT_SECRET): ''
 roadiz_rozier:
+    translate_assistant:
+        deepl_api_key: '%env(string:APP_DEEPL_API_KEY)%'
     # https://symfony.com/doc/6.4/serializer/encoders.html#the-csvencoder
     csv_encoder_options:
         # Use semicolon as CSV delimiter for european Excel compatibility
@@ -43,6 +45,7 @@ roadiz_rozier:
             - ROLE_ACCESS_CUSTOMFORMS
             - ROLE_ACCESS_CUSTOMFORMS_DELETE
             - ROLE_ACCESS_CUSTOMFORMS_RETENTION
+            - ROLE_ACCESS_CUSTOMFORMS_WEBHOOKS
             - ROLE_ACCESS_ATTRIBUTES
             - ROLE_ACCESS_ATTRIBUTES_DELETE
             - ROLE_ACCESS_NODE_ATTRIBUTES
