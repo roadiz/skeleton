@@ -3,6 +3,9 @@ ARG MYSQL_VERSION=8.4.7
 ARG NGINX_VERSION=1.28.1
 ARG MARIADB_VERSION=11.8.3
 ARG VARNISH_VERSION=7.7.3
+ARG COMPOSER_VERSION=2.9.2
+ARG PHP_EXTENSION_INSTALLER_VERSION=2.9.28
+ARG PHP_EXTENSION_REDIS_VERSION=6.3.0
 
 ARG UID=1000
 ARG GID=${UID}
@@ -19,12 +22,15 @@ ARG UID
 ARG GID
 ARG COMPOSER_VERSION
 ARG PHP_EXTENSION_REDIS_VERSION
+ARG PHP_EXTENSION_INSTALLER_VERSION
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 ENV SERVER_NAME=":80"
 ENV SERVER_ROOT="/app/public"
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
+
+ADD --chmod=755 https://github.com/mlocati/docker-php-extension-installer/releases/download/${PHP_EXTENSION_INSTALLER_VERSION}/install-php-extensions /usr/local/bin/install-php-extensions
 
 RUN <<EOF
 apt-get --quiet update
@@ -159,15 +165,17 @@ LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
 
 ARG UID
 ARG GID
-
-ARG COMPOSER_VERSION=2.8.9
-ARG PHP_EXTENSION_REDIS_VERSION=6.1.0
+ARG COMPOSER_VERSION
+ARG PHP_EXTENSION_REDIS_VERSION
+ARG PHP_EXTENSION_INSTALLER_VERSION
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 ENV APP_FFMPEG_PATH=/usr/bin/ffmpeg
 ENV MYSQL_HOST=db
 ENV MYSQL_PORT=3306
+
+ADD --chmod=755 https://github.com/mlocati/docker-php-extension-installer/releases/download/${PHP_EXTENSION_INSTALLER_VERSION}/install-php-extensions /usr/local/bin/install-php-extensions
 
 COPY --link docker/php/wait-for-it.sh /wait-for-it.sh
 COPY --link docker/php/fpm.d/www.conf   ${PHP_INI_DIR}-fpm.d/zz-www.conf
@@ -193,9 +201,6 @@ chmod +x /wait-for-it.sh
 chown -R php:php /app
 
 # Php extensions
-curl -sSLf  https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
-    --output /usr/local/bin/install-php-extensions
-chmod +x /usr/local/bin/install-php-extensions
 install-php-extensions \
     @composer-${COMPOSER_VERSION} \
     bcmath \
