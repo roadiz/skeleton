@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.1](https://github.com/roadiz/skeleton/compare/v2.7.0...v2.7.1) - 2026-03-02
+
+### Bug Fixes
+
+- config solr in monolog - ([04d0040](https://github.com/roadiz/skeleton/commit/04d00401e58233f8fdf995349018d00109265d93)) - eliot lauger
+
 ## [2.7.0](https://github.com/roadiz/skeleton/compare/v2.6.5...2.7.0) - 2026-01-23
 
 ### Bug Fixes
