@@ -1,10 +1,10 @@
-ARG PHP_VERSION=8.5.1
+ARG PHP_VERSION=8.5.3
 ARG MYSQL_VERSION=8.4.7
-ARG NGINX_VERSION=1.28.1
+ARG NGINX_VERSION=1.28.2
 ARG MARIADB_VERSION=11.8.3
 ARG VARNISH_VERSION=7.7.3
-ARG COMPOSER_VERSION=2.9.2
-ARG PHP_EXTENSION_INSTALLER_VERSION=2.9.28
+ARG COMPOSER_VERSION=2.9.5
+ARG PHP_EXTENSION_INSTALLER_VERSION=2.9.30
 ARG PHP_EXTENSION_REDIS_VERSION=6.3.0
 
 ARG UID=1000
@@ -37,11 +37,14 @@ apt-get --quiet update
 apt-get --quiet --yes --purge --autoremove upgrade
 # Packages - System
 apt-get --quiet --yes --no-install-recommends --verbose-versions install \
+    ca-certificates \
     acl \
     less \
     git \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
+
+update-ca-certificates
 
 # User
 addgroup --gid ${GID} php
@@ -185,10 +188,13 @@ apt-get --quiet update
 apt-get --quiet --yes --purge --autoremove upgrade
 # Packages - System
 apt-get --quiet --yes --no-install-recommends --verbose-versions install \
+    ca-certificates \
     less \
     git \
     ffmpeg
 rm -rf /var/lib/apt/lists/*
+
+update-ca-certificates
 
 # User
 addgroup --gid ${GID} php
