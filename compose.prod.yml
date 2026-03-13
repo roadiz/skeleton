@@ -1,6 +1,30 @@
 # Production template
 # Replace “my-registry/roadiz_skeleton” with your own project registry URL
 name: ${APP_NAMESPACE}
+
+x-app-template: &app_template
+    image: my-registry/roadiz_skeleton/api-php:${DEPLOY_TAG}
+    restart: always
+    depends_on:
+        - db
+        - redis
+    volumes:
+        - app_file_data:/app/public/files
+        - app_assets_data:/app/public/assets
+        - app_private_file_data:/app/var/files
+        - app_secret_data:/app/config/secrets
+        - app_jwt_data:/app/config/jwt
+        ## Use docker-compose env file as .env.local in container or use env vars
+        - ./.env:/app/.env.prod.local:ro
+    networks:
+        - default
+    environment:
+        # Can only override env in docker environment
+        # because these are hardcoded in Docker image definition
+        APP_ENV: prod
+        APP_RUNTIME_ENV: prod
+        APP_DEBUG: 0
+
 services:
     db:
         image: my-registry/roadiz_skeleton/api-mariadb:${DEPLOY_TAG}
@@ -100,28 +124,11 @@ services:
             - app_file_data:/app/public/files:ro
             - app_assets_data:/app/public/assets:ro
 
-    app: &app_template
-        image: my-registry/roadiz_skeleton/api-php:${DEPLOY_TAG}
-        restart: always
-        depends_on:
-            - db
-            - redis
-        volumes:
-            - app_file_data:/app/public/files
-            - app_assets_data:/app/public/assets
-            - app_private_file_data:/app/var/files
-            - app_secret_data:/app/config/secrets
-            - app_jwt_data:/app/config/jwt
-            ## Use docker-compose env file as .env.local in container or use env vars
-            - ./.env:/app/.env.prod.local:ro
-        networks:
-            - default
-        environment:
-            # Can only override env in docker environment
-            # because these are hardcoded in Docker image definition
-            APP_ENV: prod
-            APP_RUNTIME_ENV: prod
-            APP_DEBUG: 0
+    app:
+        <<: *app_template
+        # Nginx does not resolve `app` hostname correctly
+        hostname: app
+        mem_limit: 1g
 
     migrate:
         <<: *app_template
@@ -138,10 +145,13 @@ services:
         <<: *app_template
         mem_limit: 1g
         stop_signal: SIGTERM
-        networks:
-            - default
-        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=1800" ]
-        restart: always
+        entrypoint:
+            - 'sh'
+            - '-c'
+            - 'export MESSENGER_CONSUMER_NAME=$$HOSTNAME; exec php -d memory_limit=-1 /app/bin/console messenger:consume async --time-limit=1800'
+        restart: unless-stopped
+        deploy:
+            replicas: 2
 
     scheduler:
         <<: *app_template

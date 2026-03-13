@@ -2,13 +2,22 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.2](https://github.com/roadiz/skeleton/compare/v2.7.1...v2.7.2) - 2026-03-13
+
+### Features
+
+- **(ci)** update PHP runner version and add build_merge_requests stage - ([ee84fba](https://github.com/roadiz/skeleton/commit/ee84fba6b8151a1b12f4055384dd66362ccbf7f6)) - Ambroise Maupate
+- **(docker)** update PHP, NGINX, and Composer versions in Dockerfile - ([a3fa403](https://github.com/roadiz/skeleton/commit/a3fa403fb694fcdc1fa0af7de884dc9b0a035026)) - Ambroise Maupate
+- **(docker)** refactor app service configuration and add memory limits - ([70101f3](https://github.com/roadiz/skeleton/commit/70101f36a6549a67e429d6b9f620e8d0ad1ddf28)) - Ambroise Maupate
+- **(messenger)** add consumer name configuration for async transport - ([ebc1ee8](https://github.com/roadiz/skeleton/commit/ebc1ee84ed678cfff879257f28967f376fa527df)) - Ambroise Maupate
+
 ## [2.7.1](https://github.com/roadiz/skeleton/compare/v2.7.0...v2.7.1) - 2026-03-02
 
 ### Bug Fixes
 
 - config solr in monolog - ([04d0040](https://github.com/roadiz/skeleton/commit/04d00401e58233f8fdf995349018d00109265d93)) - eliot lauger
 
-## [2.7.0](https://github.com/roadiz/skeleton/compare/v2.6.5...2.7.0) - 2026-01-23
+## [2.7.0](https://github.com/roadiz/skeleton/compare/v2.6.5...v2.7.0) - 2026-01-25
 
 ### Bug Fixes
 
@@ -19,12 +28,19 @@ All notable changes to project will be documented in this file.
 
 - update CI rules for branch and tag handling - ([ea8b5a8](https://github.com/roadiz/skeleton/commit/ea8b5a85e3dc8912cee35691ee5766e87c037bde)) - Ambroise Maupate
 - update release-cli image in CI configuration - ([edc3962](https://github.com/roadiz/skeleton/commit/edc396209529309dce01f396561eea96e8f01f26)) - Ambroise Maupate
+- update PHP and Nginx versions in Dockerfile to 8.5.1 and 1.28.1 respectively - ([64b6ed4](https://github.com/roadiz/skeleton/commit/64b6ed45838fb2d51614dff1ce7cd09201f622ca)) - Ambroise Maupate
 
-## [2.6.5](https://github.com/roadiz/skeleton/compare/v2.6.4...2.6.5) - 2025-10-23
+### Features
+
+- **(env)** add Deepl API key configuration - ([8753222](https://github.com/roadiz/skeleton/commit/8753222ab1da0699d7e6e8c2e54a25ae2292a903)) - Ambroise Maupate
+- update Symfony dependencies to version 7.4.* - ([c532a13](https://github.com/roadiz/skeleton/commit/c532a131c453eeb144fb34fd4394fd9ead2c0075)) - Ambroise Maupate
+
+## [2.6.5](https://github.com/roadiz/skeleton/compare/v2.6.4...v2.6.5) - 2025-10-23
 
 ### Bug Fixes
 
 - **(doctrine)** add controller resolver auto mapping - ([9316320](https://github.com/roadiz/skeleton/commit/9316320b2339039efa1fdbb9bfca7e10997334a0)) - Ambroise Maupate
+- add memlock ulimits for Varnish service in Docker Compose files - ([fb29d49](https://github.com/roadiz/skeleton/commit/fb29d498953312640864b046ed213ebeedfd9140)) - Ambroise Maupate
 - update PHP, MySQL, Nginx, Varnish and MariaDB versions in configuration - ([5162ff3](https://github.com/roadiz/skeleton/commit/5162ff3785fb83af77adca0144743e7a0b18b332)) - Ambroise Maupate
 
 ## [2.6.4](https://github.com/roadiz/skeleton/compare/v2.6.3...v2.6.4) - 2025-08-12
