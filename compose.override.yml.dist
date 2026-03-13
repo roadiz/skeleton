@@ -12,9 +12,18 @@ services:
     varnish:
         ports:
             - ${PUBLIC_VARNISH_PORT}:80/tcp
-    pma:
-        ports:
-            - ${PUBLIC_PMA_PORT}:80/tcp
+
+    #pma:
+    #    image: phpmyadmin:5.2.1
+    #    ports:
+    #        - ${PUBLIC_PMA_PORT}:80/tcp
+    #    environment:
+    #        PMA_HOST: db
+    #        UPLOAD_LIMIT: 64M
+    #        PMA_USER: ${MARIADB_USER:-roadiz}
+    #        PMA_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
+    #    depends_on:
+    #        - db
 
     # If you depend on private Gitlab repositories, you must use a deploy token and username
     #app:

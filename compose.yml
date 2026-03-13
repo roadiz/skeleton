@@ -1,7 +1,28 @@
 name: ${APP_NAMESPACE}
+
+x-app-template: &app_template
+    # Nginx does not resolve `app` hostname correctly
+    hostname: app
+    build:
+        target: php-dev
+        args:
+            UID: ${UID}
+    depends_on:
+        - db
+        - redis
+    volumes:
+        - ./:/app
+    networks:
+        default:
+    environment:
+        TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+        UID: ${UID}
+        DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
+
 services:
     db:
         hostname: db
+        mem_limit: 1g
         build:
             # Custom image for file permissions and performances
             target: mariadb
@@ -19,40 +40,18 @@ services:
             MARIADB_USER: ${MARIADB_USER:-roadiz}
             MARIADB_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
 
-    pma:
-        image: phpmyadmin:5.2.1
-        environment:
-            PMA_HOST: db
-            UPLOAD_LIMIT: 64M
-            PMA_USER: ${MARIADB_USER:-roadiz}
-            PMA_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
-        depends_on:
-            - db
-
-    app: &app_template
+    app:
+        <<: *app_template
         # Nginx does not resolve `app` hostname correctly
         hostname: app
-        build:
-            target: php-dev
-            args:
-                UID: ${UID}
-        depends_on:
-            - db
-            - redis
-        volumes:
-            - ./:/app
-        networks:
-            default:
-        environment:
-            TRUSTED_PROXIES: ${TRUSTED_PROXIES}
-            UID: ${UID}
-            DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
+        mem_limit: 1g
 
     nginx:
         build:
             target: nginx-dev
             args:
                 UID: ${UID}
+        mem_limit: 256m
         depends_on:
             - app
         volumes:
@@ -60,15 +59,20 @@ services:
 
     worker:
         <<: *app_template
-        hostname: worker
+        mem_limit: 1g
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
-        entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "async", "--time-limit=600" ]
+        entrypoint:
+            - 'sh'
+            - '-c'
+            - 'export MESSENGER_CONSUMER_NAME=$$HOSTNAME; exec php -d memory_limit=-1 /app/bin/console messenger:consume async -vvv --time-limit=1800'
         restart: unless-stopped
+        deploy:
+            replicas: 2
 
     scheduler:
         <<: *app_template
-        hostname: scheduler
+        mem_limit: 512m
         # official php-fpm image uses SIGQUIT
         stop_signal: SIGTERM
         entrypoint: [ "php", "-d", "memory_limit=-1", "/app/bin/console", "messenger:consume", "scheduler_default", "--time-limit=600" ]
@@ -81,6 +85,7 @@ services:
     # Use Redis for Cache, Messaging and Sessions
     redis:
         hostname: redis
+        mem_limit: 512m
         image: redis:7-alpine
         volumes:
             - redis:/data
@@ -95,6 +100,7 @@ services:
     varnish:
         build:
             target: varnish
+        mem_limit: 512m
         # https://github.com/varnish/docker-varnish/issues/53
         user: root
         # Prevent cache-tags to overflow headers max size by doubling default values
