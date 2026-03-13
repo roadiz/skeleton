@@ -5,7 +5,10 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
             failed: '%env(MESSENGER_FAILED_TRANSPORT_DSN)%'
             sync: 'sync://'
 
