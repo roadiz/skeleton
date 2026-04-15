@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.3](https://github.com/roadiz/skeleton/compare/v2.7.2...v2.7.3) - 2026-04-15
+
+### Bug Fixes
+
+- **(docker)** update PHP, NGINX, and Composer versions - ([127db04](https://github.com/roadiz/skeleton/commit/127db041459d01dd5fa7a5aa6fa50cde59af7971)) - Ambroise Maupate
+
 ## [2.7.2](https://github.com/roadiz/skeleton/compare/v2.7.1...v2.7.2) - 2026-03-13
 
 ### Features
