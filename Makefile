@@ -46,3 +46,13 @@ changelog:
 
 bump:
 	git cliff --bump -o CHANGELOG.md
+
+pdf:
+	@if [ -z "$(FILE)" ]; then echo "Usage: make pdf FILE=path/to/file.md"; exit 1; fi
+	docker run --rm -v "$$(dirname $$(realpath $(FILE))):/data" pandoc/extra \
+		"$$(basename $(FILE))" \
+		-o "$$(basename $(FILE) .md).pdf" \
+		--pdf-engine=xelatex \
+		-V geometry:margin=15mm \
+		-V fontsize=9pt \
+		-V lang=en
