@@ -8,7 +8,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadInterface;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\TreeWalker\WalkerInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 final class CommonContent
 {

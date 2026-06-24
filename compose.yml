@@ -124,7 +124,7 @@ networks:
         ipam:
             driver: default
             config:
-                -   subnet: ${DEFAULT_GATEWAY}/24
+                -   subnet: ${SUB_NETWORK}/24
 
 volumes:
     redis:
