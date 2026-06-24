@@ -2,6 +2,15 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.4](https://github.com/roadiz/skeleton/compare/v2.7.3...v2.7.4) - 2026-06-24
+
+### Features
+
+- **(makefile)** add pdf generation target using pandoc - ([4250b6d](https://github.com/roadiz/skeleton/commit/4250b6d44f1ada54f2d299ab4c40582574a07724)) - eliot lauger
+- Update PHP, MySQL, NGINX, and Composer versions ([#11](https://github.com/roadiz/skeleton/issues/11)) - ([4f2526f](https://github.com/roadiz/skeleton/commit/4f2526f75b3e3827b7d7a011d842665f56308aa1)) - Ambroise Maupate
+- split DEFAULT_GATEWAY and SUB_NETWORK variables - ([d668a8a](https://github.com/roadiz/skeleton/commit/d668a8acc77b4ed24ad6661e7c63d3981d879d69)) - eliot lauger
+- add phpstan/phpstan-deprecation-rules and fix deprecated - ([4e22208](https://github.com/roadiz/skeleton/commit/4e22208ed48dd421a8e390c1f8ad0d4f86884786)) - eliot lauger
+
 ## [2.7.3](https://github.com/roadiz/skeleton/compare/v2.7.2...v2.7.3) - 2026-04-15
 
 ### Bug Fixes
