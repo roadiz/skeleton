@@ -1,9 +1,9 @@
-ARG PHP_VERSION=8.5.5
-ARG MYSQL_VERSION=8.5.7
-ARG NGINX_VERSION=1.30.2
+ARG PHP_VERSION=8.5.9
+ARG MYSQL_VERSION=8.4.11
+ARG NGINX_VERSION=1.30.4
 ARG MARIADB_VERSION=11.8.3
 ARG VARNISH_VERSION=7.7.3
-ARG COMPOSER_VERSION=2.10.1
+ARG COMPOSER_VERSION=2.10.2
 ARG PHP_EXTENSION_INSTALLER_VERSION=2.10.12
 ARG PHP_EXTENSION_REDIS_VERSION=6.3.0
 
@@ -321,16 +321,67 @@ VOLUME /app/config/jwt \
 
 
 
+################
+# Nginx Brotli #
+################
+
+FROM nginx:${NGINX_VERSION}-trixie AS nginx-module-builder
+
+ARG NGINX_VERSION
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+RUN <<EOF
+apt-get --quiet update
+apt-get --quiet --yes --no-install-recommends --verbose-versions install \
+    build-essential \
+    libpcre2-dev \
+    zlib1g-dev \
+    libssl-dev \
+    git \
+    cmake \
+    wget \
+    ca-certificates
+
+# Récupère les EXACTES configure arguments du binaire officiel
+NGINX_CONFARGS="$(nginx -V 2>&1 | grep 'configure arguments' | sed 's/configure arguments: //')"
+
+echo "$NGINX_CONFARGS" > /tmp/configure_args.txt
+EOF
+
+WORKDIR /usr/src
+RUN <<EOF
+wget -q http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+tar zxf nginx-${NGINX_VERSION}.tar.gz
+git clone --recurse-submodules -j8 https://github.com/google/ngx_brotli.git
+EOF
+
+# Build de libbrotlienc / libbrotlicommon (deps/brotli) avant le configure de nginx
+WORKDIR /usr/src/ngx_brotli/deps/brotli
+RUN <<EOF
+mkdir out
+cd out
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
+cmake --build . --config Release --target brotlienc --target brotlicommon
+EOF
+
+WORKDIR /usr/src/nginx-${NGINX_VERSION}
+RUN <<EOF
+eval "./configure $(cat /tmp/configure_args.txt) --add-dynamic-module=../ngx_brotli"
+make modules
+EOF
+
 #########
 # Nginx #
 #########
 
 FROM nginx:${NGINX_VERSION}-trixie AS nginx
 
-LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com"
+LABEL org.opencontainers.image.authors="ambroise@rezo-zero.com eliot@rezo-zero.com"
 
 ARG UID
 ARG GID
+ARG NGINX_VERSION
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
@@ -342,21 +393,33 @@ apt-get --quiet --yes --no-install-recommends --verbose-versions install less
 rm -rf /var/lib/apt/lists/*
 
 # User
-groupmod --gid ${GID} nginx
 usermod --uid ${UID} nginx
+groupmod --gid ${GID} nginx
 
 # App
 install --verbose --owner nginx --group nginx --mode 0755 --directory /app
 EOF
 
+# Silence entrypoint logs
 ENV NGINX_ENTRYPOINT_QUIET_LOGS=1
+
+# Enable Brotli module
+COPY --from=nginx-module-builder /usr/src/nginx-${NGINX_VERSION}/objs/ngx_http_brotli_filter_module.so /etc/nginx/modules/
+COPY --from=nginx-module-builder /usr/src/nginx-${NGINX_VERSION}/objs/ngx_http_brotli_static_module.so /etc/nginx/modules/
+
+RUN <<EOF
+mkdir -p /etc/nginx/modules-enabled
+echo "load_module modules/ngx_http_brotli_filter_module.so;" > /etc/nginx/modules-enabled/50-mod-http-brotli-filter.conf
+echo "load_module modules/ngx_http_brotli_static_module.so;" > /etc/nginx/modules-enabled/50-mod-http-brotli-static.conf
+EOF
+
 # Config
 COPY --link docker/nginx/nginx.conf               /etc/nginx/nginx.conf
 COPY --link docker/nginx/redirections.conf        /etc/nginx/redirections.conf
 COPY --link docker/nginx/mime.types               /etc/nginx/mime.types
 COPY --link docker/nginx/conf.d/_gzip.conf        /etc/nginx/conf.d/_gzip.conf
+COPY --link docker/nginx/conf.d/_brotli.conf      /etc/nginx/conf.d/_brotli.conf
 COPY --link docker/nginx/conf.d/_security.conf    /etc/nginx/conf.d/_security.conf
-COPY --link docker/nginx/conf.d/default.conf  /etc/nginx/conf.d/default.conf
 
 WORKDIR /app
 
