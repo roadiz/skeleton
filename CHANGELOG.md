@@ -2,6 +2,16 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.5](https://github.com/roadiz/skeleton/compare/v2.7.4...v2.7.5) - 2026-08-07
+
+### Bug Fixes
+
+- **(infra)** update PHP, Nginx, MySQL and composer versions - ([7c2ce1c](https://github.com/roadiz/skeleton/commit/7c2ce1cb77f50584d5586c0d573641b89c5949ec)) - Ambroise Maupate
+
+### Features
+
+- **(infra)** enable Brotli support in nginx Docker image - ([8adfec1](https://github.com/roadiz/skeleton/commit/8adfec1dcc29bf78c96c6338992fe4be32c2b110)) - Ambroise Maupate
+
 ## [2.7.4](https://github.com/roadiz/skeleton/compare/v2.7.3...v2.7.4) - 2026-06-24
 
 ### Features
