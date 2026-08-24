@@ -76,7 +76,8 @@ security:
             # https://symfony.com/doc/current/security/login_link.html
             login_link:
                 check_route: login_link_check
-                signature_properties: [ 'id', 'email' ]
+                check_post_only: true
+                signature_properties: [ 'id', 'email', 'password' ]
                 # lifetime in seconds
                 lifetime: 300
                 # only allow the link to be used 3 times
