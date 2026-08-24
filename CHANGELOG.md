@@ -2,6 +2,13 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.6](https://github.com/roadiz/skeleton/compare/v2.7.5...v2.7.6) - 2026-08-24
+
+### Bug Fixes
+
+- **(infra)** upgrade Varnish to 8.0.2 - ([f21eca0](https://github.com/roadiz/skeleton/commit/f21eca00803d2f6caa7a33e0a257d5d394db26e9)) - Ambroise Maupate
+- improve security configuration - ([93b284a](https://github.com/roadiz/skeleton/commit/93b284a911d174088764cc384d72e63dc470bb84)) - Ambroise Maupate
+
 ## [2.7.5](https://github.com/roadiz/skeleton/compare/v2.7.4...v2.7.5) - 2026-08-07
 
 ### Bug Fixes

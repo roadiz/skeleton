@@ -14,7 +14,6 @@ backend default {
 }
 
 acl local {
-    "localhost";
     "127.0.0.1";
     "::1";
     # Add here your $DEFAULT_GATEWAY CIDR to allow all containers in docker network to purge
@@ -224,4 +223,3 @@ sub vcl_deliver {
     #    unset resp.http.Cache-Tags;
     #}
 }
-
