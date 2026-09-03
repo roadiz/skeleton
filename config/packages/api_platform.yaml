@@ -20,6 +20,9 @@ api_platform:
     show_webby: false
     swagger:
         versions: [3]
+        # hide Schemas section in Swagger UI
+        swagger_ui_extra_configuration:
+            defaultModelsExpandDepth: -1
     title:       "%env(string:APP_TITLE)%"
     description: "%env(string:APP_DESCRIPTION)%"
     version:     '%env(string:APP_VERSION)%'
