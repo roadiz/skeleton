@@ -2,6 +2,12 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.7](https://github.com/roadiz/skeleton/compare/v2.7.6...v2.7.7) - 2026-09-15
+
+### Features
+
+- **(infra)** migrate from TRUSTED_PROXIES to SYMFONY_TRUSTED_PROXIES - ([1bbac5b](https://github.com/roadiz/skeleton/commit/1bbac5b12db522b7cabfea6192a09e58d984b108)) - Ambroise Maupate
+
 ## [2.7.6](https://github.com/roadiz/skeleton/compare/v2.7.5...v2.7.6) - 2026-08-24
 
 ### Bug Fixes
@@ -53,6 +59,7 @@ All notable changes to project will be documented in this file.
 
 ### Bug Fixes
 
+- add memlock ulimits for Varnish service in Docker Compose files - ([fb29d49](https://github.com/roadiz/skeleton/commit/fb29d498953312640864b046ed213ebeedfd9140)) - Ambroise Maupate
 - update PHP version, adjust user/group handling in Dockerfiles, remove sudo on Docker images and remove cache-clear in production entrypoint - ([057e43f](https://github.com/roadiz/skeleton/commit/057e43f974ac36c3abab8bf1c4a6d9b36c0a8748)) - Ambroise Maupate
 - add cache warmup for production environment in entrypoint scripts - ([29601d4](https://github.com/roadiz/skeleton/commit/29601d447a75add0bd38444cb9207bce91da5db8)) - Ambroise Maupate
 
@@ -72,7 +79,6 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - **(doctrine)** add controller resolver auto mapping - ([9316320](https://github.com/roadiz/skeleton/commit/9316320b2339039efa1fdbb9bfca7e10997334a0)) - Ambroise Maupate
-- add memlock ulimits for Varnish service in Docker Compose files - ([fb29d49](https://github.com/roadiz/skeleton/commit/fb29d498953312640864b046ed213ebeedfd9140)) - Ambroise Maupate
 - update PHP, MySQL, Nginx, Varnish and MariaDB versions in configuration - ([5162ff3](https://github.com/roadiz/skeleton/commit/5162ff3785fb83af77adca0144743e7a0b18b332)) - Ambroise Maupate
 
 ## [2.6.4](https://github.com/roadiz/skeleton/compare/v2.6.3...v2.6.4) - 2025-08-12
@@ -102,8 +108,15 @@ All notable changes to project will be documented in this file.
 
 ## [2.6.0](https://github.com/roadiz/skeleton/compare/v2.5.12...v2.6.0) - 2025-08-06
 
+### Bug Fixes
+
+- Update of compose.prod.yml to be in line with docker-bake.hcl ([#7](https://github.com/roadiz/skeleton/issues/7)) - ([e35847c](https://github.com/roadiz/skeleton/commit/e35847c092f34681dd660fcda2bb2b840d400ba9)) - Eliot
+- Add memory limit -1 in worker service ([#8](https://github.com/roadiz/skeleton/issues/8)) - ([c835335](https://github.com/roadiz/skeleton/commit/c8353354aefca90482624e6a4305a620a6516bc2)) - Eliot
+
 ### Features
 
+- Add MAILER_ENVELOP_SENDER and update DEFAULT_ADMIN_NOTIFIER_RECIPIENT - ([4e4058e](https://github.com/roadiz/skeleton/commit/4e4058e80a160ff2410eef8b9503cea91978f1bf)) - Ambroise Maupate
+- Update PHP version requirement to 8.3 and add Rector configuration - ([aff893e](https://github.com/roadiz/skeleton/commit/aff893e3ba79410d196c1a01a9a87792fd807549)) - Ambroise Maupate
 - Add Docker configuration for FrankenPHP with development and production setups - ([6d8fb6b](https://github.com/roadiz/skeleton/commit/6d8fb6bdd5fdbf3923b2f7722431759be1d5bb14)) - Ambroise Maupate
 - Update Symfony dependencies and configuration for version 7.3 - ([1435d46](https://github.com/roadiz/skeleton/commit/1435d461a718af3dd01daaf5ae2ef04b9c37e890)) - Ambroise Maupate
 - Update configuration for Doctrine and Messenger components - ([bdc4913](https://github.com/roadiz/skeleton/commit/bdc49132cff86732df0d7f1ce3a84aef1cea32ed)) - Ambroise Maupate
@@ -114,6 +127,7 @@ All notable changes to project will be documented in this file.
 
 ### Refactor
 
+- Remove Solr configuration and related dependencies ([#9](https://github.com/roadiz/skeleton/issues/9)) - ([0d0694d](https://github.com/roadiz/skeleton/commit/0d0694d0f9a9935457919b4f57b7f257a46681f3)) - Eliot
 - Clean up role definitions and remove unused roles in configuration files - ([a629798](https://github.com/roadiz/skeleton/commit/a629798471b6a4c067a7d2a40734f4338843babd)) - Ambroise Maupate
 - Simplify translation retrieval and enhance home page logic in GetCommonContentController - ([577a92f](https://github.com/roadiz/skeleton/commit/577a92fd184667a9ca157c2edfac4bf84627e955)) - Ambroise Maupate
 - Update PHP version requirements, clean up Dockerfile, and migrate configuration settings - ([af469db](https://github.com/roadiz/skeleton/commit/af469dbe2818aa25998087e958650a5db09e73d5)) - Ambroise Maupate
@@ -136,10 +150,6 @@ All notable changes to project will be documented in this file.
 
 - Refactor AliasBlockWalkerNormalizer to use decorated normalizers and add preview support - ([90c805b](https://github.com/roadiz/skeleton/commit/90c805b65e9431305bc33941635390740b618f35)) - Ambroise Maupate
 
-### Features
-
-- Update PHP version requirement to 8.3 and add Rector configuration - ([aff893e](https://github.com/roadiz/skeleton/commit/aff893e3ba79410d196c1a01a9a87792fd807549)) - Ambroise Maupate
-
 ## [2.5.10](https://github.com/roadiz/skeleton/compare/v2.5.9...v2.5.10) - 2025-06-26
 
 ### Features
@@ -154,10 +164,6 @@ All notable changes to project will be documented in this file.
 
 ## [2.5.8](https://github.com/roadiz/skeleton/compare/v2.5.7...v2.5.8) - 2025-06-24
 
-### Features
-
-- Add MAILER_ENVELOP_SENDER and update DEFAULT_ADMIN_NOTIFIER_RECIPIENT - ([4e4058e](https://github.com/roadiz/skeleton/commit/4e4058e80a160ff2410eef8b9503cea91978f1bf)) - Ambroise Maupate
-
 ### Refactor
 
 - Use camel case for URL keys in GetCommonContentController - ([686bf08](https://github.com/roadiz/skeleton/commit/686bf0898ccebaa118b5fb771dedab6dee187288)) - eliot lauger
@@ -167,10 +173,6 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - Missing `TRUSTED_PROXIES` env variable in `symfony/framework-bundle` section - ([3e93e7b](https://github.com/roadiz/skeleton/commit/3e93e7ba169bab8efb07aee23303164af43355f5)) - Ambroise Maupate
-
-### Refactor
-
-- Remove Solr configuration and related dependencies ([#9](https://github.com/roadiz/skeleton/issues/9)) - ([0d0694d](https://github.com/roadiz/skeleton/commit/0d0694d0f9a9935457919b4f57b7f257a46681f3)) - Eliot
 
 ## [2.5.6](https://github.com/roadiz/skeleton/compare/v2.5.5...v2.5.6) - 2025-06-12
 
@@ -208,14 +210,12 @@ All notable changes to project will be documented in this file.
 
 ### Bug Fixes
 
-- Add memory limit -1 in worker service ([#8](https://github.com/roadiz/skeleton/issues/8)) - ([c835335](https://github.com/roadiz/skeleton/commit/c8353354aefca90482624e6a4305a620a6516bc2)) - Eliot
 - Upgraded rezozero/intervention-request-bundle to 4.1 - ([2b58b74](https://github.com/roadiz/skeleton/commit/2b58b7450d1970e56843028f8412dcf4076a1a6d)) - Ambroise Maupate
 
 ## [2.5.1](https://github.com/roadiz/skeleton/compare/v2.5.0...v2.5.1) - 2025-04-08
 
 ### Bug Fixes
 
-- Update of compose.prod.yml to be in line with docker-bake.hcl ([#7](https://github.com/roadiz/skeleton/issues/7)) - ([e35847c](https://github.com/roadiz/skeleton/commit/e35847c092f34681dd660fcda2bb2b840d400ba9)) - Eliot
 - Missing `PHP_CS_FIXER_IGNORE_ENV` and `nodetypes:validate-files` command - ([2a42940](https://github.com/roadiz/skeleton/commit/2a4294027e388a4dc6afa19c0c1a85eaaf92e789)) - Ambroise Maupate
 
 ## [2.5.0](https://github.com/roadiz/skeleton/compare/v2.4.14...v2.5.0) - 2025-03-11
@@ -226,6 +226,10 @@ All notable changes to project will be documented in this file.
 
 ### Features
 
+- Migrated node-type JSON to YAML - ([1ac2fd7](https://github.com/roadiz/skeleton/commit/1ac2fd781578a3d74880318a6b8befdc3b40e2ee)) - Ambroise Maupate
+- Add test node type files in pipeline and github action - ([41950b4](https://github.com/roadiz/skeleton/commit/41950b41d8e13cedc81a7cfba3b37d16e231e474)) - eliot lauger
+- Added new starter Page node-type and re-generated node-source classes - ([bda3342](https://github.com/roadiz/skeleton/commit/bda33424a57a64c406db1b7471a46f87f396f24d)) - Ambroise Maupate
+- Upgraded to PHP 8.4 - ([2c74725](https://github.com/roadiz/skeleton/commit/2c74725507af570918c38f4734fb74fdfaf7b231)) - Ambroise Maupate
 - Added NSErrorPage tree-walker into CommonContent - ([b05ac1b](https://github.com/roadiz/skeleton/commit/b05ac1bf441c3ae74fd63350d50c21246a6d5be9)) - Ambroise Maupate
 
 ## [2.4.14](https://github.com/roadiz/skeleton/compare/v2.4.13...v2.4.14) - 2025-02-11
@@ -246,21 +250,11 @@ All notable changes to project will be documented in this file.
 
 - Fixed MariaDB configuration location - ([8d145d8](https://github.com/roadiz/skeleton/commit/8d145d8347c1570048583484f694b31a67c653d8)) - Ambroise Maupate
 
-### Features
-
-- Added new starter Page node-type and re-generated node-source classes - ([bda3342](https://github.com/roadiz/skeleton/commit/bda33424a57a64c406db1b7471a46f87f396f24d)) - Ambroise Maupate
-- Upgraded to PHP 8.4 - ([2c74725](https://github.com/roadiz/skeleton/commit/2c74725507af570918c38f4734fb74fdfaf7b231)) - Ambroise Maupate
-
 ## [2.4.11](https://github.com/roadiz/skeleton/compare/v2.4.10...v2.4.11) - 2025-02-08
 
 ### Bug Fixes
 
 - Upgraded Varnish version and add optimization on query-string (sorting) - ([f0aa8b1](https://github.com/roadiz/skeleton/commit/f0aa8b19ff3063503f002ed655ac747e08c6bf04)) - Ambroise Maupate
-
-### Features
-
-- Migrated node-type JSON to YAML - ([1ac2fd7](https://github.com/roadiz/skeleton/commit/1ac2fd781578a3d74880318a6b8befdc3b40e2ee)) - Ambroise Maupate
-- Add test node type files in pipeline and github action - ([41950b4](https://github.com/roadiz/skeleton/commit/41950b41d8e13cedc81a7cfba3b37d16e231e474)) - eliot lauger
 
 ## [2.4.10](https://github.com/roadiz/skeleton/compare/v2.4.9...v2.4.10) - 2025-01-24
 
@@ -356,6 +350,7 @@ All notable changes to project will be documented in this file.
 
 ### Features
 
+- Config updates for api-platform 3.3 - ([3baf2d0](https://github.com/roadiz/skeleton/commit/3baf2d0308dd4d6de461267c8a86ec61d3225163)) - Ambroise Maupate
 - Prevent cron docker entrypoint to run as non-root user - ([2dc6c62](https://github.com/roadiz/skeleton/commit/2dc6c6248a6ef72f0a557c3727ad8286ce8d0fed)) - Ambroise Maupate
 - Replace `squizlabs/php_codesniffer` package with  `friendsofphp/php-cs-fixer` - ([a369090](https://github.com/roadiz/skeleton/commit/a36909011b085eb91aa6a0579a14859edbd9d234)) - Ambroise Maupate
 -  [**breaking**]Migrate Dockerfile to multi-stage build and get rid of `roadiz/php83-fpm-alpine` base image - ([d2f3899](https://github.com/roadiz/skeleton/commit/d2f3899d10e2fc5df5e341354a387e8129f26789)) - Ambroise Maupate
@@ -374,10 +369,6 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - Removed useless `themes` folder - ([f06198c](https://github.com/roadiz/skeleton/commit/f06198ce0b7584b8b7294cb42662a73b9fe9b7c0)) - Ambroise Maupate
-
-### Features
-
-- Config updates for api-platform 3.3 - ([3baf2d0](https://github.com/roadiz/skeleton/commit/3baf2d0308dd4d6de461267c8a86ec61d3225163)) - Ambroise Maupate
 
 ## [2.3.8](https://github.com/roadiz/skeleton/compare/v2.3.7...v2.3.8) - 2024-06-26
 
@@ -415,11 +406,16 @@ All notable changes to project will be documented in this file.
 
 - Allow exposing `Cache-Tags` header when Varnish serve API and Nuxt responses - ([0833570](https://github.com/roadiz/skeleton/commit/083357092318e9b08ba400a5270457d563655f10)) - Ambroise Maupate
 
-## [2.3.1](https://github.com/roadiz/skeleton/compare/v2.3.0...v2.3.1) - 2024-05-16
+## [2.3.2](https://github.com/roadiz/skeleton/compare/v2.3.1...v2.3.2) - 2024-05-27
 
 ### Bug Fixes
 
 - Upgraded docker entry point script to preserve environment - ([422ba47](https://github.com/roadiz/skeleton/commit/422ba4766200adc16675173637754bbbae5e93b5)) - Ambroise Maupate
+
+## [2.3.1](https://github.com/roadiz/skeleton/compare/v2.3.0...v2.3.1) - 2024-05-16
+
+### Bug Fixes
+
 - Missing redis-messenger package at composer create-project. Missing JWT_PASSPHRASE default value. - ([c27aebc](https://github.com/roadiz/skeleton/commit/c27aebc8d60ef5df21e5ba0fdc16b8a520d7a1bb)) - Ambroise Maupate
 
 ## [2.3.0](https://github.com/roadiz/skeleton/compare/v2.2.1...v2.3.0) - 2024-05-15
@@ -472,14 +468,26 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - **(Docker)** Clear caches after migrations and db ready - ([91c6220](https://github.com/roadiz/skeleton/commit/91c62209a44ac4a6fc092e4cd1ffe57cf9e70a1d)) - Ambroise Maupate
+- Force watchtower to restart dependent containers - ([a2b0357](https://github.com/roadiz/skeleton/commit/a2b0357f1ff1a8c6032b5e77b5b6d5f77c0c449e)) - Ambroise Maupate
+- Set default empty dotenv vars for OpenID and ignore large files and archives from Varnish cache - ([94f3975](https://github.com/roadiz/skeleton/commit/94f3975ccdfdf5369acf1cbae7ea7a013ab5196b)) - Ambroise Maupate
+- Use VARNISH_HOST instead of URL for reverseProxyCache host param - ([5af0965](https://github.com/roadiz/skeleton/commit/5af0965020325714737c11b23c7b95c52b8fc63f)) - Ambroise Maupate
 - Configure API firewall as database-less JWT by default to ensure PreviewUser are not reloaded. Missing `user_checker` - ([23d64e4](https://github.com/roadiz/skeleton/commit/23d64e49b613286f1a7b1818c8fbbea5db336dfa)) - Ambroise Maupate
 - Fix docker compose watchtower depends-on labels - ([f5afbd3](https://github.com/roadiz/skeleton/commit/f5afbd38294523b7d9ca4a6faa7ae87af49be54b)) - Ambroise Maupate
 - Removed deprecated `lexik_jwt_authentication.jwt_token_authenticator` - ([42850a0](https://github.com/roadiz/skeleton/commit/42850a0cfe79628557c1454b65c75e2d4c78e57b)) - Ambroise Maupate
+
+### Documentation
+
+- More config hints - ([1c0504d](https://github.com/roadiz/skeleton/commit/1c0504d18bfb45b34d27102d2115f3b31677ce7d)) - Ambroise Maupate
 
 ### Features
 
 - **(Solr)** Better Solr managed schema for French fields asciifolding - ([141186c](https://github.com/roadiz/skeleton/commit/141186cd0743233e4283ebc5be0b7fd611846232)) - Ambroise Maupate
 - **(Solr)** Added *_ps field type for multiple geolocations - ([2c9f5e3](https://github.com/roadiz/skeleton/commit/2c9f5e36c6f0e81a05130c83f94d5872bc99478e)) - Ambroise Maupate
+- Upgraded configuration for Roadiz 2.2 - ([8ef0d3f](https://github.com/roadiz/skeleton/commit/8ef0d3f18a74f78dd99df94c2d029ee5b1cd0a4b)) - Ambroise Maupate
+- Do not use `themes:install` and `themes:migrate` command anymore as Roadiz will generate Doctrine migration at node-type changes - ([09b1714](https://github.com/roadiz/skeleton/commit/09b171417d68349c0a77b0d05dd2318c73627af6)) - Ambroise Maupate
+- Do not expose WebResponse resource directly - ([a972b80](https://github.com/roadiz/skeleton/commit/a972b80a02e9e65e37f1fbc36d5f20c1c333a14c)) - Ambroise Maupate
+- Updated README and Makefile for new `app:migrate` command, disabled default Varnish invalidation - ([b34cf42](https://github.com/roadiz/skeleton/commit/b34cf42f8b03879bc3152653d8819d63e3e72ca9)) - Ambroise Maupate
+- Updated docker-php-entrypoint to perform db migrations first then app:install - ([4b2079a](https://github.com/roadiz/skeleton/commit/4b2079a5dbad0f17f3f91be822d5a02be663b6f4)) - Ambroise Maupate
 - Added Restic services for production backup and restoration in development env - ([fc28b13](https://github.com/roadiz/skeleton/commit/fc28b134f03e7bebeaec778ef673d8755f889daf)) - Ambroise Maupate
 - Added `APP_ROUTER_DEFAULT_URI` to configure framework.router.default_uri - ([67ef138](https://github.com/roadiz/skeleton/commit/67ef1389069144257f43cc2df59da799a58902c7)) - Ambroise Maupate
 - Switched to php 82 - ([8824e7e](https://github.com/roadiz/skeleton/commit/8824e7e9f21338c86ec6b47328fa808f03bc8835)) - Ambroise Maupate
@@ -490,28 +498,12 @@ All notable changes to project will be documented in this file.
 ### Bug Fixes
 
 - **(CI)** Build and tag at the same time to avoid push same docker image digest from different jobs - ([6a96982](https://github.com/roadiz/skeleton/commit/6a96982957e029c9fb19f771ae8a32b88b685798)) - Ambroise Maupate
-- Set default empty dotenv vars for OpenID and ignore large files and archives from Varnish cache - ([94f3975](https://github.com/roadiz/skeleton/commit/94f3975ccdfdf5369acf1cbae7ea7a013ab5196b)) - Ambroise Maupate
-- Use VARNISH_HOST instead of URL for reverseProxyCache host param - ([5af0965](https://github.com/roadiz/skeleton/commit/5af0965020325714737c11b23c7b95c52b8fc63f)) - Ambroise Maupate
-
-### Documentation
-
-- More config hints - ([1c0504d](https://github.com/roadiz/skeleton/commit/1c0504d18bfb45b34d27102d2115f3b31677ce7d)) - Ambroise Maupate
-
-### Features
-
-- Updated docker-php-entrypoint to perform db migrations first then app:install - ([4b2079a](https://github.com/roadiz/skeleton/commit/4b2079a5dbad0f17f3f91be822d5a02be663b6f4)) - Ambroise Maupate
 
 ## [2.1.14](https://github.com/roadiz/skeleton/compare/v2.1.13...v2.1.14) - 2023-07-28
 
 ### Bug Fixes
 
 - Added AutoDevops templates for Gitlab CI/CD - ([769495d](https://github.com/roadiz/skeleton/commit/769495dd8460fd66c8844a04c56be5fd9e259d69)) - Ambroise Maupate
-
-### Features
-
-- Do not use `themes:install` and `themes:migrate` command anymore as Roadiz will generate Doctrine migration at node-type changes - ([09b1714](https://github.com/roadiz/skeleton/commit/09b171417d68349c0a77b0d05dd2318c73627af6)) - Ambroise Maupate
-- Do not expose WebResponse resource directly - ([a972b80](https://github.com/roadiz/skeleton/commit/a972b80a02e9e65e37f1fbc36d5f20c1c333a14c)) - Ambroise Maupate
-- Updated README and Makefile for new `app:migrate` command, disabled default Varnish invalidation - ([b34cf42](https://github.com/roadiz/skeleton/commit/b34cf42f8b03879bc3152653d8819d63e3e72ca9)) - Ambroise Maupate
 
 ## [2.1.13](https://github.com/roadiz/skeleton/compare/v2.1.12...v2.1.13) - 2023-07-25
 
@@ -531,10 +523,6 @@ All notable changes to project will be documented in this file.
 
 - Added missing Makefile entries, README and API platform `metadata_backward_compatibility_layer` - ([3346d79](https://github.com/roadiz/skeleton/commit/3346d794a60e3e94978a13d3f56d5bf28927f07b)) - Ambroise Maupate
 - Run secrets command after composer install - ([4ef7f4c](https://github.com/roadiz/skeleton/commit/4ef7f4c6a855fac2e604c208fe212f91c8912470)) - Ambroise Maupate
-
-### Features
-
-- Upgraded configuration for Roadiz 2.2 - ([8ef0d3f](https://github.com/roadiz/skeleton/commit/8ef0d3f18a74f78dd99df94c2d029ee5b1cd0a4b)) - Ambroise Maupate
 
 ## [2.1.10](https://github.com/roadiz/skeleton/compare/v2.1.9...v2.1.10) - 2023-07-12
 
@@ -576,7 +564,6 @@ All notable changes to project will be documented in this file.
 
 ### Bug Fixes
 
-- Force watchtower to restart dependent containers - ([a2b0357](https://github.com/roadiz/skeleton/commit/a2b0357f1ff1a8c6032b5e77b5b6d5f77c0c449e)) - Ambroise Maupate
 - Mixed up public and private file volumes for backup - ([8d954ac](https://github.com/roadiz/skeleton/commit/8d954acb885bda28fd071c7db3b747bf57ac9af3)) - Ambroise Maupate
 
 ## [2.1.3](https://github.com/roadiz/skeleton/compare/v2.1.2...v2.1.3) - 2023-03-20
