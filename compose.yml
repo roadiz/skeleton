@@ -15,7 +15,8 @@ x-app-template: &app_template
     networks:
         default:
     environment:
-        TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+        # See https://symfony.com/doc/7.4/deployment/proxies.html
+        SYMFONY_TRUSTED_PROXIES: ${SYMFONY_TRUSTED_PROXIES:-PRIVATE_SUBNETS,REMOTE_ADDR}
         UID: ${UID}
         DEFAULT_GATEWAY: ${DEFAULT_GATEWAY}
 
