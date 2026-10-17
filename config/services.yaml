@@ -21,13 +21,6 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\Serializer\Normalizer\MenuLinkPathNormalizer:
-        decorates: 'api_platform.jsonld.normalizer.item'
-    # Need a different name to avoid duplicate YAML key
-    app.serializer.normalizer.menu_link_path.json:
-        class: 'App\Serializer\Normalizer\MenuLinkPathNormalizer'
-        decorates: 'api_platform.serializer.normalizer.item'
-
     App\Serializer\Normalizer\AliasBlockWalkerNormalizer:
         decorates: 'api_platform.jsonld.normalizer.object'
         arguments:

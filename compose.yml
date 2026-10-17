@@ -118,6 +118,19 @@ services:
         environment:
             VARNISH_SIZE: ${VARNISH_SIZE}
 
+    pma:
+        profiles: [pma]
+        image: phpmyadmin:latest
+        ports:
+            - ${PUBLIC_PMA_PORT}:80/tcp
+        environment:
+            PMA_HOST: db
+            UPLOAD_LIMIT: 64M
+            PMA_USER: ${MARIADB_USER:-roadiz}
+            PMA_PASSWORD: ${MARIADB_PASSWORD:-roadiz}
+        depends_on:
+            - db
+
 networks:
     # If you need to use port forwarding, fixing default gateway can be useful
     # to keep same host IP address between service restarts
