@@ -7,7 +7,7 @@ cache:
 test:
 	docker compose run --rm --entrypoint= --no-deps app php -d "memory_limit=-1" bin/console nodetypes:validate-files
 	docker compose run --rm --entrypoint= --no-deps app php -d "memory_limit=-1" vendor/bin/rector process --dry-run
-	docker compose run --rm --entrypoint= --no-deps -e PHP_CS_FIXER_IGNORE_ENV=1 app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
+	docker compose run --rm --entrypoint= --no-deps app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
 	make phpstan;
 	make phpunit;
 
@@ -19,7 +19,7 @@ phpunit:
 
 rector:
 	docker compose run --rm --entrypoint= --no-deps app php -d "memory_limit=-1" vendor/bin/rector process
-	docker compose run --rm --entrypoint= --no-deps -e PHP_CS_FIXER_IGNORE_ENV=1 app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
+	docker compose run --rm --entrypoint= --no-deps app php -d "memory_limit=-1" vendor/bin/php-cs-fixer fix --ansi -vvv
 
 update:
 	docker compose run --rm --entrypoint= app composer install -o

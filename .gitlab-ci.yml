@@ -33,7 +33,6 @@ test:
         JWT_PASSPHRASE: changeme
         APP_SECRET: changeme
         XDEBUG_MODE: "coverage"
-        PHP_CS_FIXER_IGNORE_ENV: 1
         # Trigger composer config --global gitlab-token
         #GITLAB_DOMAIN: gitlab.com
     artifacts:

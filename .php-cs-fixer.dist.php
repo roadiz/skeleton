@@ -22,5 +22,6 @@ return (new PhpCsFixer\Config())
     ])
     ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRiskyAllowed(true)
+    ->setUnsupportedPhpVersionAllowed(true)
     ->setFinder($finder)
 ;

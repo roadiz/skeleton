@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Api\Model;
 
 use ApiPlatform\Metadata\ApiProperty;
+use App\TreeWalker\MenuNodeSourceWalker;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadInterface;
+use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\TreeWalker\WalkerInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -18,6 +20,9 @@ final class CommonContent
     #[Groups(['common_content'])]
     public ?NodesSources $home = null;
 
+    /**
+     * @var AutoChildrenNodeSourceWalker|null
+     */
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
@@ -32,6 +37,9 @@ final class CommonContent
     )]
     public ?NodesSourcesHeadInterface $head = null;
 
+    /**
+     * @var array<string, MenuNodeSourceWalker>|null
+     */
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
@@ -53,6 +61,9 @@ final class CommonContent
     )]
     public ?array $menus = null;
 
+    /**
+     * @var array<string, AutoChildrenNodeSourceWalker>|null
+     */
     #[Groups(['common_content'])]
     #[ApiProperty(
         identifier: false,
