@@ -17,7 +17,6 @@ use RZ\Roadiz\CoreBundle\Bag\Settings;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
 use RZ\Roadiz\CoreBundle\Preview\PreviewResolverInterface;
 use RZ\TreeWalker\WalkerContextInterface;
-use RZ\TreeWalker\WalkerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -62,18 +61,22 @@ final class GetCommonContentController extends AbstractController
             $resource->head = $this->nodesSourcesHeadFactory->createForTranslation($translation);
             $resource->home = $this->getHomePage($translation);
             $resource->errorPage = $this->getErrorPage($translation);
-            $resource->menus = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
+            /** @var array<string, MenuNodeSourceWalker> $menus */
+            $menus = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
                 'Menu',
                 MenuNodeSourceWalker::class,
                 $translation,
                 3
             );
-            $resource->footers = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
+            $resource->menus = $menus;
+            /** @var array<string, AutoChildrenNodeSourceWalker> $footers */
+            $footers = $this->treeWalkerGenerator->getTreeWalkersForTypeAtRoot(
                 'Footer',
                 AutoChildrenNodeSourceWalker::class,
                 $translation,
                 4
             );
+            $resource->footers = $footers;
 
             /**
              * @var string[] $keys
@@ -114,7 +117,7 @@ final class GetCommonContentController extends AbstractController
         ]);
     }
 
-    private function getErrorPage(TranslationInterface $translation): ?WalkerInterface
+    private function getErrorPage(TranslationInterface $translation): ?AutoChildrenNodeSourceWalker
     {
         if (!class_exists('\App\GeneratedEntity\NSErrorPage')) {
             return null;
@@ -129,12 +132,15 @@ final class GetCommonContentController extends AbstractController
             return null;
         }
 
-        return $this->treeWalkerGenerator->buildForRoot(
+        /** @var AutoChildrenNodeSourceWalker $walker */
+        $walker = $this->treeWalkerGenerator->buildForRoot(
             $errorPage,
             AutoChildrenNodeSourceWalker::class,
             $this->walkerContext,
             3,
             $this->cacheItemPool
         );
+
+        return $walker;
     }
 }
