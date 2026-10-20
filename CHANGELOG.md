@@ -2,6 +2,16 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.9](https://github.com/roadiz/skeleton/compare/v2.7.8...v2.7.9) - 2026-10-20
+
+### ⚠ Breaking changes
+
+- Prefetch common content walkers and drop document_folders group ([#15](https://github.com/roadiz/skeleton/issues/15))
+
+### Performance
+
+- **(api)** [**breaking**] prefetch common content walkers and drop document_folders group ([#15](https://github.com/roadiz/skeleton/issues/15)) - ([af37210](https://github.com/roadiz/skeleton/commit/af37210739f3fd5776c9cc45b69d8e5dd79e0327)) - Ambroise Maupate
+
 ## [2.7.7](https://github.com/roadiz/skeleton/compare/v2.7.6...v2.7.7) - 2026-09-15
 
 ### Features
