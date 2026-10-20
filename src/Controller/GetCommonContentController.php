@@ -12,6 +12,7 @@ use RZ\Roadiz\Core\AbstractEntities\TranslationInterface;
 use RZ\Roadiz\CoreBundle\Api\Controller\TranslationAwareControllerTrait;
 use RZ\Roadiz\CoreBundle\Api\Model\NodesSourcesHeadFactoryInterface;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\AutoChildrenNodeSourceWalker;
+use RZ\Roadiz\CoreBundle\Api\TreeWalker\NodesSourcesPrefetcher;
 use RZ\Roadiz\CoreBundle\Api\TreeWalker\TreeWalkerGenerator;
 use RZ\Roadiz\CoreBundle\Bag\Settings;
 use RZ\Roadiz\CoreBundle\Entity\NodesSources;
@@ -35,6 +36,7 @@ final class GetCommonContentController extends AbstractController
         private readonly WalkerContextInterface $walkerContext,
         private readonly CacheItemPoolInterface $cacheItemPool,
         private readonly Settings $settingsBag,
+        private readonly NodesSourcesPrefetcher $nodesSourcesPrefetcher,
     ) {
     }
 
@@ -77,6 +79,13 @@ final class GetCommonContentController extends AbstractController
                 4
             );
             $resource->footers = $footers;
+
+            // Walkers built outside WebResponse are not prefetched automatically.
+            $this->nodesSourcesPrefetcher->prefetchWalkers(array_filter([
+                ...array_values($menus),
+                ...array_values($footers),
+                $resource->errorPage,
+            ]));
 
             /**
              * @var string[] $keys
