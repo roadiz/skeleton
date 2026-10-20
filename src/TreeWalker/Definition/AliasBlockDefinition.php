@@ -22,6 +22,8 @@ final class AliasBlockDefinition
         if (!$this->context instanceof NodeSourceWalkerContext || !$source instanceof NSAliasBlock) {
             throw new \InvalidArgumentException('Context should be instance of '.NodeSourceWalkerContext::class);
         }
+        // Runs during the walk, before NodesSourcesPrefetcher: one query per alias block remains
+        // until level-by-level prefetching lands (follow-up of roadiz/core-bundle-dev-app#513).
         $walker->addMetadata('realType', $source->getNodeTypeName());
         $walker->addMetadata('realSlug', $source->getIdentifier());
         $walker->addMetadata('realItem', $source);

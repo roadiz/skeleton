@@ -27,7 +27,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @method NSMenuLink[]      findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @method NSMenuLink|null   findOneByIdentifierAndTranslation(string $identifier, ?TranslationInterface $translation, bool $availableTranslation = false)
  * @method NSMenuLink|null   findOneByNodeAndTranslation(Node $node, ?TranslationInterface $translation)
- * @method NSMenuLink[]|null findByNodesSourcesAndFieldNameAndTranslation(NodesSources $nodesSources, string $fieldName, array $nodeSourceClasses = [])
+ * @method NSMenuLink[]      findByNodesSourcesAndFieldNameAndTranslation(NodesSources $nodesSources, string $fieldName, array $nodeSourceClasses = [])
  * @method int countBy(mixed $criteria)
  */
 class NSMenuLinkRepository extends NodesSourcesRepository

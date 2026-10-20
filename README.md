@@ -244,6 +244,10 @@ You can fetch this endpoint once in your website frontend, instead of embedding 
 }
 ```
 
+Tree-walkers built outside `WebResponse` (common content, custom endpoints) are not prefetched automatically.
+Pass them to `NodesSourcesPrefetcher::prefetchWalkers()` once built to avoid N+1 queries on their documents and references,
+as `GetCommonContentController` does.
+
 ### Versioning
 
 Make sure your `.env` file does not contain any sensitive data as it must be added to your repository: `git add --force .env`
