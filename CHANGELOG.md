@@ -2,6 +2,14 @@
 
 All notable changes to project will be documented in this file.
 
+## [2.7.10](https://github.com/roadiz/skeleton/compare/v2.7.9...v2.7.10) - 2026-11-19
+
+### Bug Fixes
+
+- **(docker)** bump nginx to 1.31.9 (nginx2root CVEs) ([#17](https://github.com/roadiz/skeleton/issues/17)) - ([b67f0a4](https://github.com/roadiz/skeleton/commit/b67f0a439f3bff1df8119c0104246d3a103f9305)) - Ambroise Maupate
+- **(docker)** bump PHP to 8.5.13 (security release) ([#18](https://github.com/roadiz/skeleton/issues/18)) - ([7bd6f9a](https://github.com/roadiz/skeleton/commit/7bd6f9af6009d0e861e5e6a7a6634549be367e54)) - Ambroise Maupate
+- **(varnish)** serve Brotli to browsers ([#16](https://github.com/roadiz/skeleton/issues/16)) - ([47a7bc0](https://github.com/roadiz/skeleton/commit/47a7bc069927820b30a5bcb58ebaed5bd80300a4)) - Ambroise Maupate
+
 ## [2.7.9](https://github.com/roadiz/skeleton/compare/v2.7.8...v2.7.9) - 2026-10-20
 
 ### ⚠ Breaking changes
